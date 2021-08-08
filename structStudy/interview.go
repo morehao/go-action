@@ -8,17 +8,32 @@ func InterviewExercises1() {
 		age  int
 	}
 	m := make(map[string]*student)
+	m1 := make(map[string]student)
 	stus := []student{
 		{name: "pprof.cn", age: 18},
 		{name: "测试", age: 23},
 		{name: "博客", age: 28},
 	}
+	newStus := make([]student, 0)
 	for _, stu := range stus {
 		m[stu.name] = &stu
+		m1[stu.name] = stu
+		newStus = append(newStus, student{
+			name: stu.name,
+			age: stu.age,
+		})
 	}
+	fmt.Println(m)
+	fmt.Println(m1)
+	fmt.Println(newStus)
 	for k, v := range m {
 		fmt.Println(k, "=>", v.name)
 	}
+	mapSlice := make([]student,0)
+	for _, v := range m1 {
+		mapSlice = append(mapSlice, v)
+	}
+	fmt.Println(mapSlice)
 }
 
 type student struct {
