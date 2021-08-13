@@ -6,7 +6,7 @@ import (
 )
 
 func Test_Add2(t *testing.T) {
-	res := Add2(1,2)
+	res := Add2(1, 2)
 	fmt.Print(res)
 }
 
@@ -30,3 +30,23 @@ func Test_Fibonaci(t *testing.T) {
 	}
 }
 
+func Test_Defer1(t *testing.T) {
+	ts := []Test{{"a"}, {"b"}, {"c"}}
+	for _, t := range ts {
+		// for循环中调用defer可能存在资源泄露
+		defer t.Close()
+	}
+}
+
+// 正常输出
+func Test_Defer2(t *testing.T) {
+	ts := []Test{{"a"}, {"b"}, {"c"}}
+	for _, t := range ts {
+		defer Close(t)
+	}
+	// 或
+	// for _, t := range ts {
+	// 	t2 := t
+	// 	defer t2.Close()
+	// }
+}
