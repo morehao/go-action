@@ -36,3 +36,26 @@ func Fibonaci(i int) int {
 	}
 	return Fibonaci(i-1) + Fibonaci(i-2)
 }
+
+// 高阶函数
+type operate func(x, y int) int
+type operatorFunc func(x, y int) (int, error)
+
+func Calculator1(op operate) operatorFunc {
+	if op == nil {
+		return nil
+	}
+	return func(x, y int) (int, error) {
+		if op == nil {
+			return 0, nil
+		}
+		return op(x, y), nil
+	}
+}
+
+func Calculator2(x, y int, op operate) (int, error) {
+	if op == nil {
+		return 0, nil
+	}
+	return op(x, y), nil
+}

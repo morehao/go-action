@@ -50,3 +50,19 @@ func Test_Defer2(t *testing.T) {
 	// 	defer t2.Close()
 	// }
 }
+
+func Test_Calculator1(t *testing.T) {
+	op := func(x, y int) int {
+		return x + y
+	}
+	add := Calculator1(op)
+	fmt.Print(add(1, 2))
+}
+
+func Test_Calculator2(t *testing.T) {
+	op := func(x, y int) int {
+		return x + y
+	}
+	result, _ := Calculator2(1, 2, op)
+	fmt.Print(result)
+}

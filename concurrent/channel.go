@@ -2,7 +2,18 @@ package concurrent
 
 import "fmt"
 
+func InitChannel() {
+	ch1 := make(chan int, 3)
+	ch1 <- 2
+	ch1 <- 1
+	ch1 <- 3
+	elem1 := <-ch1
+	// 先进先出，输出2
+	fmt.Printf("The first element received from channel ch1: %v\n", elem1)
+}
+
 func NoReceiverChannel() {
+	// 未声明容量，是无缓冲的通道，无缓冲的通道只有在有接收者的时候才能发送值
 	ch := make(chan int)
 	ch <- 10
 	fmt.Println("发送成功")

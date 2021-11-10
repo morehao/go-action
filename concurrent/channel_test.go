@@ -4,6 +4,10 @@ import (
 	"testing"
 )
 
+func Test_InitChannel(t *testing.T) {
+	InitChannel()
+}
+
 func Test_NoReceiverChannel(t *testing.T) {
 	NoReceiverChannel()
 }
