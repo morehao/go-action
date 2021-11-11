@@ -1,4 +1,4 @@
-package concurrent
+package channel
 
 import "fmt"
 
@@ -47,4 +47,29 @@ func Close() {
 		}
 	}
 	fmt.Println("main结束")
+}
+
+func Panic() {
+	ch1 := make(chan int, 3)
+	ch1 <- 2
+	close(ch1)
+	// 对已关闭的通道进行发送操作
+	ch1 <- 3
+	// 对已关闭的通道进行再次关闭操作
+	close(ch1)
+}
+
+// TODO:待确认如何算是优雅
+func GetValGoodExample() {
+	ch1 := make(chan int, 3)
+	ch1 <- 2
+	close(ch1)
+	// 判断通道是否关闭，未关闭时再写入值
+	//val, ok := <-ch1
+	//if ok {
+	//	fmt.Println(val)
+	//}
+	val := <-ch1
+	fmt.Println(val)
+
 }

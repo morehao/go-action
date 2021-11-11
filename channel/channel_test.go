@@ -1,4 +1,4 @@
-package concurrent
+package channel
 
 import (
 	"testing"
@@ -18,4 +18,12 @@ func Test_WithReceiverChannel(t *testing.T) {
 
 func Test_Close(t *testing.T) {
 	Close()
+}
+
+func Test_Panic(t *testing.T) {
+	Panic()
+}
+
+func Test_GetValGoodExample(t *testing.T) {
+	GetValGoodExample()
 }
