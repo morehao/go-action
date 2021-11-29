@@ -41,7 +41,7 @@ func (a *Apple) setPrice(pp int) {
 
 func InterfaceTest3() {
 	var apple1 Food
-	apple1 = Apple{price: 15, color: 3} // 这里提示错误
+	apple1 = Apple{price: 15, color: 3} // 这里提示错误，值接收者没有setPrice方法
 	apple1.setColor(1)
 	apple1.setPrice(16)
 

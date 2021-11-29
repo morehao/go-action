@@ -64,12 +64,10 @@ func GetValGoodExample() {
 	ch1 := make(chan int, 3)
 	ch1 <- 2
 	close(ch1)
+	val, ok := <-ch1
 	// 判断通道是否关闭，未关闭时再写入值
-	//val, ok := <-ch1
-	//if ok {
-	//	fmt.Println(val)
-	//}
-	val := <-ch1
-	fmt.Println(val)
-
+	if ok {
+		ch1 <- 2
+		fmt.Println(val)
+	}
 }

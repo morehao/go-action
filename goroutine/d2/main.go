@@ -1,11 +1,12 @@
-package goroutine
+package main
 
 import (
 	"fmt"
 	"time"
 )
 
-func MasterTaskQuit() {
+// 输出main1 new1 new2 main2，主goroutine退出后其他goroutine也停止
+func main() {
 	// 合起来写
 	go func() {
 		i := 0
@@ -21,7 +22,7 @@ func MasterTaskQuit() {
 		fmt.Printf("main goroutine: i = %d\n", i)
 		time.Sleep(time.Second)
 		if i == 2 {
-			// 主协程退出了，其他任务仍然执行
+			// 主协程退出了，其他任务也退出了
 			break
 		}
 	}
