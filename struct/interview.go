@@ -1,4 +1,4 @@
-package structStudy
+package _struct
 
 import "fmt"
 
@@ -20,7 +20,7 @@ func InterviewExercises1() {
 		m1[stu.name] = stu
 		newStus = append(newStus, student{
 			name: stu.name,
-			age: stu.age,
+			age:  stu.age,
 		})
 	}
 	fmt.Println(m)
@@ -29,7 +29,7 @@ func InterviewExercises1() {
 	for k, v := range m {
 		fmt.Println(k, "=>", v.name)
 	}
-	mapSlice := make([]student,0)
+	mapSlice := make([]student, 0)
 	for _, v := range m1 {
 		mapSlice = append(mapSlice, v)
 	}
@@ -41,6 +41,7 @@ type student struct {
 	name string
 	age  int
 }
+
 func demo(ce []student) {
 	//切片是引用传递，是可以改变值的
 	ce[1].age = 999
@@ -48,7 +49,7 @@ func demo(ce []student) {
 	// return ce
 }
 func InterviewExercises2() {
-	var ce []student  //定义一个切片类型的结构体
+	var ce []student //定义一个切片类型的结构体
 	ce = []student{
 		student{1, "xiaoming", 22},
 		student{2, "xiaozhang", 33},

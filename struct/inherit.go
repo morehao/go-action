@@ -1,4 +1,4 @@
-package structStudy
+package _struct
 
 import "fmt"
 
@@ -6,14 +6,17 @@ import "fmt"
 type Animal struct {
 	name string
 }
+
 func (a *Animal) move() {
 	fmt.Printf("%s会动！\n", a.name)
 }
+
 //Dog 狗
 type Dog struct {
 	Feet    int8
 	*Animal //通过嵌套匿名结构体实现继承
 }
+
 func (d *Dog) wang() {
 	fmt.Printf("%s会汪汪汪~\n", d.name)
 }

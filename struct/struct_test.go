@@ -1,4 +1,4 @@
-package structStudy
+package _struct
 
 import (
 	"fmt"
@@ -25,4 +25,3 @@ func Test_NewPerson(t *testing.T) {
 func Test_Inherit(t *testing.T) {
 	Inherit()
 }
-

@@ -7,6 +7,8 @@ import (
 
 func main() {
 	num := 10
+	// 空结构体只是占位作用，且孔结构体的实例struct{}{}不占据任何内存空间
+	// 次数使用channel并不需要发送任何数据，只是用来通知子协程(goroutine)执行任务
 	sign := make(chan struct{}, num)
 
 	for i := 0; i < num; i++ {

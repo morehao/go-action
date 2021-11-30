@@ -1,4 +1,4 @@
-package structStudy
+package _struct
 
 import "fmt"
 
@@ -19,7 +19,7 @@ func NestedStruct() {
 
 type person struct {
 	name string
-	city  string
+	city string
 	age  int
 }
 
@@ -31,4 +31,3 @@ func NewPerson(name, city string, age int) *person {
 		age:  age,
 	}
 }
-
