@@ -36,6 +36,9 @@ func fn2() {
 	sliceHandle(s1)
 	fmt.Printf("2 s1:%v\n", s1)
 	fmt.Printf("2 s2 pointer address:%p\n", s2)
+	/*将切片作为参数传递给函数的时候，是值传递，传递给函数的其实是对切片底层结构体的拷贝；
+	切片底层结构体中长度和宽度并不是指针，函数内部改变切片的长度（未发生扩容)时其实底层数组的值已经改变了，
+	但是因为是值传递，所以函数内部长度的改变并不会影响函数外切片结构体中长度的值，所以在函数外部看到的切片并未发生变化，*/
 	sliceHandle(s2)
 	fmt.Printf("2 s2:%v\n", s2)
 	fmt.Printf("3 s2 pointer address:%p\n", s2)
