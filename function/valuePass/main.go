@@ -2,12 +2,15 @@ package main
 
 import "fmt"
 
+// go参数传递是值传递验证
+// 拷贝的内容有时候是非引用类型（int、string、struct等这些），这样就在函数中就无法修改原内容数据；
+// 有的是引用类型（指针、map、slice、chan等这些），这样就可以修改原内容数据
 func main() {
-	fn1()
-	fn2()
+	fnInt64()
+	fnSlice()
 }
 
-func fn1() {
+func fnInt64() {
 	var args int64 = 1
 	modifiedNumber1(args) // args就是实际参数
 	// 形参地址与实参地址不同，说明是变量的副本或变量的拷贝
@@ -20,7 +23,7 @@ func modifiedNumber1(args int64) { //这里定义的args就是形式参数
 	args = 10
 }
 
-func fn2() {
+func fnSlice() {
 	var args int64 = 1
 	addr := &args
 	fmt.Printf("原始指针的内存地址是 %p\n", addr)

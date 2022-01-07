@@ -43,7 +43,7 @@ type student struct {
 }
 
 func demo(ce []student) {
-	//切片是引用传递，是可以改变值的
+	// 切片是引用传递，是可以改变值的
 	ce[1].age = 999
 	// ce = append(ce, student{3, "xiaowang", 56})
 	// return ce
