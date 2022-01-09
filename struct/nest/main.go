@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// 结构体内嵌
 func main() {
 	d1 := &Dog{
 		Feet: 4,
