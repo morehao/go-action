@@ -1,13 +1,4 @@
-/*
- * @Author: your name
- * @Date: 2021-05-24 12:35:08
- * @LastEditTime: 2021-05-24 12:38:51
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /go-practice/fmt.go
- */
-
-package format
+package main
 
 import (
 	"encoding/json"
@@ -16,7 +7,13 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
-func FmtPrint() {
+func main() {
+	fmtPrint()
+	fmtPrintln()
+	fmtPrintf()
+}
+
+func fmtPrint() {
 	type Person struct {
 		Name string
 	}
@@ -26,7 +23,7 @@ func FmtPrint() {
 	fmt.Print(person)
 }
 
-func FmtPrintln() {
+func fmtPrintln() {
 	type Person struct {
 		Name string
 	}
@@ -36,7 +33,7 @@ func FmtPrintln() {
 	fmt.Println(person)
 }
 
-func FmtPrintf() {
+func fmtPrintf() {
 	type Person struct {
 		Name string
 	}
@@ -52,6 +49,7 @@ func FmtPrintf() {
 	fmt.Printf("c-unicode码表示(输出中文):%c\n", 0x4E2d) // unicode码表示，输出中文
 	fmt.Printf("d-十进制表示:%d\n", 18)                // 十进制表示
 	fmt.Printf("s-输出字符串:%s\n", "Go语言")            // 输出字符串
+	fmt.Printf("b-输出布尔值:%t\n", true)
 
 	var jsonBlob = []byte(`[
         {"Name": "Platypus", "Order": "Monotremata"},
