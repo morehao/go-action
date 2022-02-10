@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"unicode"
 )
 
@@ -21,12 +20,11 @@ func move(cmd string, x0 int, y0 int, z0 int) (x, y, z int) {
 	repeat := 0
 	repeatCmd := ""
 	for _, s := range cmd {
+		println(string(s))
 		switch {
 		case unicode.IsNumber(s):
+			// 单引号'0'表示0的unicode十进制编码48
 			repeat = repeat*10 + (int(s) - '0')
-			fmt.Printf("int(s):%d\n", int(s))
-			fmt.Printf("(int(s) - '0'):%d\n", int(s)-'0')
-			fmt.Printf("repeat:%d\n", repeat)
 		case s == ')':
 			for i := 0; i < repeat; i++ {
 				x, y, z = move(repeatCmd, x, y, z)
