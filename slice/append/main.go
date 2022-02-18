@@ -5,6 +5,7 @@ import "fmt"
 func main() {
 	fn1()
 	fn2()
+	fn3()
 }
 
 // 扩容时切片容量的变化
@@ -43,6 +44,17 @@ func fn2() {
 	sliceHandle(s2)
 	fmt.Printf("2 s2:%v\n", s2)
 	fmt.Printf("3 s2 pointer address:%p\n", s2)
+}
+
+// 扩容时底层数组被覆盖
+func fn3() {
+	x := make([]int, 0, 10)
+	x = append(x, []int{1, 2, 3}...)
+	y := append(x, 4)
+	z := append(x, 5)
+	fmt.Println(x)
+	fmt.Println(y)
+	fmt.Println(z)
 }
 
 func sliceHandle(s []int) {
