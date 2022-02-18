@@ -73,6 +73,7 @@ func (s *Set) SortList() []int {
 	return list
 }
 
+// map实现set
 func main() {
 	//初始化
 	s := New()

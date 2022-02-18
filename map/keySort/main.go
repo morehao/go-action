@@ -5,6 +5,7 @@ import (
 	"sort"
 )
 
+// 对map的key进行排序
 func main() {
 	var m = map[string]int{
 		"hello":   0,
