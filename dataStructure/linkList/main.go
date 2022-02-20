@@ -95,9 +95,9 @@ func (l *LinkList) Delete(i int) {
 		return
 	}
 	// 找到第i-1个节点，找到第i+1个节点，修改i-1的节点的next即可
-	j := 0
+	j := 1
 	pre := l.Header
-	for j == i-1 {
+	for j < i-1 && pre.Next != nil {
 		pre = pre.Next
 		j++
 	}
