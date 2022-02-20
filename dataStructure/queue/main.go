@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type MyQueue struct {
 	inStack, outStack []int
 }
@@ -41,4 +43,14 @@ func (this *MyQueue) Peek() int {
 
 func (this *MyQueue) Empty() bool {
 	return len(this.inStack) == 0
+}
+
+func main() {
+	queue := Constructor()
+	queue.Push(1)
+	queue.Push(2)
+	queue.Push(3)
+	fmt.Println(queue.Pop())
+	fmt.Println(queue.Peek())
+	fmt.Println(queue.Empty())
 }
