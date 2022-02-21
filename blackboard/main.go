@@ -1,44 +1,29 @@
 package main
 
-type MyQueue struct {
-	inStack, outStack []int
+import (
+	"fmt"
+	"reflect"
+)
+
+func main() {
+	print()
 }
 
-func Constructor() MyQueue {
-	return MyQueue{
-		inStack:  []int{},
-		outStack: []int{},
+type User struct {
+	Name string `json:"name"`
+	Age  int    `json:"age" form:"age"`
+}
+
+func print() {
+	user := User{
+		Name: "张三",
+		Age:  18,
 	}
-}
-
-func (this *MyQueue) Push(x int) {
-	this.inStack = append(this.inStack, x)
-}
-
-func (this *MyQueue) Pop() int {
-	if len(this.outStack) == 0 {
-		for len(this.inStack) > 0 {
-			this.outStack = append(this.outStack, this.inStack[len(this.inStack)-1])
-			this.inStack = this.inStack[0 : len(this.inStack)-1]
-		}
+	v := reflect.ValueOf(&user)
+	v = v.Elem()
+	f := v.FieldByName("Name")
+	if f.Kind() == reflect.String {
+		f.SetString("kuteng")
 	}
-	x := this.outStack[len(this.outStack)-1]
-	this.outStack = this.outStack[:len(this.outStack)-1]
-	return x
-}
-
-func (this *MyQueue) Peek() int {
-	if len(this.outStack) == 0 {
-		for len(this.inStack) > 0 {
-			this.outStack = append(this.outStack, this.inStack[len(this.inStack)-1])
-			this.inStack = this.inStack[0 : len(this.inStack)-1]
-		}
-		return this.outStack[len(this.outStack)-1]
-	}
-	x := this.outStack[len(this.outStack)-1]
-	return x
-}
-
-func (this *MyQueue) Empty() bool {
-	return len(this.inStack) == 0
+	fmt.Println(user)
 }
