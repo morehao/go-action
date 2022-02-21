@@ -5,6 +5,19 @@ import (
 	"reflect"
 )
 
+func main() {
+	u := User{1, "zs", 20}
+	printInfo(u)
+	// m := Boy{User{1, "zs", 20}, "bj"}
+	// anonymousStructInfo(m)
+
+	// u1 := User{1, "5lmh.com", 20}
+	// setValue(&u1)
+	// fmt.Println(u1)
+	// callFunc(u1) // TODO:调用报错，待修复
+	// getTag(&u1)
+}
+
 // 定义结构体
 type User struct {
 	Id   int `json:"id"`
@@ -34,7 +47,7 @@ func printInfo(o interface{}) {
 	// 可以获取所有属性
 	// 获取结构体字段个数：t.NumField()
 	for i := 0; i < t.NumField(); i++ {
-		// 取每个字段
+		// 取每个字段的名称
 		f := t.Field(i)
 		fmt.Printf("field:%s, type:%v\n", f.Name, f.Type)
 		// 获取字段的值信息
@@ -93,17 +106,4 @@ func getTag(s interface{}) {
 	// 获取字段
 	f := t.Elem().Field(0)
 	fmt.Println(f.Tag.Get("json"))
-}
-
-func main() {
-	// u := User{1, "zs", 20}
-	// printInfo(u)
-	// m := Boy{User{1, "zs", 20}, "bj"}
-	// anonymousStructInfo(m)
-
-	u1 := User{1, "5lmh.com", 20}
-	// setValue(&u1)
-	// fmt.Println(u1)
-	// callFunc(u1) // TODO:调用报错，待修复
-	getTag(&u1)
 }

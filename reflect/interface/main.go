@@ -7,7 +7,7 @@ import (
 
 // 空接口与反射
 func main() {
-	var x float64 = 3.4
+	var x = 3.4
 	reflectType(x)
 	reflectValue(x)
 	// 反射认为下面是指针类型，不是float类型
@@ -17,10 +17,10 @@ func main() {
 // 反射获取interface类型信息
 func reflectType(a interface{}) {
 	t := reflect.TypeOf(a)
-	fmt.Println("类型是：", t)
+	fmt.Println("a的类型是：", t)
 	// kind()可以获取具体类型
 	k := t.Kind()
-	fmt.Println(k)
+	fmt.Println("kind()方法获取到a的类型是：", k)
 	switch k {
 	case reflect.Float64:
 		fmt.Printf("a is float64\n")
@@ -32,7 +32,7 @@ func reflectType(a interface{}) {
 // 反射获取interface值信息
 func reflectValue(a interface{}) {
 	v := reflect.ValueOf(a)
-	fmt.Println(v)
+	fmt.Println("valueOf()的结果是：", v)
 	k := v.Kind()
 	fmt.Println(k)
 	switch k {

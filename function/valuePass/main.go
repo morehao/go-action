@@ -7,7 +7,7 @@ import "fmt"
 // 有的是引用类型（指针、map、slice、chan等这些），这样就可以修改原内容数据
 func main() {
 	fnInt64()
-	fnSlice()
+	fnInt642()
 }
 
 func fnInt64() {
@@ -18,12 +18,13 @@ func fnInt64() {
 	fmt.Printf("改动后的值是  %d\n", args)
 }
 
-func modifiedNumber1(args int64) { //这里定义的args就是形式参数
-	fmt.Printf("形参地址 %p \n", &args)
+// 这里定义的args就是形式参数
+func modifiedNumber1(args int64) {
+	fmt.Printf("形参地址 %p\n", &args)
 	args = 10
 }
 
-func fnSlice() {
+func fnInt642() {
 	var args int64 = 1
 	addr := &args
 	fmt.Printf("原始指针的内存地址是 %p\n", addr)

@@ -5,6 +5,8 @@ import "fmt"
 // 数组的声明方式
 func main() {
 	array1 := [3]int{}
+	// 初始化的数组，如果未赋值，数组内元素为对应类型的零值
+	fmt.Println(array1)
 	// 我们可以通过如下方式给数组赋值
 	array1[0] = 1
 	array1[1] = 2

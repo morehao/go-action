@@ -7,13 +7,13 @@ func main() {
 		return x + y
 	}
 	add := Calculator1(op1)
-	fmt.Print(add(1, 2))
+	fmt.Println(add(1, 2))
 
 	op2 := func(x, y int) int {
 		return x + y
 	}
 	result, _ := Calculator2(1, 2, op2)
-	fmt.Print(result)
+	fmt.Println(result)
 }
 
 // 高阶函数
