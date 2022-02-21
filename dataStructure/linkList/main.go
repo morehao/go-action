@@ -89,17 +89,18 @@ func (l *LinkList) Delete(i int) {
 	defer func() {
 		l.Length--
 	}()
+	if i > l.Length {
+		return
+	}
 	// 删除第一个节点，把header指向第二个节点即可
 	if i == 1 {
 		l.Header = l.Header.Next
 		return
 	}
 	// 找到第i-1个节点，找到第i+1个节点，修改i-1的节点的next即可
-	j := 1
 	pre := l.Header
-	for j < i-1 && pre.Next != nil {
+	for j := 1; j < i-1; j++ {
 		pre = pre.Next
-		j++
 	}
 	after := pre.Next.Next
 	pre.Next = after
