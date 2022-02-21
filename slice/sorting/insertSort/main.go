@@ -4,14 +4,12 @@ import "fmt"
 
 func main() {
 	var arr = []int{19, 8, 16, 15, 23, 34, 6, 3, 1, 0, 2, 9, 7}
-	insertSortAsc(arr)
-	fmt.Println(arr)
-	insertSortDesc(arr)
-	fmt.Println(arr)
+	fmt.Println(insertSortAsc(arr))
+	fmt.Println(insertSortDesc(arr))
 }
 
 // 降序插入排序
-func insertSortAsc(nums []int) {
+func insertSortAsc(nums []int) []int {
 	l := len(nums)
 	for i := 0; i < l; i++ {
 		currentItem := nums[i]
@@ -22,10 +20,11 @@ func insertSortAsc(nums []int) {
 		}
 		nums[j] = currentItem
 	}
+	return nums
 }
 
 // 升序插入排序
-func insertSortDesc(nums []int) {
+func insertSortDesc(nums []int) []int {
 	l := len(nums)
 	for i := 0; i < l; i++ {
 		currentItem := nums[i]
@@ -36,4 +35,5 @@ func insertSortDesc(nums []int) {
 		}
 		nums[j] = currentItem
 	}
+	return nums
 }

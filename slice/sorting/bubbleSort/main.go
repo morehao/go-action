@@ -11,9 +11,9 @@ func main() {
 }
 
 // 升序冒泡排序
-func bubbleSortAsc(nums []int) {
+func bubbleSortAsc(nums []int) []int {
 	if len(nums) < 2 {
-		return
+		return nums
 	}
 	l := len(nums)
 	for i := 0; i < l; i++ {
@@ -23,6 +23,7 @@ func bubbleSortAsc(nums []int) {
 			}
 		}
 	}
+	return nums
 }
 
 // 降序冒泡排序
