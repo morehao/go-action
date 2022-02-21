@@ -6,4 +6,5 @@
 - [字符串替换问题](./q5/README.md)
 - [机器人坐标问题](./q6/README.md)
 - [斐波那切数列](./fibonacci/main.go)
-- [两数之和](./findTargetIndex/main.go)
+- [两数之和](twoSum/main.go)
+- [数组排序](sortArray/README.md)
