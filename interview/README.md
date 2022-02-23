@@ -8,3 +8,5 @@
 - [斐波那切数列](./fibonacci/main.go)
 - [两数之和](twoSum/main.go)
 - [数组排序](sortArray/README.md)
+- [数字加1](twoSum/main.go)
+- [字符串压缩](stringCompress/main.go)
