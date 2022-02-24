@@ -7,10 +7,13 @@ import (
 
 func main() {
 	str := "aaabc"
-	fmt.Println(compress(str))
+	fmt.Println(compressString(str))
 }
 
-func compress(str string) string {
+func compressString(str string) string {
+	if len(str) < 1 {
+		return str
+	}
 	result, cnt := string(str[0]), 1
 	for i := 1; i < len(str); i++ {
 		if str[i] == str[i-1] {
@@ -23,9 +26,37 @@ func compress(str string) string {
 			result += fmt.Sprintf("%s", string(str[i]))
 			cnt = 1
 			if i == len(str)-1 {
-				result += fmt.Sprintf("%s%s", string(str[i]), strconv.Itoa(1))
+				result += fmt.Sprintf("%s", strconv.Itoa(1))
 			}
 		}
 	}
+	if len(result) >= len(str) {
+		return str
+	}
 	return result
+}
+
+func compressString2(S string) string {
+	var sLen int = len(S)
+	if sLen < 2 {
+		return S
+	}
+	var (
+		ans []byte = make([]byte, 0, sLen)
+
+		i, j int = 0, 0
+	)
+
+	for i < sLen {
+		for j < sLen && S[i] == S[j] {
+			j++
+		}
+		ans = append(ans, S[i])
+		ans = append(ans, []byte(strconv.Itoa(j-i))...)
+		if len(ans) >= sLen {
+			return S
+		}
+		i = j
+	}
+	return string(ans)
 }

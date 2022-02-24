@@ -10,3 +10,5 @@
 - [数组排序](sortArray/README.md)
 - [数字加1](twoSum/main.go)
 - [字符串压缩](stringCompress/main.go)
+- [山峰数组的顶部](mountainArray/main.go)
+- [二分查找](search/main.go)

@@ -3,35 +3,30 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Printf("%d\n", fibonacci(4))
+	fmt.Printf("%d\n", fib(5))
 	fmt.Println("-----------分割符-------")
-	fmt.Printf("%d\n", fibonacci2(4))
+	fmt.Printf("%d\n", fib2(5))
 }
 
 // 递归-斐波那切数列
-func fibonacci(i int) int {
-	if i < 2 {
-		return i
+func fib(n int) int {
+	if n < 2 {
+		return n
 	}
-	if i == 2 {
-		return 1
-	}
-	return fibonacci(i-1) + fibonacci(i-2)
+	return fib(n-1) + fib(n-2)
 }
 
-func fibonacci2(i int) int {
-	if i < 2 {
-		return i
+func fib2(n int) int {
+	// 需要取模时
+	const mod int = 1e9 + 7
+	if n < 2 {
+		return n
 	}
-	if i == 2 {
-		return 1
-	}
-	pre, current, index := 1, 1, 3
-	for index <= i {
+	pre, current := 0, 1
+	for i := 2; i <= n; i++ {
 		next := pre + current
 		pre = current
-		current = next
-		index++
+		current = next % mod
 	}
 	return current
 }
