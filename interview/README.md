@@ -12,3 +12,11 @@
 - [字符串压缩](stringCompress/main.go)
 - [山峰数组的顶部](mountainArray/main.go)
 - [二分查找](search/main.go)
+- [二叉搜索树的第k大节点](treeKth/main.go)
+- [滑动窗口最大值](maxSlidingWindow/main.go)
+- [二叉树按中序遍历的方式转换为链表]
+- [一个先逆序再正序的数组，求最小值]
+- [二叉树按层遍历]
+- [LRU缓存]
+- [交替合并字符串]
+- [最长公共子序列]

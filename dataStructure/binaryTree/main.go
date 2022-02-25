@@ -1,39 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	jsoniter "github.com/json-iterator/go"
+)
 
 func main() {
-	arr := []int{3, 1, 4, 0, 2}
+	arr := []int{5, 3, 6, 2, 4, 0, 0, 1}
 	tree := createBinaryTree(0, arr)
-	fmt.Println(kthLargest(tree, 1))
+	treeStr, _ := jsoniter.Marshal(tree)
+	fmt.Println(string(treeStr))
 }
 
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
 	Right *TreeNode
-}
-
-// 中序遍历
-func inorderTraverse(root *TreeNode, ret *[]int) {
-	if root == nil {
-		return
-	}
-
-	inorderTraverse(root.Left, ret)
-	*ret = append(*ret, root.Val)
-	inorderTraverse(root.Right, ret)
-}
-
-func kthLargest(root *TreeNode, k int) int {
-	ret := &[]int{}
-	inorderTraverse(root, ret)
-	// 说明没找到第k大节点
-	if k < 1 && k > len(*ret) {
-		return -1
-	}
-
-	return (*ret)[len(*ret)-k]
 }
 
 func createBinaryTree(i int, nums []int) *TreeNode {
