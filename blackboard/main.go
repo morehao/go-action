@@ -1,35 +1,65 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	var arr = []int{19, 8, 16, 15, 23, 34, 6, 3, 1, 0, 2, 9, 7}
-	sortArr(arr, 0, len(arr)-1)
-	fmt.Println("sortArr:", arr)
+	arr := []int{5, 3, 6, 2, 4, 0, 0, 1}
+	root := createBinaryTree(0, arr)
+
+	fmt.Println(treeLast(root, 3))
 }
 
-func sortArr(arr []int, start, end int) {
-	if start < end {
-		i, j := start, end
-		key := arr[(start+end)/2]
-		for i <= j {
-			for arr[i] < key {
-				i++
-			}
-			for arr[j] > key {
-				j--
-			}
-			if i <= j {
-				arr[i], arr[j] = arr[j], arr[i]
-				i++
-				j--
-			}
-		}
-		if start < j {
-			sortArr(arr, start, j)
-		}
-		if end > i {
-			sortArr(arr, i, end)
+func treeLast(root *TreeNode, k int) int {
+	if k < 1 || root == nil {
+		return -1
+	}
+	index = 0
+	node := search(root, k)
+	return node.Value
+}
+
+var index int
+
+func search(node *TreeNode, k int) *TreeNode {
+	if node.Right != nil {
+		right := search(node.Right, k)
+		if right != nil {
+			return right
 		}
 	}
+	index++
+	if index == k {
+		return node
+	}
+	if node.Left != nil {
+		right := search(node.Left, k)
+		if right != nil {
+			return right
+		}
+	}
+	return nil
+}
+
+type TreeNode struct {
+	Value int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+func createBinaryTree(i int, nums []int) *TreeNode {
+	if nums[i] == 0 {
+		return nil
+	}
+	treeNode := &TreeNode{
+		Value: nums[i],
+	}
+	if i < len(nums) && 2*i+1 < len(nums) {
+		treeNode.Left = createBinaryTree(2*i+1, nums)
+	}
+	if i < len(nums) && 2*i+2 < len(nums) {
+		treeNode.Right = createBinaryTree(2*i+2, nums)
+	}
+	return treeNode
 }

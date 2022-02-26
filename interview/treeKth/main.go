@@ -35,6 +35,7 @@ func convertToSearch(node *TreeNode, k int) *TreeNode {
 	}
 
 	index++
+	// 第k大在第k层最右节点
 	if index == k {
 		return node
 	}
