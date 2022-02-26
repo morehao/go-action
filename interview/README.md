@@ -18,5 +18,5 @@
 - [一个先逆序再正序的数组，求最小值](mountainArrayBottom/main.go)
 - [二叉树按层遍历]
 - [LRU缓存]
-- [交替合并字符串]
+- [交替合并字符串](mergeSreingAlternately/main.go)
 - [最长公共子序列]
