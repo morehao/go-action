@@ -10,18 +10,14 @@ func main() {
 }
 
 func mergeAlternately(str1, str2 string) string {
-	maxStr, minStr := str1, str2
-	if len(str1) < len(str2) {
-		maxStr = str2
-		minStr = str1
+	res := make([]uint8, 0, len(str1)+len(str2))
+	for i := 0; i < len(str1) || i < len(str2); i++ {
+		if i < len(str1) {
+			res = append(res, str1[i])
+		}
+		if i < len(str2) {
+			res = append(res, str2[i])
+		}
 	}
-	lenDiff := len(maxStr) - len(minStr)
-	res := ""
-	for i := 0; i < len(minStr); i++ {
-		res = res + string(str1[i]) + string(str2[i])
-	}
-	if lenDiff > 0 {
-		res += maxStr[len(maxStr)-lenDiff:]
-	}
-	return res
+	return string(res)
 }
