@@ -3,9 +3,9 @@ package main
 import "fmt"
 
 func main() {
-	arr := []int{3, 1, 4, 0, 2}
+	arr := []int{5, 3, 6, 2, 4, 0, 0, 1}
 	tree := createBinaryTree(0, arr)
-	fmt.Println(kthLargest(tree, 1))
+	fmt.Println(kthLargest(tree, 3))
 }
 
 type TreeNode struct {
@@ -26,6 +26,7 @@ func kthLargest(root *TreeNode, k int) int {
 }
 
 func convertToSearch(node *TreeNode, k int) *TreeNode {
+	fmt.Println(node)
 	if node.Right != nil {
 		right := convertToSearch(node.Right, k)
 		if right != nil {
@@ -49,6 +50,9 @@ func convertToSearch(node *TreeNode, k int) *TreeNode {
 }
 
 func createBinaryTree(i int, nums []int) *TreeNode {
+	if nums[i] == 0 {
+		return nil
+	}
 	tree := &TreeNode{nums[i], nil, nil}
 	// 左节点的数组下标为1,3,5...2*i+1
 	if i < len(nums) && 2*i+1 < len(nums) {

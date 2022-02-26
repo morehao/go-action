@@ -20,6 +20,9 @@ type TreeNode struct {
 }
 
 func createBinaryTree(i int, nums []int) *TreeNode {
+	if nums[i] == 0 {
+		return nil
+	}
 	tree := &TreeNode{nums[i], nil, nil}
 	// 左节点的数组下标为1,3,5...2*i+1
 	if i < len(nums) && 2*i+1 < len(nums) {
