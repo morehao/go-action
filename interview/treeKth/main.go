@@ -14,26 +14,38 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-// 中序遍历
-func inorderTraverse(root *TreeNode, ret *[]int) {
-	if root == nil {
-		return
-	}
-
-	inorderTraverse(root.Left, ret)
-	*ret = append(*ret, root.Val)
-	inorderTraverse(root.Right, ret)
-}
+var index int
 
 func kthLargest(root *TreeNode, k int) int {
-	ret := &[]int{}
-	inorderTraverse(root, ret)
-	// 说明没找到第k大节点
-	if k < 1 && k > len(*ret) {
+	if root == nil || k < 1 {
 		return -1
 	}
+	index = 0
+	node := convertToSearch(root, k)
+	return node.Val
+}
 
-	return (*ret)[len(*ret)-k]
+func convertToSearch(node *TreeNode, k int) *TreeNode {
+	if node.Right != nil {
+		right := convertToSearch(node.Right, k)
+		if right != nil {
+			return right
+		}
+	}
+
+	index++
+	if index == k {
+		return node
+	}
+
+	if node.Left != nil {
+		left := convertToSearch(node.Left, k)
+		if left != nil {
+			return left
+		}
+	}
+
+	return nil
 }
 
 func createBinaryTree(i int, nums []int) *TreeNode {
