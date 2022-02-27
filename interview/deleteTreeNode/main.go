@@ -1,14 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"go-practict/interview/binaryTree"
+)
 
 func main() {
 	arr := []int{5, 3, 6, 2, 4, 0, 7}
-	tree := createBinaryTree(0, arr)
+	tree := binaryTree.CreateBinaryTree(0, arr)
 	fmt.Println(deleteNode(tree, 3))
+	fmt.Println(tree.LevelOrder())
 }
 
-func deleteNode(root *TreeNode, key int) *TreeNode {
+func deleteNode(root *binaryTree.TreeNode, key int) *binaryTree.TreeNode {
 	// 递归删除节点
 	// 5-case
 	// 1.空节点返回nil
@@ -51,26 +56,4 @@ func deleteNode(root *TreeNode, key int) *TreeNode {
 		root.Right = deleteNode(root.Right, key)
 	}
 	return root
-}
-
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
-func createBinaryTree(i int, nums []int) *TreeNode {
-	if nums[i] == 0 {
-		return nil
-	}
-	tree := &TreeNode{nums[i], nil, nil}
-	// 左节点的数组下标为1,3,5...2*i+1
-	if i < len(nums) && 2*i+1 < len(nums) {
-		tree.Left = createBinaryTree(2*i+1, nums)
-	}
-	// 右节点的数组下标为2,4,6...2*i+2
-	if i < len(nums) && 2*i+2 < len(nums) {
-		tree.Right = createBinaryTree(2*i+2, nums)
-	}
-	return tree
 }
