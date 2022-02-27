@@ -19,5 +19,5 @@
 - [二叉树按层遍历](binaryTreeLevelOrder/main.go)
 - [LRU缓存]
 - [交替合并字符串](mergeSreingAlternately/main.go)
-- [最长公共子序列]
+- [最长公共子序列](longestSubstring/main.go)
 - [删除二叉搜索树中的节点](deleteTreeNode/main.go)
