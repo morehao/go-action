@@ -2,64 +2,37 @@ package main
 
 import (
 	"fmt"
+
+	"go-practict/interview/binaryTree"
 )
 
 func main() {
-	arr := []int{5, 3, 6, 2, 4, 0, 0, 1}
-	root := createBinaryTree(0, arr)
+	arr := []int{3, 9, 20, 0, 0, 15, 7}
+	root := binaryTree.CreateBinaryTree(0, arr)
 
-	fmt.Println(treeLast(root, 3))
+	fmt.Println(levelOrderPrint(root))
 }
 
-func treeLast(root *TreeNode, k int) int {
-	if k < 1 || root == nil {
-		return -1
+func levelOrderPrint(root *binaryTree.TreeNode) [][]int {
+	var res [][]int
+	if root == nil {
+		return res
 	}
-	index = 0
-	node := search(root, k)
-	return node.Value
-}
-
-var index int
-
-func search(node *TreeNode, k int) *TreeNode {
-	if node.Right != nil {
-		right := search(node.Right, k)
-		if right != nil {
-			return right
+	nodeList := []*binaryTree.TreeNode{root}
+	for i := 0; len(nodeList) > 0; i++ {
+		res = append(res, []int{})
+		var currentLevelNodes []*binaryTree.TreeNode
+		for j := 0; j < len(nodeList); j++ {
+			node := nodeList[j]
+			res[i] = append(res[i], node.Val)
+			if node.Left != nil {
+				currentLevelNodes = append(currentLevelNodes, node.Left)
+			}
+			if node.Right != nil {
+				currentLevelNodes = append(currentLevelNodes, node.Right)
+			}
 		}
+		nodeList = currentLevelNodes
 	}
-	index++
-	if index == k {
-		return node
-	}
-	if node.Left != nil {
-		right := search(node.Left, k)
-		if right != nil {
-			return right
-		}
-	}
-	return nil
-}
-
-type TreeNode struct {
-	Value int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
-func createBinaryTree(i int, nums []int) *TreeNode {
-	if nums[i] == 0 {
-		return nil
-	}
-	treeNode := &TreeNode{
-		Value: nums[i],
-	}
-	if i < len(nums) && 2*i+1 < len(nums) {
-		treeNode.Left = createBinaryTree(2*i+1, nums)
-	}
-	if i < len(nums) && 2*i+2 < len(nums) {
-		treeNode.Right = createBinaryTree(2*i+2, nums)
-	}
-	return treeNode
+	return res
 }
