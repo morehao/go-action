@@ -7,42 +7,39 @@ import (
 )
 
 func main() {
-	arr := []int{5, 3, 6, 2, 4, 0, 7}
+	arr := []int{5, 3, 6, 2, 4, 0, 0, 1}
 	tree := binaryTree.CreateBinaryTree(0, arr)
-	fmt.Println(deleteNode(tree, 3))
 	fmt.Println(tree.LevelOrder())
+	fmt.Println(kthLargest(tree, 3))
 }
 
-func deleteNode(root *binaryTree.TreeNode, val int) *binaryTree.TreeNode {
-	if root == nil {
-		return nil
+func kthLargest(root *binaryTree.TreeNode, k int) int {
+	if root == nil || k < 1 {
+		return -1
 	}
-	if val < root.Val {
-		root.Left = deleteNode(root.Left, val)
+	index = 0
+	node := search(root, k)
+	return node.Val
+}
+
+var index int
+
+func search(root *binaryTree.TreeNode, k int) *binaryTree.TreeNode {
+	if root.Right != nil {
+		right := search(root.Right, k)
+		if right != nil {
+			return right
+		}
+	}
+	index++
+	if k == index {
 		return root
 	}
-	if val > root.Val {
-		root.Right = deleteNode(root.Right, val)
-		return root
+	if root.Left != nil {
+		left := search(root.Left, k)
+		if left != nil {
+			return left
+		}
 	}
-	if root.Left == nil && root.Right == nil {
-		root = nil
-		return root
-	}
-	if root.Left == nil && root.Right != nil {
-		root = root.Left
-		return root
-	}
-	if root.Left != nil && root.Right == nil {
-		return root
-	}
-	left := root.Left
-	right := root.Right
-	tmp := root.Right
-	for tmp.Left != nil {
-		tmp = tmp.Left
-	}
-	tmp.Left = left
-	root = right
-	return root
+	return nil
 }
