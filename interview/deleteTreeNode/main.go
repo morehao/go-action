@@ -23,6 +23,7 @@ func deleteNode(root *binaryTree.TreeNode, key int) *binaryTree.TreeNode {
 	if root.Val == key {
 		// 2.左右孩子都空，直接删除节点，返回nil
 		if root.Left == nil && root.Right == nil {
+			root = nil
 			return nil
 		}
 		// 3.左空右不空，删除节点，右孩子补位

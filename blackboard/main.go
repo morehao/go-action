@@ -2,33 +2,47 @@ package main
 
 import (
 	"fmt"
+
+	"go-practict/interview/binaryTree"
 )
 
 func main() {
-	s := "abcabcbb"
-	fmt.Println(lengthOfLongestSubstring(s))
+	arr := []int{5, 3, 6, 2, 4, 0, 7}
+	tree := binaryTree.CreateBinaryTree(0, arr)
+	fmt.Println(deleteNode(tree, 3))
+	fmt.Println(tree.LevelOrder())
 }
 
-func lengthOfLongestSubstring(s string) int {
-	m := make(map[byte]int)
-	n := len(s)
-	rk, res := -1, 0
-	for i := 0; i < n; i++ {
-		if i != 0 {
-			delete(m, s[i-1])
-		}
-		for rk+1 < n && m[s[rk+1]] == 0 {
-			m[s[rk+1]]++
-			rk++
-		}
-		res = max(res, rk-i+1)
+func deleteNode(root *binaryTree.TreeNode, val int) *binaryTree.TreeNode {
+	if root == nil {
+		return nil
 	}
-	return res
-}
-
-func max(x, y int) int {
-	if x < y {
-		return y
+	if val < root.Val {
+		root.Left = deleteNode(root.Left, val)
+		return root
 	}
-	return x
+	if val > root.Val {
+		root.Right = deleteNode(root.Right, val)
+		return root
+	}
+	if root.Left == nil && root.Right == nil {
+		root = nil
+		return root
+	}
+	if root.Left == nil && root.Right != nil {
+		root = root.Left
+		return root
+	}
+	if root.Left != nil && root.Right == nil {
+		return root
+	}
+	left := root.Left
+	right := root.Right
+	tmp := root.Right
+	for tmp.Left != nil {
+		tmp = tmp.Left
+	}
+	tmp.Left = left
+	root = right
+	return root
 }
