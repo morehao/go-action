@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	str := "aaabc"
+	str := "aaabbbbc"
 	fmt.Println(compressString(str))
 }
 

@@ -2,44 +2,33 @@ package main
 
 import (
 	"fmt"
-
-	"go-practict/interview/binaryTree"
+	"strconv"
 )
 
 func main() {
-	arr := []int{5, 3, 6, 2, 4, 0, 0, 1}
-	tree := binaryTree.CreateBinaryTree(0, arr)
-	fmt.Println(tree.LevelOrder())
-	fmt.Println(kthLargest(tree, 3))
+	str := "aaabbbbc"
+	fmt.Println(compressString(str))
 }
 
-func kthLargest(root *binaryTree.TreeNode, k int) int {
-	if root == nil || k < 1 {
-		return -1
+func compressString(s string) string {
+	sLen := len(s)
+	if len(s) < 2 {
+		return s
 	}
-	index = 0
-	node := search(root, k)
-	return node.Val
-}
-
-var index int
-
-func search(root *binaryTree.TreeNode, k int) *binaryTree.TreeNode {
-	if root.Right != nil {
-		right := search(root.Right, k)
-		if right != nil {
-			return right
+	var (
+		i, j = 0, 0
+		ans  = make([]byte, 0, sLen)
+	)
+	for i < sLen {
+		for j < sLen && s[i] == s[j] {
+			j++
 		}
+		ans = append(ans, s[i])
+		ans = append(ans, []byte(strconv.Itoa(j-i))...)
+		i = j
 	}
-	index++
-	if k == index {
-		return root
+	if len(ans) >= sLen {
+		return s
 	}
-	if root.Left != nil {
-		left := search(root.Left, k)
-		if left != nil {
-			return left
-		}
-	}
-	return nil
+	return string(ans)
 }
