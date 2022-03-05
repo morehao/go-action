@@ -1,31 +1,50 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	s := "abcabcbb"
-	fmt.Println(lengthOfLongestSubstring(s))
+	nums := []int{1, 3, -1, -3, 5, 3, 6, 7}
+	fmt.Println(maxSlidingWindow(nums, 3))
 }
 
-func lengthOfLongestSubstring(s string) int {
-	m := make(map[byte]int)
-	rk, res := -1, 0
-	for i := 0; i < len(s); i++ {
-		if i != 0 {
-			delete(m, s[i-1])
-		}
-		for rk+1 < len(s) && m[s[rk+1]] == 0 {
-			m[s[rk+1]]++
-			rk++
-		}
-		res = max(res, rk-i+1)
+func maxSlidingWindow(nums []int, k int) []int {
+	slideWindows := &HighQueue{
+		List: []int{},
 	}
-	return res
+	result := make([]int, 0)
+	for i := 0; i < k-1; i++ {
+		slideWindows.push(nums[i])
+	}
+	for i := k - 1; i < len(nums); i++ {
+		slideWindows.push(nums[i])
+		result = append(result, slideWindows.max())
+		slideWindows.shift(nums[i-k+1])
+	}
+	return result
 }
 
-func max(x, y int) int {
-	if x > y {
-		return x
+type HighQueue struct {
+	List []int
+}
+
+func (q *HighQueue) push(v int) {
+	for len(q.List) > 0 && q.List[len(q.List)-1] < v {
+		q.List = q.List[:len(q.List)-1]
 	}
-	return y
+	q.List = append(q.List, v)
+}
+
+func (q *HighQueue) shift(v int) {
+	if v == q.List[0] {
+		q.List = q.List[1:]
+	}
+}
+
+func (q *HighQueue) max() int {
+	if len(q.List) == 0 {
+		return 0
+	}
+	return q.List[0]
 }
