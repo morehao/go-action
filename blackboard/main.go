@@ -3,27 +3,29 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Printf("%d\n", fib(5))
-	fmt.Println("-----------分割符-------")
-	fmt.Printf("%d\n", fib2(5))
+	s := "abcabcbb"
+	fmt.Println(lengthOfLongestSubstring(s))
 }
 
-func fib(n int) int {
-	if n < 2 {
-		return n
+func lengthOfLongestSubstring(s string) int {
+	m := make(map[byte]int)
+	rk, res := -1, 0
+	for i := 0; i < len(s); i++ {
+		if i != 0 {
+			delete(m, s[i-1])
+		}
+		for rk+1 < len(s) && m[s[rk+1]] == 0 {
+			m[s[rk+1]]++
+			rk++
+		}
+		res = max(res, rk-i+1)
 	}
-	return fib(n-1) + fib(n-2)
+	return res
 }
 
-func fib2(n int) int {
-	if n < 2 {
-		return n
+func max(x, y int) int {
+	if x > y {
+		return x
 	}
-	pre, current := 0, 1
-	for i := 2; i <= n; i++ {
-		next := pre + current
-		pre = current
-		current = next
-	}
-	return current
+	return y
 }
