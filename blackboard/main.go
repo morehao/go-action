@@ -7,8 +7,46 @@ import (
 func main() {
 	arr := []int{5, 3, 6, 2, 4, 0, 7}
 	tree := createBinaryTree(0, arr)
+	deleteNode(tree, 3)
 	fmt.Println(tree.levelOrder())
 
+}
+
+func deleteNode(root *treeNode, val int) *treeNode {
+	if root == nil {
+		return nil
+	}
+	if root.val > val {
+		root.left = deleteNode(root.left, val)
+	}
+	if root.val < val {
+		root.right = deleteNode(root.right, val)
+	}
+	if root.val == val {
+		if root.left == nil && root.right == nil {
+			root = nil
+			return root
+		}
+		if root.left == nil && root.right != nil {
+			root = root.right
+			return root
+		}
+		if root.left != nil && root.right == nil {
+			root = root.left
+			return root
+		}
+		if root.left != nil && root.right != nil {
+			left, right := root.left, root.right
+			tmp := root.right
+			for tmp.left != nil {
+				tmp = tmp.left
+			}
+			tmp.left = left
+			root = right
+			return root
+		}
+	}
+	return root
 }
 
 func createBinaryTree(i int, nums []int) *treeNode {
