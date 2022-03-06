@@ -10,7 +10,6 @@ func main() {
 }
 
 func hasSameStr(s string) bool {
-	fmt.Printf("count: %d\n", strings.Count(s, ""))
 	if strings.Count(s, "") > 3000 {
 		return false
 	}
@@ -26,11 +25,11 @@ func hasSameStr(s string) bool {
 }
 
 func hasSameStr2(s string) bool {
-	fmt.Printf("count: %d\n", strings.Count(s, ""))
 	if strings.Count(s, "") > 3000 {
 		return false
 	}
 	for k, v := range s {
+		// ACCII码中127之后的字符，键盘上无法打出
 		if v > 127 {
 			return false
 		}

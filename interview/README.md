@@ -21,3 +21,4 @@
 - [交替合并字符串](mergeSreingAlternately/main.go)
 - [最长公共子序列](longestSubstring/main.go)
 - [删除二叉搜索树中的节点](deleteTreeNode/main.go)
+- [删除有序数组中的重复项](removeDuplicates/main.go)
