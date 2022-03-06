@@ -14,6 +14,7 @@ func SelectionSort(arr []int) []int {
 		min := i
 		for j := i + 1; j < len(arr); j++ {
 			if arr[j] < arr[min] {
+				// 选择最小的
 				min = j
 			}
 		}
