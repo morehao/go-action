@@ -14,9 +14,11 @@
 - [二分查找](search/main.go)
 - [二叉搜索树的第k大节点](treeKth/main.go)
 - [滑动窗口最大值](maxSlidingWindow/main.go)
+- [二叉搜索树中序遍历](inorderTraversal/main.go)
+- [二叉搜索树先序遍历](preorderTraversal/main.go)
+- [二叉树按层遍历](binaryTreeLevelOrder/main.go)
 - [二叉树按中序遍历的方式转换为链表]
 - [一个先逆序再正序的数组，求最小值](mountainArrayBottom/main.go)
-- [二叉树按层遍历](binaryTreeLevelOrder/main.go)
 - [LRU缓存]
 - [交替合并字符串](mergeSreingAlternately/main.go)
 - [最长公共子序列](longestSubstring/main.go)
