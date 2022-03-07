@@ -7,31 +7,39 @@ import (
 )
 
 func main() {
-	root := []int{3, 9, 20, 0, 0, 15, 7}
-	tree := binaryTree.CreateBinaryTree(0, root)
-	fmt.Println(levelOrder(tree))
+	arr := []int{5, 3, 6, 2, 4, 0, 0, 1}
+	tree := binaryTree.CreateBinaryTree(0, arr)
+	fmt.Println(treeKth(tree, 3))
 }
 
-func levelOrder(root *binaryTree.TreeNode) [][]int {
-	if root == nil {
-		return nil
+func treeKth(root *binaryTree.TreeNode, k int) int {
+	if root == nil || k < 1 {
+		return -1
 	}
-	nodeList := []*binaryTree.TreeNode{root}
-	res := make([][]int, 0)
-	for i := 0; len(nodeList) > 0; i++ {
-		res = append(res, []int{})
-		currentNodeList := make([]*binaryTree.TreeNode, 0)
-		for j := 0; j < len(nodeList); j++ {
-			node := nodeList[j]
-			res[i] = append(res[i], node.Val)
-			if node.Left != nil {
-				currentNodeList = append(currentNodeList, node.Left)
-			}
-			if node.Right != nil {
-				currentNodeList = append(currentNodeList, node.Right)
-			}
+	index = 0
+	node := convertToSearch(root, k)
+	return node.Val
+}
+
+var index int
+
+func convertToSearch(node *binaryTree.TreeNode, k int) *binaryTree.TreeNode {
+	if node.Right != nil {
+		right := convertToSearch(node.Right, k)
+		if right != nil {
+			return right
 		}
-		nodeList = currentNodeList
+
 	}
-	return res
+	index++
+	if index == k {
+		return node
+	}
+	if node.Left != nil {
+		left := convertToSearch(node.Left, k)
+		if left != nil {
+			return left
+		}
+	}
+	return nil
 }
