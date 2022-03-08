@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"go-practict/interview/binaryTree"
+	"go-practict/leetcode/binaryTree"
 )
 
 func main() {
