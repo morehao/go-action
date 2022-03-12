@@ -12,30 +12,30 @@ func main() {
 	fmt.Println(levelOrderBottom(tree))
 }
 
+// 相当于二叉搜索树从上到下遍历之后，结果反转
 func levelOrderBottom(root *binaryTree.TreeNode) [][]int {
-	res := make([][]int, 0)
+	ret := make([][]int, 0)
 	if root == nil {
-		return res
+		return ret
 	}
-	queue := []*binaryTree.TreeNode{root}
-	for len(queue) > 0 {
-		level := make([]int, 0)
-		size := len(queue)
-		for i := 0; i < size; i++ {
-			node := queue[0]
-			queue = queue[1:]
-			level = append(level, node.Val)
+	q := []*binaryTree.TreeNode{root}
+	for i := 0; len(q) > 0; i++ {
+		ret = append(ret, []int{})
+		var p []*binaryTree.TreeNode
+		for j := 0; j < len(q); j++ {
+			node := q[j]
+			ret[i] = append(ret[i], node.Val)
 			if node.Left != nil {
-				queue = append(queue, node.Left)
+				p = append(p, node.Left)
 			}
 			if node.Right != nil {
-				queue = append(queue, node.Right)
+				p = append(p, node.Right)
 			}
 		}
-		res = append(res, level)
+		q = p
 	}
-	for i := 0; i < len(res)/2; i++ {
-		res[i], res[len(res)-1-i] = res[len(res)-1-i], res[i]
+	for i := 0; i < len(ret)/2; i++ {
+		ret[i], ret[len(ret)-1-i] = ret[len(ret)-1-i], ret[i]
 	}
-	return res
+	return ret
 }
