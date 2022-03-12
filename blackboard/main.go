@@ -8,38 +8,65 @@ import (
 
 func main() {
 	arr := []int{5, 3, 6, 2, 4, 0, 0, 1}
-	tree := binaryTree.CreateBinaryTree(0, arr)
-	fmt.Println(treeKth(tree, 3))
+	tree := createTree(0, arr)
+	fmt.Println(tree.LevelOrder())
+	fmt.Println(InOrder(tree))
 }
 
-func treeKth(root *binaryTree.TreeNode, k int) int {
-	if root == nil || k < 1 {
-		return -1
+func createTree(i int, nums []int) *binaryTree.TreeNode {
+	if nums[i] == 0 {
+		return nil
 	}
-	index = 0
-	node := convertToSearch(root, k)
-	return node.Val
+	root := &binaryTree.TreeNode{
+		Val: nums[i],
+	}
+	if i < len(nums) && 2*i+1 < len(nums) {
+		root.Left = createTree(2*i+1, nums)
+	}
+	if i < len(nums) && 2*i+2 < len(nums) {
+		root.Right = createTree(2*i+2, nums)
+	}
+	return root
 }
 
-var index int
-
-func convertToSearch(node *binaryTree.TreeNode, k int) *binaryTree.TreeNode {
-	if node.Right != nil {
-		right := convertToSearch(node.Right, k)
-		if right != nil {
-			return right
+func levelOrder(root *binaryTree.TreeNode) [][]int {
+	if root == nil {
+		return nil
+	}
+	q := []*binaryTree.TreeNode{root}
+	res := make([][]int, 0)
+	for i := 0; len(q) > 0; i++ {
+		res = append(res, []int{})
+		current := make([]*binaryTree.TreeNode, 0)
+		for j := 0; j < len(q); j++ {
+			node := q[j]
+			res[i] = append(res[i], node.Val)
+			if node.Left != nil {
+				current = append(current, node.Left)
+			}
+			if node.Right != nil {
+				current = append(current, node.Right)
+			}
 		}
+		q = current
+	}
+	return res
+}
 
+func InOrder(root *binaryTree.TreeNode) []int {
+	if root == nil {
+		return nil
 	}
-	index++
-	if index == k {
-		return node
-	}
-	if node.Left != nil {
-		left := convertToSearch(node.Left, k)
-		if left != nil {
-			return left
+	res := make([]int, 0)
+	var inorder func(node *binaryTree.TreeNode)
+	inorder = func(node *binaryTree.TreeNode) {
+		if node == nil {
+			return
 		}
+		res = append(res, node.Val)
+		inorder(node.Left)
+		inorder(node.Right)
 	}
-	return nil
+	inorder(root)
+	return res
 }
