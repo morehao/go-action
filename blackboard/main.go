@@ -1,72 +1,41 @@
 package main
 
-import (
-	"fmt"
-
-	"go-practict/leetcode/binaryTree"
-)
+import "fmt"
 
 func main() {
-	arr := []int{5, 3, 6, 2, 4, 0, 0, 1}
-	tree := createTree(0, arr)
-	fmt.Println(tree.LevelOrder())
-	fmt.Println(InOrder(tree))
+	queue := Constructor()
+	queue.Push(1)
+	fmt.Println(queue.Pop())
+	fmt.Println(queue.List)
+	fmt.Println(queue.Peek())
 }
 
-func createTree(i int, nums []int) *binaryTree.TreeNode {
-	if nums[i] == 0 {
-		return nil
-	}
-	root := &binaryTree.TreeNode{
-		Val: nums[i],
-	}
-	if i < len(nums) && 2*i+1 < len(nums) {
-		root.Left = createTree(2*i+1, nums)
-	}
-	if i < len(nums) && 2*i+2 < len(nums) {
-		root.Right = createTree(2*i+2, nums)
-	}
-	return root
+type Queue struct {
+	List []int
 }
 
-func levelOrder(root *binaryTree.TreeNode) [][]int {
-	if root == nil {
-		return nil
+func Constructor() Queue {
+	return Queue{
+		List: []int{},
 	}
-	q := []*binaryTree.TreeNode{root}
-	res := make([][]int, 0)
-	for i := 0; len(q) > 0; i++ {
-		res = append(res, []int{})
-		current := make([]*binaryTree.TreeNode, 0)
-		for j := 0; j < len(q); j++ {
-			node := q[j]
-			res[i] = append(res[i], node.Val)
-			if node.Left != nil {
-				current = append(current, node.Left)
-			}
-			if node.Right != nil {
-				current = append(current, node.Right)
-			}
-		}
-		q = current
-	}
-	return res
 }
 
-func InOrder(root *binaryTree.TreeNode) []int {
-	if root == nil {
-		return nil
+func (q *Queue) Push(x int) {
+	q.List = append(q.List, x)
+}
+
+func (q *Queue) Pop() int {
+	if len(q.List) == 0 {
+		return 0
 	}
-	res := make([]int, 0)
-	var inorder func(node *binaryTree.TreeNode)
-	inorder = func(node *binaryTree.TreeNode) {
-		if node == nil {
-			return
-		}
-		res = append(res, node.Val)
-		inorder(node.Left)
-		inorder(node.Right)
+	item := q.List[0]
+	q.List = q.List[1:]
+	return item
+}
+
+func (q *Queue) Peek() int {
+	if len(q.List) == 0 {
+		return 0
 	}
-	inorder(root)
-	return res
+	return q.List[0]
 }

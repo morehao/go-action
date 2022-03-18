@@ -1,14 +1,14 @@
 
 # 字符串
 - [交替打印数字和字母](./q1/README.md)
+- [交替合并字符串](mergeSreingAlternately/main.go)
 - [判断字符串中字符是否全都不同](./q2/README.md)
 - [翻转字符串](./q3/README.md)
 - [判断两个给定的字符串排序后是否一致](./q4/README.md)
+- [最长公共子序列](longestSubstring/main.go)
 - [字符串替换问题](./q5/README.md)
 - [机器人坐标问题](./q6/README.md)
 - [斐波那切数列](./fibonacci/main.go)
-- [两数之和](twoSum/main.go)
-- [数字加1](twoSum/main.go)
 - [字符串压缩](stringCompress/main.go)
 
 
@@ -29,11 +29,12 @@
 - [反转链表 II](linkListReverseBetween/main.go)
 
 # 数组
+- [数字加1](twoSum/main.go)
 - [一个先逆序再正序的数组，求最小值](mountainArrayBottom/main.go)
 - [LRU缓存](lruCache/main.go)
-- [交替合并字符串](mergeSreingAlternately/main.go)
-- [最长公共子序列](longestSubstring/main.go)
 - [删除有序数组中的重复项](removeDuplicates/main.go)
 - [山峰数组的顶部](mountainArrayTop/main.go)
 - [二分查找](search/main.go)
 - [数组排序](sortArray/README.md)
+- [两数之和](twoSum/main.go)
+- [用栈实现队列](queueImplement/main.go)
