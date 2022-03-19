@@ -2,204 +2,79 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 )
 
 func main() {
-	res := findTargetIndex([]int{1, 3, 5, 8, 7}, 3)
-	fmt.Printf("result:%v", res)
+	fmt.Printf("%d\n", fib(5))
 }
 
-type MyQueue struct {
-	inStack, outStack []int
-}
-
-func Constructor() *MyQueue {
-	return &MyQueue{
-		inStack:  []int{},
-		outStack: []int{},
+func fib(n int) int {
+	if n < 2 {
+		return n
 	}
-}
-
-func (q *MyQueue) Push(item int) {
-	q.inStack = append(q.inStack, item)
-}
-
-func (q *MyQueue) Pop() int {
-	if len(q.outStack) == 0 {
-		q.inToOut()
-	}
-	item := q.outStack[len(q.outStack)-1]
-	q.outStack = q.outStack[:len(q.outStack)-1]
-	return item
-}
-
-func (q *MyQueue) Peek() int {
-	if len(q.outStack) == 0 {
-		q.inToOut()
-	}
-	return q.outStack[len(q.outStack)-1]
-}
-
-func (q *MyQueue) Empty() bool {
-	return len(q.inStack) == 0 && len(q.outStack) == 0
-}
-func (q *MyQueue) inToOut() {
-	for len(q.inStack) > 0 {
-		q.outStack = append(q.outStack, q.inStack[len(q.inStack)-1])
-		q.inStack = q.inStack[:len(q.inStack)-1]
-	}
-}
-
-func findTargetIndex(nums []int, target int) []int {
-	m := make(map[int]int)
-	for i := 0; i < len(nums); i++ {
-		diff := target - nums[i]
-		if v, ok := m[diff]; ok {
-			return []int{i, v}
-		}
-		m[nums[i]] = i
-	}
-	return nil
-}
-
-func search(nums []int, item int) int {
-	i, j := 0, len(nums)
-	for i <= j {
-		mid := (j-i)/2 + i
-		if item == nums[mid] {
-			return mid
-		} else if item < nums[mid] {
-			j = mid
-		} else {
-			i = mid
-		}
-	}
-	return -1
-}
-
-func bottomIndexInMountainArray(nums []int) int {
-	for i := 0; i < len(nums)-1; i++ {
-		if nums[i] < nums[i+1] {
-			return i
-		}
-	}
-	return -1
-}
-
-func plusOne(nums []int) []int {
-	for i := len(nums) - 1; i >= 0; i-- {
-		nums[i] = (nums[i] + 1) % 10
-		if nums[i] != 0 {
-			return nums
-		}
-	}
-	newNums := make([]int, len(nums)+1)
-	newNums[0] = 1
-	return newNums
-
-}
-
-func bubbleSort(nums []int) {
-	if len(nums) < 2 {
-		return
-	}
-	for i := 0; i < len(nums); i++ {
-		for j := 0; j < len(nums)-1; j++ {
-			if nums[j] > nums[j+1] {
-				nums[j], nums[j+1] = nums[j+1], nums[j]
-			}
-		}
-	}
-}
-
-func selectSort(nums []int) {
-	if len(nums) < 2 {
-		return
-	}
-	for i := 0; i < len(nums); i++ {
-		min := i
-		for j := i + 1; j < len(nums); j++ {
-			if nums[j] < nums[min] {
-				min = j
-			}
-		}
-		tmp := nums[i]
-		nums[i] = nums[min]
-		nums[min] = tmp
-
-	}
-}
-
-func insertSort(nums []int) {
-	if len(nums) < 2 {
-		return
-	}
-	for i := 0; i < len(nums); i++ {
-		current := nums[i]
-		j := i
-		for j > 0 && nums[j-1] > current {
-			nums[j] = nums[j-1]
-			j--
-		}
-		nums[j] = current
-	}
-}
-
-func quickSort(nums []int, start, end int) {
-	if start >= end {
-		return
-	}
-	i, j := start, end
-	mid := nums[(start+end)/2]
-	for i <= j {
-		for nums[i] < mid {
-			i++
-		}
-		for nums[j] > mid {
-			j--
-		}
-		if i <= j {
-			nums[i], nums[j] = nums[j], nums[i]
-			i++
-			j--
-		}
-	}
-	if i < end {
-		quickSort(nums, i, end)
-	}
-	if j > start {
-		quickSort(nums, start, j)
-	}
-
-}
-
-func mergeSort(nums []int) []int {
-	if len(nums) < 2 {
-		return nums
-	}
-	mid := len(nums) / 2
-	return merge(mergeSort(nums[:mid]), mergeSort(nums[mid:]))
-}
-
-func merge(left, right []int) []int {
-	res := make([]int, len(left)+len(right))
-	i, j := 0, 0
-	for i < len(left) && j < len(right) {
-		if left[i] < right[j] {
-			res[i+j] = left[i]
-			i++
-		} else {
-			res[i+j] = right[j]
-			j++
-		}
-	}
-	for i < len(left) {
-		res[i+j] = left[i]
+	pre, current, i := 0, 1, 2
+	for i <= n {
+		next := pre + current
+		pre = current
+		current = next
 		i++
 	}
-	for j < len(right) {
-		res[i+j] = right[j]
-		j++
+	return current
+}
+
+func lengthOfLongestSubstring(s string) int {
+	ans, rk := 0, -1
+	m := make(map[byte]int)
+	for i := 0; i < len(s); i++ {
+		if i != 0 {
+			delete(m, s[i-1])
+		}
+		for rk+1 < len(s) && m[s[rk+1]] == 0 {
+			m[s[rk+1]]++
+			rk++
+		}
+		ans = max(ans, rk+1-i)
 	}
-	return res
+	return ans
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+func compressString(s string) string {
+	res := make([]byte, 0, len(s))
+	i, j := 0, 0
+	sLen := len(s)
+	for i < sLen {
+		for j < sLen && s[j] == s[i] {
+			j++
+		}
+		res = append(res, s[i])
+		res = append(res, []byte(strconv.Itoa(j-i))...)
+		if len(res) >= sLen {
+			return s
+		}
+		i = j
+	}
+	return string(res)
+}
+
+func search(nums []int, target int) int {
+	low, high := 0, len(nums)-1
+	for low <= high {
+		mid := (high-low)/2 + low
+		num := nums[mid]
+		if target < num {
+			high = mid - 1
+		} else if target == num {
+			return mid
+		} else {
+			low = mid + 1
+		}
+	}
+	return -1
 }

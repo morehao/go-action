@@ -20,13 +20,13 @@
 - [二分查找](search/main.go)
 - [数组排序](sortArray/README.md)
 - [两数之和](twoSum/main.go)
+- [滑动窗口最大值](maxSlidingWindow/main.go)
 
 # 栈
 - [用栈实现队列](queueImplement/main.go)
 
 # 二叉搜索树
 - [二叉搜索树的第k大节点](treeKth/main.go)
-- [滑动窗口最大值](maxSlidingWindow/main.go)
 - [二叉搜索树中序遍历](binaryTreeOrderTraversal/inorderTraversal/main.go)
 - [二叉搜索树先序遍历](binaryTreeOrderTraversal/preorderTraversal/main.go)
 - [二叉搜索树后序遍历](binaryTreeOrderTraversal/postOrderTraversal/main.go)
