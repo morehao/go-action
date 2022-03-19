@@ -35,6 +35,7 @@
 - [N 叉树的后序遍历](nTreePostOrderTraversal/main.go)
 - [二叉树按中序遍历的方式转换为链表]()
 - [删除二叉搜索树中的节点](deleteTreeNode/main.go)
+- [递增顺序搜索树](binaryTreeOrderTraversal/ineasingOrder/main.go)
 
 # 链表
 - [反转链表](linkListReverse/main.go)
