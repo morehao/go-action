@@ -11,6 +11,18 @@
 - [斐波那切数列](./fibonacci/main.go)
 - [字符串压缩](stringCompress/main.go)
 
+# 数组
+- [数字加1](twoSum/main.go)
+- [一个先逆序再正序的数组，求最小值](mountainArrayBottom/main.go)
+- [LRU缓存](lruCache/main.go)
+- [删除有序数组中的重复项](removeDuplicates/main.go)
+- [山峰数组的顶部](mountainArrayTop/main.go)
+- [二分查找](search/main.go)
+- [数组排序](sortArray/README.md)
+- [两数之和](twoSum/main.go)
+
+# 栈
+- [用栈实现队列](queueImplement/main.go)
 
 # 二叉搜索树
 - [二叉搜索树的第k大节点](treeKth/main.go)
@@ -27,14 +39,3 @@
 # 链表
 - [反转链表](linkListReverse/main.go)
 - [反转链表 II](linkListReverseBetween/main.go)
-
-# 数组
-- [数字加1](twoSum/main.go)
-- [一个先逆序再正序的数组，求最小值](mountainArrayBottom/main.go)
-- [LRU缓存](lruCache/main.go)
-- [删除有序数组中的重复项](removeDuplicates/main.go)
-- [山峰数组的顶部](mountainArrayTop/main.go)
-- [二分查找](search/main.go)
-- [数组排序](sortArray/README.md)
-- [两数之和](twoSum/main.go)
-- [用栈实现队列](queueImplement/main.go)
