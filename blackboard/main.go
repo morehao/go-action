@@ -1,80 +1,130 @@
 package main
 
-import (
-	"fmt"
-	"strconv"
-)
+import "fmt"
 
 func main() {
-	fmt.Printf("%d\n", fib(5))
+	nums := []int{5, 3, 6, 2, 4, 0, 0, 1}
+	tree := create(0, nums)
+	fmt.Println(tree.LevelOrder())
+	// fmt.Println(tree.InOrderTraversal())
+	// fmt.Println(tree.PreOrderTraversal())
+	// fmt.Println(tree.PostOrderTraversal())
+	fmt.Println(TreeKth(tree, 3))
 }
 
-func fib(n int) int {
-	if n < 2 {
-		return n
-	}
-	pre, current, i := 0, 1, 2
-	for i <= n {
-		next := pre + current
-		pre = current
-		current = next
-		i++
-	}
-	return current
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
 }
 
-func lengthOfLongestSubstring(s string) int {
-	ans, rk := 0, -1
-	m := make(map[byte]int)
-	for i := 0; i < len(s); i++ {
-		if i != 0 {
-			delete(m, s[i-1])
-		}
-		for rk+1 < len(s) && m[s[rk+1]] == 0 {
-			m[s[rk+1]]++
-			rk++
-		}
-		ans = max(ans, rk+1-i)
+var index int
+
+func TreeKth(root *TreeNode, k int) int {
+	if root == nil || k < 1 {
+		return -1
 	}
-	return ans
+	index = 0
+	node := convertSearch(root, k)
+	return node.Val
+}
+func convertSearch(node *TreeNode, k int) *TreeNode {
+	if node.Right != nil {
+		right := convertSearch(node.Right, k)
+		if right != nil {
+			return right
+		}
+	}
+	index++
+	if index == k {
+		return node
+	}
+	if node.Left != nil {
+		left := convertSearch(node.Left, k)
+		if left != nil {
+			return left
+		}
+	}
+	return nil
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
+func create(i int, nums []int) *TreeNode {
+	if nums[i] == 0 {
+		return nil
 	}
-	return b
-}
-func compressString(s string) string {
-	res := make([]byte, 0, len(s))
-	i, j := 0, 0
-	sLen := len(s)
-	for i < sLen {
-		for j < sLen && s[j] == s[i] {
-			j++
-		}
-		res = append(res, s[i])
-		res = append(res, []byte(strconv.Itoa(j-i))...)
-		if len(res) >= sLen {
-			return s
-		}
-		i = j
+	node := &TreeNode{
+		Val: nums[i],
 	}
-	return string(res)
+	if 2*i+1 < len(nums) {
+		node.Left = create(2*i+1, nums)
+	}
+	if 2*i+2 < len(nums) {
+		node.Right = create(2*i+2, nums)
+	}
+	return node
 }
 
-func search(nums []int, target int) int {
-	low, high := 0, len(nums)-1
-	for low <= high {
-		mid := (high-low)/2 + low
-		num := nums[mid]
-		if target < num {
-			high = mid - 1
-		} else if target == num {
-			return mid
-		} else {
-			low = mid + 1
+func (t *TreeNode) LevelOrder() [][]int {
+	res := make([][]int, 0)
+	q := []*TreeNode{t}
+	for i := 0; len(q) > 0; i++ {
+		res = append(res, []int{})
+		nodeList := make([]*TreeNode, 0)
+		for j := 0; j < len(q); j++ {
+			if q[j].Left != nil {
+				nodeList = append(nodeList, q[j].Left)
+			}
+			if q[j].Right != nil {
+				nodeList = append(nodeList, q[j].Right)
+			}
+			res[i] = append(res[i], q[j].Val)
 		}
+		q = nodeList
 	}
-	return -1
+	return res
+}
+
+func (t *TreeNode) InOrderTraversal() []int {
+	res := make([]int, 0)
+	var inOrder func(node *TreeNode)
+	inOrder = func(node *TreeNode) {
+		if node == nil {
+			return
+		}
+		inOrder(node.Left)
+		res = append(res, node.Val)
+		inOrder(node.Right)
+	}
+	inOrder(t)
+	return res
+}
+
+func (t *TreeNode) PreOrderTraversal() []int {
+	res := make([]int, 0)
+	var preOrder func(node *TreeNode)
+	preOrder = func(node *TreeNode) {
+		if node == nil {
+			return
+		}
+		res = append(res, node.Val)
+		preOrder(node.Left)
+		preOrder(node.Right)
+	}
+	preOrder(t)
+	return res
+}
+
+func (t *TreeNode) PostOrderTraversal() []int {
+	res := make([]int, 0)
+	var postOrder func(node *TreeNode)
+	postOrder = func(node *TreeNode) {
+		if node == nil {
+			return
+		}
+		postOrder(node.Left)
+		postOrder(node.Right)
+		res = append(res, node.Val)
+	}
+	postOrder(t)
+	return res
 }
