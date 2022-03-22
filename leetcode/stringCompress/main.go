@@ -11,52 +11,19 @@ func main() {
 }
 
 func compressString(str string) string {
-	if len(str) < 1 {
-		return str
-	}
-	result, cnt := string(str[0]), 1
-	for i := 1; i < len(str); i++ {
-		if str[i] == str[i-1] {
-			cnt++
-			if i == len(str)-1 {
-				result += fmt.Sprintf("%s", strconv.Itoa(cnt))
-			}
-		} else {
-			result += fmt.Sprintf("%s", strconv.Itoa(cnt))
-			result += fmt.Sprintf("%s", string(str[i]))
-			cnt = 1
-			if i == len(str)-1 {
-				result += fmt.Sprintf("%s", strconv.Itoa(1))
-			}
-		}
-	}
-	if len(result) >= len(str) {
-		return str
-	}
-	return result
-}
-
-func compressString2(S string) string {
-	var sLen int = len(S)
-	if sLen < 2 {
-		return S
-	}
-	var (
-		ans []byte = make([]byte, 0, sLen)
-
-		i, j int = 0, 0
-	)
-
+	res := make([]byte, 0, len(str))
+	i, j := 0, 0
+	sLen := len(str)
 	for i < sLen {
-		for j < sLen && S[i] == S[j] {
+		for j < sLen && str[j] == str[i] {
 			j++
 		}
-		ans = append(ans, S[i])
-		ans = append(ans, []byte(strconv.Itoa(j-i))...)
-		if len(ans) >= sLen {
-			return S
+		res = append(res, str[i])
+		res = append(res, []byte(strconv.Itoa(j-i))...)
+		if len(res) >= sLen {
+			return str
 		}
 		i = j
 	}
-	return string(ans)
+	return string(res)
 }

@@ -9,6 +9,7 @@ import (
 func main() {
 	arr := []int{5, 3, 6, 2, 4, 0, 0, 1}
 	tree := binaryTree.CreateBinaryTree(0, arr)
+	fmt.Println(tree.KthLargest(3))
 	fmt.Println(tree.LevelOrder())
 	fmt.Println(kthLargest(tree, 3))
 }

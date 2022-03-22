@@ -2,19 +2,44 @@ package main
 
 import "fmt"
 
-type Node struct {
-	Data int
-	Next *Node
+func main() {
+	linkList := CreateLinkList()
+	linkList.Add(1)
+	linkList.Add(2)
+	linkList.Add(3)
+	linkList.Add(4)
+	linkList.Scan()
+	// linkList.Insert(2, 4)
+	// linkList.Scan()
+	linkList.Delete(4)
+	linkList.Scan()
+}
+
+func reverseList(head *ListNode) *ListNode {
+	var pre *ListNode
+	current := head
+	for current != nil {
+		next := current.Next
+		current.Next = pre
+		pre = current
+		current = next
+	}
+	return pre
+}
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
 }
 
 type LinkList struct {
-	Header *Node
+	Header *ListNode
 	Length int
 }
 
-func CreateNode(item int) *Node {
-	return &Node{
-		Data: item,
+func CreateNode(item int) *ListNode {
+	return &ListNode{
+		Val:  item,
 		Next: nil,
 	}
 }
@@ -51,10 +76,10 @@ func (l *LinkList) Append(item int) {
 	}
 	if l.Length > 0 {
 		current := l.Header
-		for current.Next != nil { //循环找到最后一个节点
+		for current.Next != nil { // 循环找到最后一个节点
 			current = current.Next
 		}
-		current.Next = newNode //把新节点地址给最后一个节点的Next
+		current.Next = newNode // 把新节点地址给最后一个节点的Next
 	}
 }
 
@@ -78,7 +103,7 @@ func (l *LinkList) Insert(i, item int) {
 		pre = pre.Next
 		j++
 	}
-	after := pre.Next //获取到i+1个节点
+	after := pre.Next // 获取到i+1个节点
 	// 修改i节点，新节点的指针
 	pre.Next = newNode
 	newNode.Next = after
@@ -111,23 +136,10 @@ func (l *LinkList) Scan() {
 	current := l.Header
 	i := 1
 	for current.Next != nil {
-		fmt.Printf("第%d的节点是%d\n", i, current.Data)
+		fmt.Printf("第%d的节点是%d\n", i, current.Val)
 		current = current.Next
 		i++
 	}
-	fmt.Printf("第%d的节点是%d\n", i, current.Data)
+	fmt.Printf("第%d的节点是%d\n", i, current.Val)
 
-}
-
-func main() {
-	linkList := CreateLinkList()
-	linkList.Add(1)
-	linkList.Add(2)
-	linkList.Add(3)
-	linkList.Add(4)
-	linkList.Scan()
-	//linkList.Insert(2, 4)
-	//linkList.Scan()
-	linkList.Delete(4)
-	linkList.Scan()
 }
