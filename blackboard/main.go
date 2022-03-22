@@ -2,44 +2,50 @@ package main
 
 import (
 	"fmt"
-
-	"go-practict/leetcode/binaryTree"
+	"sync"
+	"time"
 )
 
 func main() {
-	arr := []int{5, 3, 6, 2, 4, 0, 0, 1}
-	tree := binaryTree.CreateBinaryTree(0, arr)
-	fmt.Println(treeKth(tree, 3))
+	m := NewMulti(3)
+	for i := 0; i < 4; i++ {
+		go Read(m, i)
+	}
+	m.Wait()
 }
 
-func treeKth(root *binaryTree.TreeNode, k int) int {
-	if root == nil || k < 1 {
-		return -1
-	}
-	index = 0
-	node := convertToSearch(root, k)
-	return node.Val
+func Read(m *multi, i int) {
+	defer m.Done()
+	m.Add(1)
+	fmt.Println("Read i", i)
+	time.Sleep(2 * time.Second)
 }
 
-var index int
+type multi struct {
+	c  chan struct{}
+	wg *sync.WaitGroup
+}
 
-func convertToSearch(node *binaryTree.TreeNode, k int) *binaryTree.TreeNode {
-	if node.Right != nil {
-		right := convertToSearch(node.Right, k)
-		if right != nil {
-			return right
-		}
+func NewMulti(maxNum int) *multi {
+	return &multi{
+		c: make(chan struct{}, maxNum),
+		// wg: new(sync.WaitGroup),
+		wg: &sync.WaitGroup{},
+	}
+}
 
+func (m *multi) Add(num int) {
+	m.wg.Add(num)
+	for i := 0; i < num; i++ {
+		m.c <- struct{}{}
 	}
-	index++
-	if index == k {
-		return node
-	}
-	if node.Left != nil {
-		left := convertToSearch(node.Left, k)
-		if left != nil {
-			return left
-		}
-	}
-	return nil
+}
+
+func (m *multi) Done() {
+	<-m.c
+	m.wg.Done()
+}
+
+func (m *multi) Wait() {
+	m.wg.Wait()
 }
