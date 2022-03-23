@@ -10,6 +10,7 @@
 - [机器人坐标问题](./q6/README.md)
 - [斐波那切数列](./fibonacci/main.go)
 - [字符串压缩](stringCompress/main.go)
+- [有效的括号](validParentheses/main.go)
 
 # 数组
 - [数字加1](twoSum/main.go)
