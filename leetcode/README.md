@@ -41,3 +41,7 @@
 # 链表
 - [反转链表](linkListReverse/main.go)
 - [反转链表 II](linkListReverseBetween/main.go)
+
+# 数字
+
+- [计数质数](primeNumberCount/main.go)
