@@ -22,6 +22,7 @@
 - [数组排序](sortArray/README.md)
 - [两数之和](twoSum/main.go)
 - [滑动窗口最大值](maxSlidingWindow/main.go)
+- [连续子数组的最大和](maxSubArray/main.go)
 
 # 栈
 - [用栈实现队列](queueImplement/main.go)
