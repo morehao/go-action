@@ -51,9 +51,13 @@
 
 # 剑指Offer Ⅰ
 
+- [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
+- [剑指 Offer 05. 替换空格](replaceSpace/main.go)
 - [剑指 Offer 06. 从尾到头打印链表](linkListScan/main.go)
 - [剑指 Offer 09. 用两个栈实现队列](queueImplement/main.go)
 - [剑指 Offer 42. 连续子数组的最大和](maxSubArray/main.go)
+- [剑指 Offer 58 - II. 左旋转字符串](reverseLeftWords/main.go)
+- [剑指 Offer 53 - I. 在排序数组中查找数字 I](searchCount1/main.go)
 
 # 剑指Offer Ⅱ
 
