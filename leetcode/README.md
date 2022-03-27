@@ -43,7 +43,18 @@
 # 链表
 - [反转链表](linkListReverse/main.go)
 - [反转链表 II](linkListReverseBetween/main.go)
+- [从尾到头打印链表](linkListScan/main.go)
 
 # 数字
 
 - [计数质数](primeNumberCount/main.go)
+
+# 剑指Offer Ⅰ
+
+- [剑指 Offer 06. 从尾到头打印链表](linkListScan/main.go)
+- [剑指 Offer 09. 用两个栈实现队列](queueImplement/main.go)
+- [剑指 Offer 42. 连续子数组的最大和](maxSubArray/main.go)
+
+# 剑指Offer Ⅱ
+
+- [剑指 Offer II 079. 所有子集](subSets/main.go)
