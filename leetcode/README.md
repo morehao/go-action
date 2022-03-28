@@ -52,6 +52,7 @@
 # 剑指Offer Ⅰ
 
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
+- [剑指 Offer 04. 二维数组中的查找](findNumberIn2DArray/main.go)
 - [剑指 Offer 05. 替换空格](replaceSpace/main.go)
 - [剑指 Offer 06. 从尾到头打印链表](linkListScan/main.go)
 - [剑指 Offer 09. 用两个栈实现队列](queueImplement/main.go)
