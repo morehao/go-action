@@ -56,8 +56,9 @@
 - [剑指 Offer 06. 从尾到头打印链表](linkListScan/main.go)
 - [剑指 Offer 09. 用两个栈实现队列](queueImplement/main.go)
 - [剑指 Offer 42. 连续子数组的最大和](maxSubArray/main.go)
+- [剑指 Offer 53 - I. 在排序数组中查找数字 I](searchNumber1/main.go)
+- [剑指 Offer 53 - II. 0～n-1中缺失的数字](missingNumber/main.go)
 - [剑指 Offer 58 - II. 左旋转字符串](reverseLeftWords/main.go)
-- [剑指 Offer 53 - I. 在排序数组中查找数字 I](searchCount1/main.go)
 
 # 剑指Offer Ⅱ
 
