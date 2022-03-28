@@ -1,46 +1,24 @@
 package main
 
-import (
-	"fmt"
-	"unsafe"
-
-	"go-practict/leetcode/linkList"
-)
+import "fmt"
 
 func main() {
-	nums := []int{1, 2, 3, 4, 5}
-	linkNode := linkList.ArrToLinkList(nums)
-	fmt.Println(linkNode.Scan())
-	newLinkNode := reverseList(linkNode)
-	fmt.Println(newLinkNode.Scan())
-}
 
-type slice struct {
-	array []unsafe.Pointer
-	len   int
-	cap   int
-}
+	// Creating slices
+	slice1 := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	var slice2 []int
+	slice3 := make([]int, 5)
 
-type stringStruct struct {
-	str unsafe.Pointer
-	len int
-}
+	// Before copying
+	fmt.Println("------------before copy-------------")
+	fmt.Printf("len=%-4d cap=%-4d slice1=%v\n", len(slice1), cap(slice1), slice1)
+	fmt.Printf("len=%-4d cap=%-4d slice2=%v\n", len(slice2), cap(slice2), slice2)
+	fmt.Printf("len=%-4d cap=%-4d slice3=%v\n", len(slice3), cap(slice3), slice3)
 
-type hmap struct {
-	count      int            // 当前保存的元素个数
-	B          uint8          // bucket数组的大小
-	buckets    unsafe.Pointer // bucket数组，数组的长度为2的B次方
-	oldbuckets unsafe.Pointer // 老旧的buckets数组，用于扩容
-}
-
-func reverseList(head *linkList.ListNode) *linkList.ListNode {
-	var pre *linkList.ListNode
-	current := head
-	for current != nil {
-		next := current.Next
-		current.Next = pre
-		pre = current
-		current = next
-	}
-	return pre
+	// Copying the slices
+	copy_1 := copy(slice2, slice1)
+	fmt.Println()
+	fmt.Printf("len=%-4d cap=%-4d slice1=%v\n", len(slice1), cap(slice1), slice1)
+	fmt.Printf("len=%-4d cap=%-4d slice2=%v\n", len(slice2), cap(slice2), slice2)
+	fmt.Println("Total number of elements copied:", copy_1)
 }
