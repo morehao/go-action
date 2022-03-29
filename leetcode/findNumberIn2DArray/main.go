@@ -1,7 +1,16 @@
 package main
 
-func main() {
+import "fmt"
 
+func main() {
+	nums := [][]int{
+		{1, 4, 7, 11, 15},
+		{2, 5, 8, 12, 19},
+		{3, 6, 9, 16, 22},
+		{10, 13, 14, 17, 24},
+		{18, 21, 23, 26, 30},
+	}
+	fmt.Println(findNumberIn2DArray(nums, 5))
 }
 
 // 线性查找
@@ -19,22 +28,6 @@ func findNumberIn2DArray(matrix [][]int, target int) bool {
 			column--
 		} else {
 			row++
-		}
-	}
-	return false
-}
-
-// 暴力破解,TODO:待调试
-func findNumberIn2DArray2(matrix [][]int, target int) bool {
-	if len(matrix) == 0 || len(matrix[0]) == 0 {
-		return false
-	}
-	rows, columns := len(matrix), len(matrix[0])
-	for i := 0; i < rows; i++ {
-		for j := 0; j < columns; j++ {
-			if matrix[i][j] == target {
-				return true
-			}
 		}
 	}
 	return false
