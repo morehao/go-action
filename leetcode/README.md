@@ -67,4 +67,5 @@
 
 # 剑指Offer Ⅱ
 
+- [剑指 Offer II 072. 求平方根](mySqrt/main.go)
 - [剑指 Offer II 079. 所有子集](subSets/main.go)
