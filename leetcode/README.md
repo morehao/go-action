@@ -57,6 +57,7 @@
 - [剑指 Offer 06. 从尾到头打印链表](linkListScan/main.go)
 - [剑指 Offer 09. 用两个栈实现队列](queueImplement/main.go)
 - [剑指 Offer 11. 旋转数组的最小数字](minArray/main.go)
+- [剑指 Offer 30. 包含min函数的栈](minStack/main.go),同[155. 最小栈](minStack/main.go)
 - [剑指 Offer 32 - I. 从上到下打印二叉树](binaryTreeOrderTraversal/levelOrderBFS/main.go)
 - [剑指 Offer 32 - II. 从上到下打印二叉树 II](binaryTreeOrderTraversal/levelOrder/main.go)
 - [剑指 Offer 42. 连续子数组的最大和](maxSubArray/main.go)
