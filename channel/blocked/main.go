@@ -22,7 +22,9 @@ func readFromNilChan() {
 	<-ch
 }
 
-// 非缓冲队列的读写操作会导致永久阻塞
+// 非缓冲通道的读写操作会导致永久阻塞
+// 非缓冲通道发送时，在接受者准备好之前都是阻塞的；读操作在发送者准备好之前都是阻塞的。
+// 如果需要满足发送者和接收者都准备好，可以开启新的goroutine让其中一个准备好
 func operateUnbufferedChan() {
 	ch := make(chan int)
 	ch <- 1
