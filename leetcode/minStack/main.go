@@ -1,5 +1,16 @@
 package main
 
+import "fmt"
+
+func main() {
+	minStack := Constructor()
+	minStack.Push(-2)
+	minStack.Push(0)
+	minStack.Push(-3)
+	minStack.Push(-1)
+	fmt.Println(minStack.Min())
+}
+
 type MinStack struct {
 	list    []int
 	minList []int
