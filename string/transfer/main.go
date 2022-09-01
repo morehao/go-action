@@ -1,12 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 func main() {
-	byteToString([]byte{'H', 'e', 'l', 'l', 'o'})
-	stringToByte("Hello")
-	rangeChineseStr("你好")
-	rangeLetterStr("abc")
+	// byteToString([]byte{'H', 'e', 'l', 'l', 'o'})
+	// stringToByte("Hello")
+	// rangeChineseStr("你好")
+	// rangeLetterStr("abc")
+	strconv.Itoa(0)
 }
 
 func byteToString(s []byte) string {
