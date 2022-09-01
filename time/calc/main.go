@@ -6,38 +6,62 @@ import (
 )
 
 func main() {
-	//某个时间
-	//oneTimeStr := "2018-01-08 00:00:00"
-	oneTimeStr := "2021-04-05 00:00:00"
-	//时间转换成time.Time格式
-	t, err := time.ParseInLocation("2006-01-02 15:04:05", oneTimeStr, time.Local)
-	if err != nil {
-		fmt.Println(err)
-		return
+	// fmt.Println(WeekIntervalTime(0))
+	// fmt.Println(MonthIntervalTime(0))
+	// fmt.Println(SubWeek(time.Unix(1661184000, 10), time.Now()))
+	fmt.Println(SubMonth(time.Unix(1661184000, 10), time.Now(), true))
+}
+
+// WeekIntervalTime 获取某周的开始和结束时间,week为0本周,-1上周，1下周以此类推
+func WeekIntervalTime(week int) (startTime, endTime string) {
+	now := time.Now()
+	offset := int(time.Monday - now.Weekday())
+	// 周日做特殊判断 因为time.Monday = 0
+	if offset > 0 {
+		offset = -6
 	}
-	//获取这个时间的基于这一年有多少天了
-	yearDay := t.YearDay()
-	//获取上一年的最后一天
-	yesterdayYearEndDay := t.AddDate(0, 0, -yearDay)
-	//获取上一年最后一天是星期几
-	dayInWeek := int(yesterdayYearEndDay.Weekday())
-	//第一周的总天数,默认是7天
-	firstWeekDays := 7
-	//如果上一年最后一天不是星期天，则第一周总天数是7-dayInWeek
-	if dayInWeek != 0 {
-		firstWeekDays = 7 - dayInWeek
+	year, month, day := now.Date()
+	thisWeek := time.Date(year, month, day, 0, 0, 0, 0, time.Local)
+	startTime = thisWeek.AddDate(0, 0, offset+7*week).Format("2006-01-02") + " 00:00:00"
+	endTime = thisWeek.AddDate(0, 0, offset+6+7*week).Format("2006-01-02") + " 23:59:59"
+	return startTime, endTime
+}
+
+// MonthIntervalTime 获取某月的开始和结束时间mon为0本月,-1上月，1下月以此类推
+func MonthIntervalTime(mon int) (startTime, endTime string) {
+	year, month, _ := time.Now().Date()
+	thisMonth := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+	startTime = thisMonth.AddDate(0, mon, 0).Format("2006-01-02") + " 00:00:00"
+	endTime = thisMonth.AddDate(0, mon+1, -1).Format("2006-01-02") + " 23:59:59"
+	return startTime, endTime
+}
+
+func SubWeek(startTime, endTime time.Time) int {
+	subHours := endTime.Sub(startTime).Hours()
+	weeks := subHours / (7 * 24)
+	return int(weeks)
+}
+
+// SubMonth 计算日期相差多少月, isNatureMonth:true-只关心自然月的差值，false-需要关心两个时间的日期大小
+func SubMonth(startTime, endTime time.Time, isNatureMonth bool) (month int) {
+	startY := startTime.Year()
+	endY := endTime.Year()
+	startM := int(startTime.Month())
+	endM := int(endTime.Month())
+	startD := startTime.Day()
+	endD := endTime.Day()
+
+	yearInterval := endY - startY
+	// 如果 endDay的 月-日 小于 startDay的 月-日 那么 yearInterval-- 这样就得到了相差的年数
+	if endM < startM || endM == startM && endD < startD {
+		yearInterval--
 	}
-	week := 0
-	//如果这一年的总天数小于第一周总天数，则是第一周，否则按照这一年多少天减去第一周的天数除以7+1 但是要考虑这一天减去第一周天数除以7会取整型，
-	//所以需要处理两个数取余之后是否大于0，如果大于0 则多加一天，这样自然周就算出来了。
-	if yearDay <= firstWeekDays {
-		week = 1
-	} else {
-		plusDay := 0
-		if (yearDay-firstWeekDays)%7 > 0 {
-			plusDay = 1
-		}
-		week = (yearDay-firstWeekDays)/7 + 1 + plusDay
+	// 获取月数差值
+	monthInterval := (endM + 12) - startM
+	if !isNatureMonth && endD < startD {
+		monthInterval--
 	}
-	fmt.Printf("%d%d", t.Year(), week)
+	monthInterval %= 12
+	month = yearInterval*12 + monthInterval
+	return
 }
