@@ -1,19 +1,25 @@
 package main
 
+import "fmt"
+
+func main() {
+	fmt.Println(isNumber("-1E-16"))
+}
+
 type State int
 type CharType int
 
 const (
-	StateInitial State = iota
-	StateIntSign // 整数符号
-	StateInteger // 整数
-	StatePoint // 小数点
-	StatePointWithoutInt // 小数点前无整数
-	StateDecimal // 小数部分
-	StateExp // 指数，e
-	StateExpSign // 指数符号部分
-	StateExpInt // 指数数字部分
-	StateEnd // 末尾空格，结束状态
+	StateInitial         State = iota
+	StateIntSign               // 整数符号
+	StateInteger               // 整数
+	StatePoint                 // 小数点
+	StatePointWithoutInt       // 小数点前无整数
+	StateDecimal               // 小数部分
+	StateExp                   // 指数，e
+	StateExpSign               // 指数符号部分
+	StateExpInt                // 指数数字部分
+	StateEnd                   // 末尾空格，结束状态
 )
 
 const (
