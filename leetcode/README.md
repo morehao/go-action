@@ -58,6 +58,7 @@
 - [剑指 Offer 09. 用两个栈实现队列](queueImplement/main.go)
 - [剑指 Offer 10- I. 斐波那契数列](fibonacci/main.go)
 - [剑指 Offer 11. 旋转数组的最小数字](minArray/main.go)
+- [剑指 Offer 18. 删除链表的节点](deleteNode/main.go)
 - [剑指 Offer 20. 表示数值的字符串](desNumByStr/main.go) 
 - [剑指 Offer 24. 反转链表](linkListReverse/main.go)，同[206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/)
 - [剑指 Offer 30. 包含min函数的栈](minStack/main.go),同[155. 最小栈](https://leetcode-cn.com/problems/min-stack/)
