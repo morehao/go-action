@@ -20,3 +20,20 @@ func findTargetIndex(arr []int, target int) []int {
 	}
 	return []int{}
 }
+
+// 双指针，找出具体元素
+func twoSum(nums []int, target int) []int {
+	i, j := 0, len(nums)-1
+	tmp := 0
+	for i < j {
+		tmp = nums[i] + nums[j]
+		if tmp == target {
+			return []int{nums[i], nums[j]}
+		} else if tmp > target {
+			j--
+		} else {
+			i++
+		}
+	}
+	return nil
+}

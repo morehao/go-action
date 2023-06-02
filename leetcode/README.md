@@ -73,6 +73,7 @@
 - [剑指 Offer 52. 两个链表的第一个公共节点](getIntersectionNode/main.go),同[160. 相交链表]()
 - [剑指 Offer 53 - I. 在排序数组中查找数字 I](searchNumber1/main.go)，同[34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 - [剑指 Offer 53 - II. 0～n-1中缺失的数字](missingNumber/main.go)
+- [剑指 Offer 57. 和为s的两个数字](twoSum/main.go)
 - [剑指 Offer 58 - II. 左旋转字符串](reverseLeftWords/main.go)
 - [剑指 Offer 67. 把字符串转换成整数](strToInt/main.go)
 
