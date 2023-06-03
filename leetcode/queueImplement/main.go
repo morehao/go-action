@@ -4,51 +4,46 @@ import "fmt"
 
 func main() {
 	queue := Constructor()
-	queue.Push(1)
-	queue.Push(2)
-	queue.Push(3)
-	fmt.Println(queue.Pop())
-	fmt.Println(queue.Peek())
-	fmt.Println(queue.Empty())
+	queue.AppendTail(1)
+	queue.AppendTail(2)
+	queue.AppendTail(3)
+	fmt.Println(queue.DeleteHead())
 }
 
-type MyQueue struct {
-	inStack, outStack []int
+type CQueue struct {
+	inStack  []int
+	outStack []int
 }
 
-func Constructor() MyQueue {
-	return MyQueue{
-		inStack:  []int{},
-		outStack: []int{},
+/*
+队列：先入先出，栈：先入后出。
+将一个栈当作输入栈，用于压入appendTail 传入的数据；另一个栈当作输出栈，用于deleteHead 操作。
+每次deleteHead 时，若输出栈为空则将输入栈的全部数据依次弹出并压入输出栈，这样输出栈从栈顶往栈底的顺序就是队列从队首往队尾的顺序。
+*/
+func Constructor() CQueue {
+	return CQueue{}
+}
+
+func (this *CQueue) AppendTail(value int) {
+	this.inStack = append(this.inStack, value)
+
+}
+
+func (this *CQueue) DeleteHead() int {
+	if len(this.outStack) == 0 {
+		if len(this.inStack) == 0 {
+			return -1
+		}
+		this.inToOut()
 	}
+	head := this.outStack[len(this.outStack)-1]
+	this.outStack = this.outStack[:len(this.outStack)-1]
+	return head
 }
 
-func (q *MyQueue) Push(item int) {
-	q.inStack = append(q.inStack, item)
-}
-
-func (q *MyQueue) Pop() int {
-	if len(q.outStack) == 0 {
-		q.inToOut()
-	}
-	item := q.outStack[len(q.outStack)-1]
-	q.outStack = q.outStack[:len(q.outStack)-1]
-	return item
-}
-
-func (q *MyQueue) Peek() int {
-	if len(q.outStack) == 0 {
-		q.inToOut()
-	}
-	return q.outStack[len(q.outStack)-1]
-}
-
-func (q *MyQueue) Empty() bool {
-	return len(q.inStack) == 0 && len(q.outStack) == 0
-}
-func (q *MyQueue) inToOut() {
-	for len(q.inStack) > 0 {
-		q.outStack = append(q.outStack, q.inStack[len(q.inStack)-1])
-		q.inStack = q.inStack[:len(q.inStack)-1]
+func (this *CQueue) inToOut() {
+	for len(this.inStack) > 0 {
+		this.outStack = append(this.outStack, this.inStack[len(this.inStack)-1])
+		this.inStack = this.inStack[:len(this.inStack)-1]
 	}
 }
