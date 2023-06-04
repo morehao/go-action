@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	minStack := Constructor()
@@ -13,7 +15,7 @@ func main() {
 
 type MinStack struct {
 	list    []int
-	minList []int
+	minList []int // 通过辅助栈降低复杂度
 }
 
 // Constructor /** initialize your data structure here. */
@@ -29,8 +31,8 @@ func (this *MinStack) Push(x int) {
 	if len(this.minList) == 0 {
 		this.minList = append(this.minList, x)
 	} else {
-		top := this.minList[len(this.minList)-1]
-		this.minList = append(this.minList, min(x, top))
+		minTop := this.minList[len(this.minList)-1]
+		this.minList = append(this.minList, min(x, minTop))
 	}
 }
 
