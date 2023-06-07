@@ -77,6 +77,7 @@
 - [剑指 Offer 58 - I. 翻转单词顺序](reverseWords/main.go)
 - [剑指 Offer 58 - II. 左旋转字符串](reverseLeftWords/main.go)
 - [剑指 Offer 59 - I. 滑动窗口的最大值](maxSlidingWindow/main.go)
+- [剑指 Offer 59 - II. 队列的最大值](maxQueue/main.go)
 - [剑指 Offer 67. 把字符串转换成整数](strToInt/main.go)
 
 # 剑指Offer Ⅱ

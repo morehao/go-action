@@ -29,6 +29,7 @@ func maxSlidingWindow(nums []int, k int) []int {
 	return result
 }
 
+// 维护一个单调的双端队列DQueue
 type MyQueue struct {
 	list []int
 }
