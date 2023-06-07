@@ -34,6 +34,7 @@ type MyQueue struct {
 }
 
 func (q *MyQueue) push(v int) {
+	// 删除list内所有小于v的值，确保list递减
 	for len(q.list) > 0 && q.list[len(q.list)-1] < v {
 		q.list = q.list[:len(q.list)-1]
 	}
