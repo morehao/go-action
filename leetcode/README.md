@@ -66,6 +66,7 @@
 - [剑指 Offer 25. 合并两个排序的链表](mergeTwoLists/main.go)
 - [剑指 Offer 29. 顺时针打印矩阵](spiralOrder/main.go)
 - [剑指 Offer 30. 包含min函数的栈](minStack/main.go),同[155. 最小栈](https://leetcode-cn.com/problems/min-stack/)
+- [剑指 Offer 31. 栈的压入、弹出序列](validateStackSequences/main.go)
 - [剑指 Offer 32 - I. 从上到下打印二叉树](binaryTreeOrderTraversal/levelOrderBFS/main.go)
 - [剑指 Offer 32 - II. 从上到下打印二叉树 II](binaryTreeOrderTraversal/levelOrder/main.go)
 - [剑指 Offer 35. 复杂链表的复制](copyRandomList/READMD.md),同[138. 复制带随机指针的链表](https://leetcode-cn.com/problems/copy-list-with-random-pointer/)
