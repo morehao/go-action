@@ -64,6 +64,7 @@
 - [剑指 Offer 22. 链表中倒数第k个节点](getKthFromEnd/main.go)
 - [剑指 Offer 24. 反转链表](linkListReverse/main.go)，同[206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/)
 - [剑指 Offer 25. 合并两个排序的链表](mergeTwoLists/main.go)
+- [剑指 Offer 29. 顺时针打印矩阵](spiralOrder/main.go)
 - [剑指 Offer 30. 包含min函数的栈](minStack/main.go),同[155. 最小栈](https://leetcode-cn.com/problems/min-stack/)
 - [剑指 Offer 32 - I. 从上到下打印二叉树](binaryTreeOrderTraversal/levelOrderBFS/main.go)
 - [剑指 Offer 32 - II. 从上到下打印二叉树 II](binaryTreeOrderTraversal/levelOrder/main.go)
