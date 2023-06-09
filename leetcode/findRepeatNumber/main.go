@@ -8,14 +8,13 @@ func main() {
 }
 
 func findRepeatNumber(nums []int) int {
-	m := make(map[int]bool)
-	var res int
+	m := make(map[int]struct{})
 	for _, v := range nums {
-		if m[v] {
-			res = v
-			break
+		if _, ok := m[v]; ok {
+			return v
+		} else {
+			m[v] = struct{}{}
 		}
-		m[v] = true
 	}
-	return res
+	return -1
 }
