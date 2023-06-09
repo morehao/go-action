@@ -1,6 +1,8 @@
 package main
 
-import "sync"
+import (
+	"sync"
+)
 
 type Multi struct {
 	wg *sync.WaitGroup
@@ -30,8 +32,10 @@ func (m *Multi) Wait() {
 	m.wg.Wait()
 }
 
-// func (m *Multi) Run(f func()) {
-// 	defer m.Done()
-// 	m.Add(1)
-// 	go f()
-// }
+func (m *Multi) Run(f func()) {
+	go func() {
+		defer m.Done()
+		m.Add(1)
+		f()
+	}()
+}

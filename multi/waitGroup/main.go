@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	demo2()
+	demo3()
 }
 
 // 简单使用sync.WaitGroup实现并发
@@ -40,6 +40,23 @@ func demo2() {
 func demo2Processor(m *Multi, i int) {
 	defer m.Done()
 	m.Add(1)
+	fmt.Printf("goroutine %d finished. \n", i)
+	time.Sleep(time.Second)
+}
+
+// multi封装Run方法
+func demo3() {
+	multi := NewMulti(2)
+	for i := 0; i < 10; i++ {
+		tempI := i
+		multi.Run(func() {
+			demo3Processor(tempI)
+		})
+	}
+	multi.Wait()
+}
+
+func demo3Processor(i int) {
 	fmt.Printf("goroutine %d finished. \n", i)
 	time.Sleep(time.Second)
 }
