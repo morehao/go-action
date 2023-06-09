@@ -6,6 +6,45 @@ import (
 	"time"
 )
 
+func main() {
+	// CancelCtxFn()
+	// DeadlineCtxFn()
+	TimeoutCtxFn()
+}
+
+func CancelCtxFn() {
+	// 使用context.WithCancel创建context时，如果没有父context，则需要传入background作为其父节点。
+	ctx, cancel := context.WithCancel(context.Background())
+	go handleRequest(ctx)
+	time.Sleep(5 * time.Second)
+	fmt.Print("It's time to stop all sub goroutines!\n")
+	cancel()
+	// 只是为了测试子goroutine是否存在
+	time.Sleep(5 * time.Second)
+}
+
+func DeadlineCtxFn() {
+	// 使用context.WithDeadline创建context时，如果没有父context，则需要传入background作为其父节点。
+	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(time.Second*3))
+	go handleRequest(ctx)
+	time.Sleep(5 * time.Second)
+	fmt.Print("It's time to stop all sub goroutines!\n")
+	cancel()
+	// 只是为了测试子goroutine是否存在
+	time.Sleep(5 * time.Second)
+}
+
+func TimeoutCtxFn() {
+	// 使用context.WithTimeout创建context时，如果没有父context，则需要传入background作为其父节点。
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+	go handleRequest(ctx)
+	time.Sleep(5 * time.Second)
+	fmt.Print("It's time to stop all sub goroutines!\n")
+	cancel()
+	// 只是为了测试子goroutine是否存在
+	time.Sleep(5 * time.Second)
+}
+
 func handleRequest(ctx context.Context) {
 	go writeRedis(ctx)
 	go writeDataBase(ctx)
@@ -45,15 +84,4 @@ func writeDataBase(ctx context.Context) {
 			time.Sleep(2 * time.Second)
 		}
 	}
-}
-
-func main() {
-	// 使用context.WithCancel创建context时，如果没有父context，则需要传入background作为其父节点。
-	ctx, cancel := context.WithCancel(context.Background())
-	go handleRequest(ctx)
-	time.Sleep(5 * time.Second)
-	fmt.Print("It's time to stop all sub goroutines!\n")
-	cancel()
-	// 只是为了测试子goroutine是否存在
-	time.Sleep(5 * time.Second)
 }
