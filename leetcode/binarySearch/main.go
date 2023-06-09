@@ -7,6 +7,7 @@ func main() {
 	fmt.Println(search(arr, 9))
 }
 
+// 二分法查找
 func search(nums []int, target int) int {
 	low, high := 0, len(nums)-1
 	for low <= high {

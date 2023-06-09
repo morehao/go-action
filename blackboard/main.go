@@ -21,17 +21,12 @@ func main() {
 	}
 }
 
-func validateStackSequences(pushed []int, popped []int) bool {
-	var (
-		stack []int
-		i     = 0
-	)
-	for _, v := range pushed {
-		stack = append(stack, v)
-		for len(stack) > 0 && stack[len(stack)-1] == popped[i] {
-			stack = stack[:len(stack)-1]
-			i++
+func search(nums []int, target int) int {
+	m := make(map[int]int)
+	for _, v := range nums {
+		if v == target {
+			m[target]++
 		}
 	}
-	return len(stack) == 0
+	return m[target]
 }
