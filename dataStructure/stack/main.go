@@ -2,6 +2,16 @@ package main
 
 import "fmt"
 
+func main() {
+	stock := Constructor()
+	stock.Push(1)
+	stock.Push(2)
+	stock.Push(3)
+	fmt.Println(stock.Pop())
+	fmt.Println(stock.Top())
+	fmt.Println(stock.Empty())
+}
+
 type MyStack struct {
 	list []int
 }
@@ -34,14 +44,4 @@ func (this *MyStack) Top() int {
 
 func (this *MyStack) Empty() bool {
 	return len(this.list) == 0
-}
-
-func main() {
-	stock := Constructor()
-	stock.Push(1)
-	stock.Push(2)
-	stock.Push(3)
-	fmt.Println(stock.Pop())
-	fmt.Println(stock.Top())
-	fmt.Println(stock.Empty())
 }
