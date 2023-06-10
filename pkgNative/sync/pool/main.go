@@ -1,1 +1,5 @@
-package pool
+package main
+
+func main() {
+	RunWithPool()
+}
