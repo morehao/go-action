@@ -1,6 +1,6 @@
 package main
 
-import "go-practict/leetcode/linkList"
+import "go-practict/dataStructure/linkList"
 
 /*
 双指针法

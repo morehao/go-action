@@ -2,8 +2,7 @@ package main
 
 import (
 	"fmt"
-
-	"go-practict/leetcode/linkList"
+	"go-practict/dataStructure/linkList"
 )
 
 func main() {

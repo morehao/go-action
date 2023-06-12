@@ -2,8 +2,7 @@ package main
 
 import (
 	"fmt"
-
-	"go-practict/leetcode/binaryTree"
+	"go-practict/dataStructure/binaryTree"
 )
 
 func main() {
