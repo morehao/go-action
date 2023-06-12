@@ -1,21 +1,5 @@
 package binaryTree
 
-func CreateBinaryTree(i int, nums []int) *TreeNode {
-	if nums[i] == 0 {
-		return nil
-	}
-	tree := &TreeNode{nums[i], nil, nil}
-	// 左节点的数组下标为1,3,5...2*i+1
-	if i < len(nums) && 2*i+1 < len(nums) {
-		tree.Left = CreateBinaryTree(2*i+1, nums)
-	}
-	// 右节点的数组下标为2,4,6...2*i+2
-	if i < len(nums) && 2*i+2 < len(nums) {
-		tree.Right = CreateBinaryTree(2*i+2, nums)
-	}
-	return tree
-}
-
 func (nd *TreeNode) Insert(newNode *TreeNode) {
 	if newNode.Val == nd.Val {
 		return
@@ -141,34 +125,4 @@ func (nd *TreeNode) LevelOrder() [][]int {
 		q = p
 	}
 	return ret
-}
-
-var index int
-
-func (nd *TreeNode) KthLargest(k int) int {
-	if nd == nil || k < 1 {
-		return -1
-	}
-	index = 0
-	node := convertSearch(nd, k)
-	return node.Val
-}
-func convertSearch(node *TreeNode, k int) *TreeNode {
-	if node.Right != nil {
-		Right := convertSearch(node.Right, k)
-		if Right != nil {
-			return Right
-		}
-	}
-	index++
-	if index == k {
-		return node
-	}
-	if node.Left != nil {
-		Left := convertSearch(node.Left, k)
-		if Left != nil {
-			return Left
-		}
-	}
-	return nil
 }

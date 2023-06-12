@@ -29,13 +29,13 @@
 - [用栈实现队列](queueImplement/main.go)
 
 # 二叉搜索树
-- [二叉搜索树的第k大节点](treeKth/main.go)
-- [二叉搜索树中序遍历](binaryTreeOrderTraversal/inorderTraversal/main.go)
-- [二叉搜索树先序遍历](binaryTreeOrderTraversal/preorderTraversal/main.go)
-- [二叉搜索树后序遍历](binaryTreeOrderTraversal/postOrderTraversal/main.go)
+- [144. 二叉树的前序遍历](preorderTraversal/main.go)
+- [94. 二叉树的中序遍历](inorderTraversal/main.go)
+- [145. 二叉树的后序遍历](postorderTraversal/main.go)
 - [二叉树按层遍历](binaryTreeOrderTraversal/levelOrder/main.go)
 - [二叉树的层序遍历 II](binaryTreeOrderTraversal/levelOrderBottom/main.go)
 - [N 叉树的后序遍历](nTreePostOrderTraversal/main.go)
+- [二叉搜索树的第k大节点](treeKth/main.go)
 - [二叉树按中序遍历的方式转换为链表]()
 - [删除二叉搜索树中的节点](deleteTreeNode/main.go)
 - [递增顺序搜索树](binaryTreeOrderTraversal/ineasingOrder/main.go)
