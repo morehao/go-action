@@ -75,42 +75,69 @@ func CreateBinaryTree(i int, nums []int) *TreeNode {
 	return tree
 }
 
-// BuildTree 输入一个切片 ：[3,9,20,0,0,15,7]
-func BuildTree(l []int) (root *TreeNode) {
-	length := len(l)
+// BuildTreeWithNums 输入一个切片 ：[3,9,20,0,0,15,7]
+func BuildTreeWithNums(nums []int) *TreeNode {
+	length := len(nums)
 	if length == 0 {
-		return root
+		return nil
 	}
-
-	var nodes = make([]*TreeNode, length)
-	root = &TreeNode{
-		Val: l[0],
+	root := &TreeNode{
+		Val: nums[0],
 	}
+	nodes := make([]*TreeNode, length)
 	nodes[0] = root
 	//循环输入的数组切片，依次判断每一个节点的左右节点是否存在并创建
 	for i := 0; i < length; i++ {
 		currentNode := nodes[i]
-
 		if currentNode == nil {
 			continue
 		}
-
-		leftIndex := 2*i + 1
-		if leftIndex < length && l[leftIndex] != 0 {
+		var (
+			leftIndex  = 2*i + 1
+			rightIndex = 2*i + 2
+		)
+		if leftIndex < length && nums[leftIndex] != 0 {
 			currentNode.Left = &TreeNode{
-				Val: l[leftIndex],
+				Val: nums[leftIndex],
 			}
 			nodes[leftIndex] = currentNode.Left
 		}
-
-		rightIndex := 2*i + 2
-		if rightIndex < length && l[rightIndex] != 0 {
+		if rightIndex < length && nums[rightIndex] != 0 {
 			currentNode.Right = &TreeNode{
-				Val: l[rightIndex],
+				Val: nums[rightIndex],
 			}
 			nodes[rightIndex] = currentNode.Right
 		}
 	}
+	return root
+}
 
+func BuildTreeWithDataList(dataList []interface{}) *TreeNode {
+	length := len(dataList)
+	if length == 0 {
+		return nil
+	}
+	root := newNodeFromData(dataList[0])
+	nodes := make([]*TreeNode, length)
+	nodes[0] = root
+	//循环输入的数组切片，依次判断每一个节点的左右节点是否存在并创建
+	for i := 0; i < length; i++ {
+		currentNode := nodes[i]
+		if currentNode == nil {
+			continue
+		}
+		var (
+			leftIndex  = 2*i + 1
+			rightIndex = 2*i + 2
+		)
+		if leftIndex < length && dataList[leftIndex] != nil {
+			currentNode.Left = newNodeFromData(dataList[leftIndex])
+			nodes[leftIndex] = currentNode.Left
+		}
+		if rightIndex < length && dataList[rightIndex] != nil {
+			currentNode.Right = newNodeFromData(dataList[rightIndex])
+			nodes[rightIndex] = currentNode.Right
+		}
+	}
 	return root
 }

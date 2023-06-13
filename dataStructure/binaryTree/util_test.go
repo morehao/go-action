@@ -15,8 +15,16 @@ func TestCreateBinaryTree(t *testing.T) {
 }
 
 func TestBuildTree(t *testing.T) {
-	arr := []int{1, 0, 2, 3}
-	tree := BuildTree(arr)
+	arr := []int{3, 9, 20, 0, 0, 15, 7}
+	tree := BuildTreeWithNums(arr)
+	treeByte, _ := jsoniter.Marshal(tree)
+	fmt.Println("tree string:", string(treeByte))
+	fmt.Println("tree level order:", tree.LevelOrder())
+}
+
+func TestBuildTreeWithDataList(t *testing.T) {
+	arr := []interface{}{3, 9, 20, nil, nil, 15, 7}
+	tree := BuildTreeWithDataList(arr)
 	treeByte, _ := jsoniter.Marshal(tree)
 	fmt.Println("tree string:", string(treeByte))
 	fmt.Println("tree level order:", tree.LevelOrder())
