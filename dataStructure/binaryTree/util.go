@@ -54,9 +54,14 @@ func newNodeFromData(val interface{}) *TreeNode {
 	}
 }
 
+// CreateBinaryTree
+// @Description: 通过数组创建一个完全二叉树
+// @param i 数组中元素下标
+// @param nums 数组
+// @return *TreeNode 完全二叉树节点
 func CreateBinaryTree(i int, nums []int) *TreeNode {
 	if nums[i] == 0 {
-		CreateBinaryTree(i+1, nums)
+		return nil
 	}
 	tree := &TreeNode{nums[i], nil, nil}
 	// 左节点的数组下标为1,3,5...2*i+1

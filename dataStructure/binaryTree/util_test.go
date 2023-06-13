@@ -7,7 +7,7 @@ import (
 )
 
 func TestCreateBinaryTree(t *testing.T) {
-	arr := []int{1, 0, 2, 3}
+	arr := []int{1, 2, 3}
 	tree := CreateBinaryTree(0, arr)
 	treeByte, _ := jsoniter.Marshal(tree)
 	fmt.Println("tree string:", string(treeByte))

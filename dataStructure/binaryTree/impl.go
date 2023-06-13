@@ -1,46 +1,46 @@
 package binaryTree
 
-func (nd *TreeNode) Insert(newNode *TreeNode) {
-	if newNode.Val == nd.Val {
+func (t *TreeNode) Insert(newNode *TreeNode) {
+	if newNode.Val == t.Val {
 		return
 	}
-	if newNode.Val > nd.Val {
-		if nd.Right == nil {
-			nd.Right = newNode
+	if newNode.Val > t.Val {
+		if t.Right == nil {
+			t.Right = newNode
 		} else {
-			nd.Right.Insert(newNode)
+			t.Right.Insert(newNode)
 		}
 	} else {
-		if nd.Left == nil {
-			nd.Left = newNode
+		if t.Left == nil {
+			t.Left = newNode
 		} else {
-			nd.Left.Insert(newNode)
+			t.Left.Insert(newNode)
 		}
 	}
 }
 
-func (nd *TreeNode) Search(value int) *TreeNode {
-	if nd == nil {
+func (t *TreeNode) Search(value int) *TreeNode {
+	if t == nil {
 		return nil
 	}
 	// 1、比较是否为当前节点
-	if value == nd.Val {
-		return nd
+	if value == t.Val {
+		return t
 	}
 	// 2、大于当前节点，递归右边
-	if value > nd.Val {
-		return nd.Right.Search(value)
+	if value > t.Val {
+		return t.Right.Search(value)
 	}
 	// 3、大于当前节点，递归左边
-	if value < nd.Val {
-		return nd.Left.Search(value)
+	if value < t.Val {
+		return t.Left.Search(value)
 	}
 	return nil
 }
 
 // Remove 删除一个元素.
-func (nd *TreeNode) Remove(value int) bool {
-	_, existed := remove(nd, value)
+func (t *TreeNode) Remove(value int) bool {
+	_, existed := remove(t, value)
 	return existed
 }
 
@@ -88,33 +88,33 @@ func remove(root *TreeNode, value int) (*TreeNode, bool) {
 	return root, existed
 }
 
-func (nd *TreeNode) Min() int {
-	if nd.Left == nil {
-		return nd.Val
+func (t *TreeNode) Min() int {
+	if t.Left == nil {
+		return t.Val
 	}
-	return nd.Left.Min()
+	return t.Left.Min()
 }
 
-func (nd *TreeNode) Max() int {
-	if nd.Right == nil {
-		return nd.Val
+func (t *TreeNode) Max() int {
+	if t.Right == nil {
+		return t.Val
 	}
-	return nd.Right.Max()
+	return t.Right.Max()
 }
 
 // 层序遍历
-func (nd *TreeNode) LevelOrder() [][]int {
-	var ret [][]int
-	if nd == nil {
-		return ret
+func (t *TreeNode) LevelOrder() [][]int {
+	var res [][]int
+	if t == nil {
+		return res
 	}
-	q := []*TreeNode{nd}
+	q := []*TreeNode{t}
 	for i := 0; len(q) > 0; i++ {
-		ret = append(ret, []int{})
+		res = append(res, []int{})
 		var p []*TreeNode
 		for j := 0; j < len(q); j++ {
 			node := q[j]
-			ret[i] = append(ret[i], node.Val)
+			res[i] = append(res[i], node.Val)
 			if node.Left != nil {
 				p = append(p, node.Left)
 			}
@@ -124,5 +124,23 @@ func (nd *TreeNode) LevelOrder() [][]int {
 		}
 		q = p
 	}
-	return ret
+	return res
+}
+
+func (t *TreeNode) InorderTraversal() []int {
+	if t == nil {
+		return nil
+	}
+	var fn func(node *TreeNode)
+	var res []int
+	fn = func(node *TreeNode) {
+		if node == nil {
+			return
+		}
+		fn(node.Left)
+		res = append(res, node.Val)
+		fn(node.Right)
+	}
+	fn(t)
+	return res
 }
