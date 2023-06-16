@@ -14,9 +14,6 @@ func main() {
 
 // 二叉树前序遍历，先访问根，然后遍历其左子树，最后遍历其右子树
 func preorderTraversal(root *binaryTree.TreeNode) []int {
-	if root == nil {
-		return nil
-	}
 	var res []int
 	var fn func(node *binaryTree.TreeNode)
 	fn = func(node *binaryTree.TreeNode) {

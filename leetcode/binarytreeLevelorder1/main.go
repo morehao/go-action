@@ -35,3 +35,29 @@ func levelOrder(root *binaryTree.TreeNode) []int {
 	}
 	return res
 }
+
+func levelOrder2(root *binaryTree.TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+	var (
+		res   []int
+		queue []*binaryTree.TreeNode
+	)
+	queue = append(queue, root)
+	for len(queue) > 0 {
+		var tempQueue []*binaryTree.TreeNode
+		for i := 0; i < len(queue); i++ {
+			node := queue[i]
+			res = append(res, node.Val)
+			if node.Left != nil {
+				tempQueue = append(tempQueue, node.Left)
+			}
+			if node.Right != nil {
+				tempQueue = append(tempQueue, node.Right)
+			}
+		}
+		queue = tempQueue
+	}
+	return res
+}

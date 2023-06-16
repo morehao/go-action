@@ -51,6 +51,13 @@
 
 # 剑指Offer Ⅰ
 
+## 二叉树
+- [剑指 Offer 32 - I. 从上到下打印二叉树（结果为一维数组）](binarytreeLevelorder1/main.go)
+- [剑指 Offer 32 - II. 从上到下打印二叉树 II（结果为二维数组）](binaryTreeLevelorder2/main.go)
+- [剑指 Offer 32 - III. 从上到下打印二叉树 III（返回结果为二维数组，奇数行正序访问，偶数行逆序访问）](binaryTreeLevelorder3/main.go)
+- [剑指 Offer 26. 树的子结构](binaryTreeIsSubStructure/main.go)
+
+
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
 - [剑指 Offer 04. 二维数组中的查找](findNumberIn2DArray/main.go)
 - [剑指 Offer 05. 替换空格](replaceSpace/main.go)
@@ -67,9 +74,6 @@
 - [剑指 Offer 29. 顺时针打印矩阵](spiralOrder/main.go)
 - [剑指 Offer 30. 包含min函数的栈](minStack/main.go),同[155. 最小栈](https://leetcode-cn.com/problems/min-stack/)
 - [剑指 Offer 31. 栈的压入、弹出序列](validateStackSequences/main.go)
-- [剑指 Offer 32 - I. 从上到下打印二叉树（结果为一维数组）](binarytreeLevelorder1/main.go)
-- [剑指 Offer 32 - II. 从上到下打印二叉树 II（结果为二维数组）](binaryTreeLevelorder2/main.go)
-- [剑指 Offer 32 - III. 从上到下打印二叉树 III（返回结果为二维数组，奇数行正序访问，偶数行逆序访问）](binaryTreeLevelorder3/main.go)
 - [剑指 Offer 35. 复杂链表的复制](copyRandomList/READMD.md),同[138. 复制带随机指针的链表](https://leetcode-cn.com/problems/copy-list-with-random-pointer/)
 - [剑指 Offer 42. 连续子数组的最大和](maxSubArray/main.go)
 - [剑指 Offer 50. 第一个只出现一次的字符](firstUniqChar/main.go)

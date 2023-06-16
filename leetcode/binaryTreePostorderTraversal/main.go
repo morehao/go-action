@@ -14,9 +14,6 @@ func main() {
 
 // 后序遍历，先遍历其左子树，然后遍历其右子树，最后访问根
 func postorderTraversal(root *binaryTree.TreeNode) []int {
-	if root == nil {
-		return nil
-	}
 	var fn func(node *binaryTree.TreeNode)
 	var res []int
 	fn = func(node *binaryTree.TreeNode) {

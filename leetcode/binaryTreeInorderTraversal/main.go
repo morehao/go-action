@@ -14,9 +14,6 @@ func main() {
 
 // 中序遍历，先遍历其左子树，然后访问根，最后遍历其右子树
 func inorderTraversal(root *binaryTree.TreeNode) []int {
-	if root == nil {
-		return nil
-	}
 	var fn func(node *binaryTree.TreeNode)
 	var res []int
 	fn = func(node *binaryTree.TreeNode) {
