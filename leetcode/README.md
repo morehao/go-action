@@ -59,6 +59,7 @@
 - [剑指 Offer 27. 二叉树的镜像](binaryTreeMirrorTree/main.go)
 - [剑指 Offer 28. 对称的二叉树](binaryTreeIsSymmetric/main.go)
 - [剑指 Offer 12. 矩阵中的路径](matrixStringExist/main.go)，同[79. 单词搜索]()
+- [剑指 Offer 13. 机器人的运动范围](robotMovingCount/main.go)
 
 
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)

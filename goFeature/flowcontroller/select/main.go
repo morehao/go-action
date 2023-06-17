@@ -34,8 +34,8 @@ func caseFn() {
 
 	select {
 	// 表达式必须是channel的接收操作或写入操作
-	case 3 == 3:
-		fmt.Println("equal")
+	// case 3 == 3:
+	// 	fmt.Println("equal")
 	case v := <-ch:
 		fmt.Print(v)
 	case ch2 <- 10:
