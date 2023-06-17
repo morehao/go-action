@@ -51,13 +51,14 @@
 
 # 剑指Offer Ⅰ
 
-## 二叉树
+## 搜索与回溯算法
 - [剑指 Offer 32 - I. 从上到下打印二叉树（结果为一维数组）](binarytreeLevelorder1/main.go)
 - [剑指 Offer 32 - II. 从上到下打印二叉树 II（结果为二维数组）](binaryTreeLevelorder2/main.go)
 - [剑指 Offer 32 - III. 从上到下打印二叉树 III（返回结果为二维数组，奇数行正序访问，偶数行逆序访问）](binaryTreeLevelorder3/main.go)
 - [剑指 Offer 26. 树的子结构](binaryTreeIsSubStructure/main.go)
 - [剑指 Offer 27. 二叉树的镜像](binaryTreeMirrorTree/main.go)
 - [剑指 Offer 28. 对称的二叉树](binaryTreeIsSymmetric/main.go)
+- [剑指 Offer 12. 矩阵中的路径](matrixStringExist/main.go)，同[79. 单词搜索]()
 
 
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)

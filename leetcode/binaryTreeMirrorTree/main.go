@@ -6,9 +6,8 @@ func mirrorTree(root *binaryTree.TreeNode) *binaryTree.TreeNode {
 	if root == nil {
 		return nil
 	}
-	left := mirrorTree(root.Left)
-	right := mirrorTree(root.Right)
-	root.Left = right
-	root.Right = left
+	root.Left, root.Right = root.Right, root.Left
+	mirrorTree(root.Left)
+	mirrorTree(root.Right)
 	return root
 }

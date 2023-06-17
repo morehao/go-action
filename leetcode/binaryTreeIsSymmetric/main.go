@@ -19,5 +19,6 @@ func check(a, b *binaryTree.TreeNode) bool {
 	if a.Val != b.Val {
 		return false
 	}
+	// 对称
 	return check(a.Left, b.Right) && check(a.Right, b.Left)
 }

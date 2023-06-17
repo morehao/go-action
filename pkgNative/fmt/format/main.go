@@ -67,7 +67,7 @@ func fmtPrintf() {
 	fmt.Printf("%+v\n", animals)
 
 	var animals2 []Animal
-	var json_iterator = jsoniter.ConfigCompatibleWithStandardLibrary
-	json_iterator.Unmarshal(jsonBlob, &animals2)
+	var jsonIterator = jsoniter.ConfigCompatibleWithStandardLibrary
+	_ = jsonIterator.Unmarshal(jsonBlob, &animals2)
 	fmt.Printf("%+v\n", animals2)
 }
