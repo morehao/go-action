@@ -6,8 +6,8 @@ import (
 )
 
 func main() {
-	nums := []int{1, 0, 2, 3}
-	root := binaryTree.CreateBinaryTree(0, nums)
+	nums := []int{5, 4, 8, 11, 0, 13, 4, 7, 2, 0, 0, 5, 1}
+	root := binaryTree.BuildTreeWithNums(nums)
 	fmt.Println(root)
 	fmt.Println(inorderTraversal(root))
 }
