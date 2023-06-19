@@ -63,6 +63,8 @@
 - [剑指 Offer 34. 二叉树中和为某一值的路径](binaryTreePathSum/main.go)，同[113. 路径总和 II](https://leetcode.cn/problems/path-sum-ii/)
 - [剑指 Offer 54. 二叉搜索树的第k大节点](binaryTreeKthLargest/main.go)
 - [剑指 Offer 55 - I. 二叉树的深度](binaryTreeMaxDepth/main.go)，同[104. 二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/submissions/)
+- [剑指 Offer 55 - II. 平衡二叉树](binaryTreeIsBalance/main.go)，同[110. 平衡二叉树](https://leetcode.cn/problems/balanced-binary-tree/)
+- [剑指 Offer 64. 求1+2+…+n](sumNums/main.go)
 
 
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
