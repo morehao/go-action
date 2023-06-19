@@ -28,11 +28,11 @@ func sum(x, y int) int {
 	return s
 }
 func dfs(i, j, m, n, k int, visited *[100][100]bool) (ans int) {
-	// 超出边界||已访问过
+	// 超出边界||大于K||已访问过
 	if i > m || j > n || sum(i, j) > k || visited[i][j] {
 		return 0
 	}
-	// 当前左边可达
+	// 当前坐标可达
 	visited[i][j] = true
 	// 坐标继续向右（j+1）和向下（i+1）
 	return 1 + dfs(i+1, j, m, n, k, visited) + dfs(i, j+1, m, n, k, visited)

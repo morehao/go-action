@@ -62,6 +62,7 @@
 - [剑指 Offer 13. 机器人的运动范围](robotMovingCount/main.go)
 - [剑指 Offer 34. 二叉树中和为某一值的路径](binaryTreePathSum/main.go)，同[113. 路径总和 II](https://leetcode.cn/problems/path-sum-ii/)
 - [剑指 Offer 54. 二叉搜索树的第k大节点](binaryTreeKthLargest/main.go)
+- [剑指 Offer 55 - I. 二叉树的深度](binaryTreeMaxDepth/main.go)，同[104. 二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/submissions/)
 
 
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
