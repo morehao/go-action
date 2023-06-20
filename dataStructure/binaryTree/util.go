@@ -1,35 +1,25 @@
 package binaryTree
 
-// 将数组转为二叉树
-func ArrayToTree(data []interface{}) *TreeNode {
+// BuildTreeWithArray
+// @Description: 通过interface数组构建二叉树
+// @param data interface数组
+// @return *TreeNode 构建好的二叉树
+func BuildTreeWithArray(data []interface{}) *TreeNode {
 	if len(data) == 0 {
 		return nil
 	}
-	root := &TreeNode{}
-	switch t := data[0].(type) {
-	case int:
-		root.Val = t
-	case nil:
-		return nil
-	default:
-		panic("Unknown element type")
-	}
-
-	queue := make([]*TreeNode, 1)
-	queue[0] = root
-
+	root := newNodeFromData(data[0])
+	queue := []*TreeNode{root}
 	data = data[1:]
 	for len(data) > 0 && len(queue) > 0 {
 		node := queue[0]
 		queue = queue[1:]
-
 		// 左侧节点
 		node.Left = newNodeFromData(data[0])
 		if node.Left != nil {
 			queue = append(queue, node.Left)
 		}
 		data = data[1:]
-
 		// 右侧节点
 		if len(data) > 0 {
 			node.Right = newNodeFromData(data[0])
@@ -86,7 +76,7 @@ func BuildTreeWithNums(nums []int) *TreeNode {
 	}
 	nodes := make([]*TreeNode, length)
 	nodes[0] = root
-	//循环输入的数组切片，依次判断每一个节点的左右节点是否存在并创建
+	// 循环输入的数组切片，依次判断每一个节点的左右节点是否存在并创建
 	for i := 0; i < length; i++ {
 		currentNode := nodes[i]
 		if currentNode == nil {
@@ -120,7 +110,7 @@ func BuildTreeWithDataList(dataList []interface{}) *TreeNode {
 	root := newNodeFromData(dataList[0])
 	nodes := make([]*TreeNode, length)
 	nodes[0] = root
-	//循环输入的数组切片，依次判断每一个节点的左右节点是否存在并创建
+	// 循环输入的数组切片，依次判断每一个节点的左右节点是否存在并创建
 	for i := 0; i < length; i++ {
 		currentNode := nodes[i]
 		if currentNode == nil {

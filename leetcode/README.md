@@ -67,6 +67,7 @@
 - [剑指 Offer 64. 求1+2+…+n](sumNums/main.go)
 - [剑指 Offer 68 - I. 二叉搜索树的最近公共祖先](binaryTreeLowestCommonAncestor/main.go)，同[235. 二叉搜索树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/)
 - [剑指 Offer 68 - II. 二叉树的最近公共祖先（一个节点也可以是它自己的祖先）](binaryTreeLowestCommonAncestor2/main.go)，同[236. 二叉树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/submissions/)
+- [剑指 Offer 37. 序列化二叉树](binaryTreeSerialize/main.go)，同[297. 二叉树的序列化与反序列化](https://leetcode.cn/problems/serialize-and-deserialize-binary-tree/)
 
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
 - [剑指 Offer 04. 二维数组中的查找](findNumberIn2DArray/main.go)

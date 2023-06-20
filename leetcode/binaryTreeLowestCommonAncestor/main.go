@@ -7,7 +7,7 @@ import (
 
 func main() {
 	nums := []interface{}{3, 9, 20, nil, nil, 15, 7}
-	root := binaryTree.ArrayToTree(nums)
+	root := binaryTree.BuildTreeWithArray(nums)
 	fmt.Println(root.LevelOrder())
 	fmt.Println(lowestCommonAncestor(nil, nil, nil))
 }
