@@ -7,6 +7,7 @@ func main() {
 	fmt.Println(numWays(n))
 }
 
+// 动态规划，同斐波那契数列
 func numWays(n int) int {
 	if n <= 1 {
 		return 1

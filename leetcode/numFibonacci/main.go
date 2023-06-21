@@ -16,6 +16,7 @@ func fib(n int) int {
 	return fib(n-1) + fib(n-2)
 }
 
+// 动态规划
 func fib2(n int) int {
 	// 需要取模时
 	const mod int = 1e9 + 7
