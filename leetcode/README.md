@@ -22,7 +22,7 @@
 - [数组排序](../sortAlgorithm/README.md)
 - [两数之和](twoSum/main.go)
 - [滑动窗口最大值](maxSlidingWindow/main.go)
-- [连续子数组的最大和](maxSubArray/main.go)
+- [连续子数组的最大和](arrayMaxSubArray/main.go)
 - [子集](subSets/main.go)
 
 # 栈
@@ -74,6 +74,7 @@
 - [剑指 Offer 10- I. 斐波那契数列](numFibonacci/main.go)
 - [剑指 Offer 10- II. 青蛙跳台阶问题](numWays/main.go)，同[70. 爬楼梯](https://leetcode.cn/problems/climbing-stairs/)
 - [剑指 Offer 63. 股票的最大利润](arrayMaxProfit/main.go)，同[121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)
+- [剑指 Offer 42. 连续子数组的最大和](arrayMaxSubArray/main.go)，同[53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/)
 
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
 - [剑指 Offer 04. 二维数组中的查找](findNumberIn2DArray/main.go)
@@ -91,7 +92,6 @@
 - [剑指 Offer 30. 包含min函数的栈](minStack/main.go),同[155. 最小栈](https://leetcode-cn.com/problems/min-stack/)
 - [剑指 Offer 31. 栈的压入、弹出序列](validateStackSequences/main.go)
 - [剑指 Offer 35. 复杂链表的复制](copyRandomList/READMD.md),同[138. 复制带随机指针的链表](https://leetcode-cn.com/problems/copy-list-with-random-pointer/)
-- [剑指 Offer 42. 连续子数组的最大和](maxSubArray/main.go)
 - [剑指 Offer 50. 第一个只出现一次的字符](firstUniqChar/main.go)
 - [剑指 Offer 52. 两个链表的第一个公共节点](getIntersectionNode/main.go),同[160. 相交链表]()
 - [剑指 Offer 53 - I. 在排序数组中查找数字 I](searchTargetCnt/main.go)，同[34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
