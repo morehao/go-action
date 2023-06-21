@@ -8,7 +8,7 @@
 - [最长公共子序列](longestSubstring/main.go)
 - [字符串替换问题](./q5/README.md)
 - [机器人坐标问题](./q6/README.md)
-- [斐波那切数列](./fibonacci/main.go)
+- [斐波那切数列](numFibonacci/main.go)
 - [字符串压缩](stringCompress/main.go)
 - [有效的括号](validParentheses/main.go)
 
@@ -70,12 +70,16 @@
 - [剑指 Offer 37. 序列化二叉树](binaryTreeSerialize/main.go)，同[297. 二叉树的序列化与反序列化](https://leetcode.cn/problems/serialize-and-deserialize-binary-tree/)
 - [剑指 Offer 38. 字符串的排列](stringPermutation/main.go)
 
+## 动态规划
+- [剑指 Offer 10- I. 斐波那契数列](numFibonacci/main.go)
+- [剑指 Offer 10- II. 青蛙跳台阶问题](numWays/main.go)，同[70. 爬楼梯](https://leetcode.cn/problems/climbing-stairs/)
+
+
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
 - [剑指 Offer 04. 二维数组中的查找](findNumberIn2DArray/main.go)
 - [剑指 Offer 05. 替换空格](replaceSpace/main.go)
 - [剑指 Offer 06. 从尾到头打印链表](linkListScan/main.go)
 - [剑指 Offer 09. 用两个栈实现队列](queueImplement/main.go)
-- [剑指 Offer 10- I. 斐波那契数列](fibonacci/main.go)
 - [剑指 Offer 11. 旋转数组的最小数字](minArray/main.go)
 - [剑指 Offer 18. 删除链表的节点](deleteNode/main.go)
 - [剑指 Offer 20. 表示数值的字符串](desNumByStr/main.go)

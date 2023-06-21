@@ -16,6 +16,7 @@ func permutation(s string) []string {
 	dfs = func(x int) {
 		if x == len(sBytes)-1 {
 			res = append(res, string(sBytes))
+			return
 		}
 		dict := map[byte]bool{}
 		for i := x; i < len(sBytes); i++ {
