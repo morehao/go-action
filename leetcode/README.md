@@ -78,6 +78,7 @@
 - [剑指 Offer 47. 礼物的最大价值](arrayMaxValue/main.go)
 - [剑指 Offer 46. 把数字翻译成字符串](numTranslateNum/main.go)
 - [剑指 Offer 48. 最长不含重复字符的子字符串](stringLongestSubstring/main.go)，同[3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
+- [剑指 Offer 49. 丑数](numNthUglyNumber/main.go)，同[264. 丑数 II](https://leetcode.cn/problems/ugly-number-ii/)
 
 
 
