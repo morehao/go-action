@@ -5,7 +5,7 @@
 - [判断字符串中字符是否全都不同](./q2/README.md)
 - [翻转字符串](./q3/README.md)
 - [判断两个给定的字符串排序后是否一致](./q4/README.md)
-- [最长公共子序列](longestSubstring/main.go)
+- [3. 无重复字符的最长子串](stringLongestSubstring/main.go)
 - [字符串替换问题](./q5/README.md)
 - [机器人坐标问题](./q6/README.md)
 - [斐波那切数列](numFibonacci/main.go)
@@ -77,6 +77,7 @@
 - [剑指 Offer 42. 连续子数组的最大和](arrayMaxSubArray/main.go)，同[53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/)
 - [剑指 Offer 47. 礼物的最大价值](arrayMaxValue/main.go)
 - [剑指 Offer 46. 把数字翻译成字符串](numTranslateNum/main.go)
+- [剑指 Offer 48. 最长不含重复字符的子字符串](stringLongestSubstring/main.go)，同[3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
 
 
 
