@@ -19,7 +19,7 @@
 - [删除有序数组中的重复项](removeDuplicates/main.go)
 - [山峰数组的顶部](mountainArrayTop/main.go)
 - [二分查找](binarySearch/main.go)
-- [数组排序](../sortAlgorithm/README.md)
+- [数组排序](../algorithm/sortAlgorithm/README.md)
 - [两数之和](twoSum/main.go)
 - [滑动窗口最大值](maxSlidingWindow/main.go)
 - [连续子数组的最大和](arrayMaxSubArray/main.go)

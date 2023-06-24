@@ -1,45 +1,40 @@
 package main
 
+import (
+	"fmt"
+	"math"
+)
+
 func main() {
+	var arr = []int{19, 8, 16, 15, 23, 34, 6, 3, 1, 0, 2, 9, 7}
+	fmt.Println(sortArray(arr))
 }
 
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
-// 创建二叉树
-func CreateBinaryTree(i int, nums []int) *TreeNode {
-	if len(nums) == 0 || nums[i] == 0 {
-		return nil
+func sortArray(nums []int) []int {
+	size := len(nums)
+	if size <= 1 {
+		return nums
 	}
-	tree := &TreeNode{
-		Val: nums[i],
-	}
-	if i < len(nums) && 2*i+1 < len(nums) {
-		tree.Left = CreateBinaryTree(2*i+1, nums)
-	}
-	if i < len(nums) && 2*i+2 < len(nums) {
-		tree.Left = CreateBinaryTree(2*i+2, nums)
-	}
-	return tree
-}
-
-func PreLevelOrder(root *TreeNode) []int {
-	if root == nil {
-		return nil
-	}
-	var res []int
-	var fn func(node *TreeNode)
-	fn = func(node *TreeNode) {
-		if node == nil {
-			return
+	max, min := math.MinInt, math.MaxInt
+	for _, v := range nums {
+		if v > max {
+			max = v
 		}
-		res = append(res, node.Val)
-		fn(node.Left)
-		fn(node.Right)
+		if v < min {
+			min = v
+		}
 	}
-	fn(root)
-	return res
+	countList := make([]int, max-min+1)
+	for _, v := range nums {
+		countList[v-min]++
+	}
+	index := 0
+	for i, v := range countList {
+		for v > 0 {
+			nums[index] = i + min
+			v--
+			index++
+		}
+	}
+	return nums
 }
