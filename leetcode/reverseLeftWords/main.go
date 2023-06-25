@@ -16,4 +16,5 @@ func reverseLeftWords(s string, n int) string {
 	res = append(res, str[n:]...)
 	res = append(res, str[:n]...)
 	return string(res)
+	// return s[n:]+s[:n]
 }

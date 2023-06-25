@@ -15,41 +15,32 @@ func main() {
 	numberCh, letterCh, doneCh := make(chan struct{}), make(chan struct{}), make(chan struct{})
 	go func() {
 		i := 1
-		for {
-			select {
-			case <-numberCh:
-				fmt.Print(i)
-				i++
-				fmt.Print(i)
-				i++
-				letterCh <- struct{}{}
-			}
+		for range numberCh {
+			fmt.Print(i)
+			i++
+			fmt.Print(i)
+			i++
+			letterCh <- struct{}{}
 		}
 	}()
 	go func() {
 		i := 'A'
-		for {
-			select {
-			case <-letterCh:
-				if i >= 'Z' {
-					doneCh <- struct{}{}
-				} else {
-					fmt.Print(string(i))
-					i++
-					fmt.Print(string(i))
-					i++
-					numberCh <- struct{}{}
-				}
-
+		for range letterCh {
+			if i >= 'Z' {
+				doneCh <- struct{}{}
+			} else {
+				fmt.Print(string(i))
+				i++
+				fmt.Print(string(i))
+				i++
+				numberCh <- struct{}{}
 			}
 		}
 	}()
 	numberCh <- struct{}{}
-	for {
-		select {
-		case <-doneCh:
-			return
-		}
+	// for range doneCh 等同于 for { select { case <-doneCh } }
+	for range doneCh {
+		return
 	}
 
 }

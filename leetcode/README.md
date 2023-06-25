@@ -50,6 +50,11 @@
 - [计数质数](primeNumberCount/main.go)
 
 # 剑指Offer Ⅰ
+## 字符串
+- [剑指 Offer 05. 替换空格](replaceSpace/main.go)（简单）
+- [剑指 Offer 58 - II. 左旋转字符串](reverseLeftWords/main.go)（简单）
+- [剑指 Offer 20. 表示数值的字符串](desNumByStr/main.go)（中等）
+- [剑指 Offer 67. 把字符串转换成整数](strToInt/main.go)（中等）
 
 ## 搜索与回溯算法
 - [剑指 Offer 32 - I. 从上到下打印二叉树（结果为一维数组）](binarytreeLevelorder1/main.go)
@@ -89,12 +94,10 @@
 
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
 - [剑指 Offer 04. 二维数组中的查找](findNumberIn2DArray/main.go)
-- [剑指 Offer 05. 替换空格](replaceSpace/main.go)
 - [剑指 Offer 06. 从尾到头打印链表](linkListScan/main.go)
 - [剑指 Offer 09. 用两个栈实现队列](queueImplement/main.go)
 - [剑指 Offer 11. 旋转数组的最小数字](minArray/main.go)
 - [剑指 Offer 18. 删除链表的节点](deleteNode/main.go)
-- [剑指 Offer 20. 表示数值的字符串](desNumByStr/main.go)
 - [剑指 Offer 21. 调整数组顺序使奇数位于偶数前面](exchange/main.go)
 - [剑指 Offer 22. 链表中倒数第k个节点](getKthFromEnd/main.go)
 - [剑指 Offer 24. 反转链表](linkListReverse/main.go)，同[206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/)
@@ -109,10 +112,9 @@
 - [剑指 Offer 53 - II. 0～n-1中缺失的数字](missingNumber/main.go)
 - [剑指 Offer 57. 和为s的两个数字](twoSum/main.go)
 - [剑指 Offer 58 - I. 翻转单词顺序](reverseWords/main.go)
-- [剑指 Offer 58 - II. 左旋转字符串](reverseLeftWords/main.go)
 - [剑指 Offer 59 - I. 滑动窗口的最大值](maxSlidingWindow/main.go)
 - [剑指 Offer 59 - II. 队列的最大值](maxQueue/main.go)
-- [剑指 Offer 67. 把字符串转换成整数](strToInt/main.go)
+
 
 # 剑指Offer Ⅱ
 
