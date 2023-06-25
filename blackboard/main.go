@@ -1,14 +1,50 @@
 package main
 
-import (
-	"fmt"
-	"sort"
-)
+import "fmt"
 
 func main() {
-	var arr = []int{10, 2}
-	sort.Slice(arr, func(i, j int) bool {
-		return arr[i] < arr[j]
-	})
-	fmt.Println(arr)
+	number := make(chan bool)
+	letter := make(chan bool)
+	done := make(chan bool)
+
+	go func() {
+		i := 1
+		for {
+			select {
+			case <-number:
+				fmt.Print(i)
+				i++
+				fmt.Print(i)
+				i++
+				letter <- true
+			}
+		}
+	}()
+
+	go func() {
+		j := 'A'
+		for {
+			select {
+			case <-letter:
+				if j >= 'Z' {
+					done <- true
+				} else {
+					fmt.Print(string(j))
+					j++
+					fmt.Print(string(j))
+					j++
+					number <- true
+				}
+			}
+		}
+	}()
+
+	number <- true
+
+	for {
+		select {
+		case <-done:
+			return
+		}
+	}
 }
