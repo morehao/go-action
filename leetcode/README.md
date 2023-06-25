@@ -72,6 +72,7 @@
 
 ## 排序
 - [剑指 Offer 45. 把数组排成最小的数](numMinNumber/main.go)
+- [剑指 Offer 61. 扑克牌中的顺子](numIsStraight/main.go)
 
 ## 动态规划
 - [剑指 Offer 10- I. 斐波那契数列](numFibonacci/main.go)
