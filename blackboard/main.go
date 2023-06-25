@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 func main() {
@@ -15,26 +14,29 @@ func sortArray(nums []int) []int {
 	if size <= 1 {
 		return nums
 	}
-	max, min := math.MinInt, math.MaxInt
-	for _, v := range nums {
-		if v > max {
-			max = v
-		}
-		if v < min {
-			min = v
-		}
-	}
-	countList := make([]int, max-min+1)
-	for _, v := range nums {
-		countList[v-min]++
-	}
-	index := 0
-	for i, v := range countList {
-		for v > 0 {
-			nums[index] = i + min
-			v--
-			index++
+	mid := size / 2
+	return merge(sortArray(nums[:mid]), sortArray(nums[mid:]))
+}
+
+func merge(a, b []int) []int {
+	i, j := 0, 0
+	res := make([]int, len(a)+len(b))
+	for i < len(a) && j < len(b) {
+		if a[i] < b[j] {
+			res[i+j] = a[i]
+			i++
+		} else {
+			res[i+j] = b[j]
+			j++
 		}
 	}
-	return nums
+	for i < len(a) {
+		res[i+j] = a[i]
+		i++
+	}
+	for j < len(b) {
+		res[i+j] = b[j]
+		j++
+	}
+	return res
 }

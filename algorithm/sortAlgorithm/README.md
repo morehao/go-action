@@ -7,3 +7,4 @@
 - [快速排序](quickSort/main.go)
 - [归并排序](mergeSort/main.go)
 - [堆排序](heapSort/main.go)
+- [记数排序](countSort/main.go)

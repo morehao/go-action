@@ -20,10 +20,12 @@ func insertSortAsc(nums []int) []int {
 	for i := range nums {
 		currentItem := nums[i]
 		j := i
+		// 逆向遍历，nums[j-1] > currentItem表示前面的大于后面的
 		for j > 0 && nums[j-1] > currentItem {
 			nums[j] = nums[j-1]
 			j--
 		}
+		// 直到找到已排序的元素小于或者等于新元素的位置
 		nums[j] = currentItem
 	}
 	return nums

@@ -21,6 +21,7 @@ func sortArray(nums []int) []int {
 
 func partition(nums []int, start, end int) {
 	i, j := start, end
+	// 选出基准数
 	midValue := nums[(start+end)/2]
 	for i <= j {
 		for nums[i] < midValue {
@@ -29,6 +30,7 @@ func partition(nums []int, start, end int) {
 		for nums[j] > midValue {
 			j--
 		}
+		// 上面操作结束后，如果仍然i<=j，说明左边有大于中值的右边有小于中值的，交换位置
 		if i <= j {
 			nums[i], nums[j] = nums[j], nums[i]
 			i++
@@ -41,5 +43,4 @@ func partition(nums []int, start, end int) {
 	if j > start {
 		partition(nums, start, j)
 	}
-	return
 }
