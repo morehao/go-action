@@ -2,41 +2,13 @@ package main
 
 import (
 	"fmt"
+	"sort"
 )
 
 func main() {
-	var arr = []int{19, 8, 16, 15, 23, 34, 6, 3, 1, 0, 2, 9, 7}
-	fmt.Println(sortArray(arr))
-}
-
-func sortArray(nums []int) []int {
-	size := len(nums)
-	if size <= 1 {
-		return nums
-	}
-	mid := size / 2
-	return merge(sortArray(nums[:mid]), sortArray(nums[mid:]))
-}
-
-func merge(a, b []int) []int {
-	i, j := 0, 0
-	res := make([]int, len(a)+len(b))
-	for i < len(a) && j < len(b) {
-		if a[i] < b[j] {
-			res[i+j] = a[i]
-			i++
-		} else {
-			res[i+j] = b[j]
-			j++
-		}
-	}
-	for i < len(a) {
-		res[i+j] = a[i]
-		i++
-	}
-	for j < len(b) {
-		res[i+j] = b[j]
-		j++
-	}
-	return res
+	var arr = []int{10, 2}
+	sort.Slice(arr, func(i, j int) bool {
+		return arr[i] < arr[j]
+	})
+	fmt.Println(arr)
 }
