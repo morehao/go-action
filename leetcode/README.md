@@ -1,6 +1,5 @@
 
 # 字符串
-- [交替打印数字和字母](./q1/README.md)
 - [交替合并字符串](mergeSreingAlternately/main.go)
 - [判断字符串中字符是否全都不同](./q2/README.md)
 - [翻转字符串](./q3/README.md)
