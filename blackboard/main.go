@@ -3,48 +3,38 @@ package main
 import "fmt"
 
 func main() {
-	number := make(chan bool)
-	letter := make(chan bool)
-	done := make(chan bool)
+	fn()
+}
 
+func fn() {
+	numberCh, letterCh, doneCh := make(chan struct{}), make(chan struct{}), make(chan struct{})
 	go func() {
 		i := 1
-		for {
-			select {
-			case <-number:
-				fmt.Print(i)
-				i++
-				fmt.Print(i)
-				i++
-				letter <- true
-			}
+		for range numberCh {
+			fmt.Print(i)
+			i++
+			fmt.Print(i)
+			i++
+			letterCh <- struct{}{}
 		}
 	}()
-
 	go func() {
-		j := 'A'
-		for {
-			select {
-			case <-letter:
-				if j >= 'Z' {
-					done <- true
-				} else {
-					fmt.Print(string(j))
-					j++
-					fmt.Print(string(j))
-					j++
-					number <- true
-				}
+		i := 'A'
+		for range letterCh {
+			if i >= 'Z' {
+				doneCh <- struct{}{}
+			} else {
+				fmt.Print(string(i))
+				i++
+				fmt.Print(string(i))
+				i++
+				numberCh <- struct{}{}
 			}
 		}
 	}()
-
-	number <- true
-
-	for {
-		select {
-		case <-done:
-			return
-		}
+	numberCh <- struct{}{}
+	for range doneCh {
+		return
 	}
+
 }

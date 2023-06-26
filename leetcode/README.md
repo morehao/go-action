@@ -74,6 +74,9 @@
 - [剑指 Offer 37. 序列化二叉树](binaryTreeSerialize/main.go)，同[297. 二叉树的序列化与反序列化](https://leetcode.cn/problems/serialize-and-deserialize-binary-tree/)
 - [剑指 Offer 38. 字符串的排列](stringPermutation/main.go)
 
+## 分治算法
+- [剑指 Offer 07. 重建二叉树](binaryTreeBuildTree/main.go)，同[105. 从前序与中序遍历序列构造二叉树](https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)（中等）
+
 ## 排序
 - [剑指 Offer 45. 把数组排成最小的数](numMinNumber/main.go)
 - [剑指 Offer 61. 扑克牌中的顺子](numIsStraight/main.go)
