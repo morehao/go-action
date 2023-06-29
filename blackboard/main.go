@@ -1,29 +1,19 @@
 package main
 
-import (
-	"fmt"
-	"time"
-)
+import "fmt"
 
 func main() {
-	var count int
-	process := func(i int, fn func()) {
-		for {
-			if count == i {
-				fn()
-				count++
-				break
-			}
-			time.Sleep(time.Nanosecond)
-		}
+	s := []int{1, 2, 3}
+	ReverseList[int](s)
+	fmt.Print(s)
+}
+
+func ReverseList[T any](s []T) {
+	first := 0
+	last := len(s) - 1
+	for first < last {
+		s[first], s[last] = s[last], s[first]
+		first++
+		last--
 	}
-	for i := 0; i < 10; i++ {
-		go func(i int) {
-			fn := func() {
-				fmt.Println(i)
-			}
-			process(i, fn)
-		}(i)
-	}
-	process(10, func() {})
 }
