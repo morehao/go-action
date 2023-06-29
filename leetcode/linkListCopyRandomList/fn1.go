@@ -18,6 +18,7 @@ func deepCopy(node *Node) *Node {
 	return newNode
 }
 
+// 回溯 + 哈希表
 func copyRandomList1(head *Node) *Node {
 	return deepCopy(head)
 }

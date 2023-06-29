@@ -1,40 +1,40 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+	"strings"
+)
 
 func main() {
-	var arr = []int{19, 8, 16, 15, 23, 34, 6, 3, 1, 0, 2, 9, 7}
-	fmt.Println(sortArr(arr))
+	s := "43"
+	fmt.Println(strToInt(s))
 }
 
-func sortArr(nums []int) []int {
-	size := len(nums)
-	if size < 2 {
-		return nums
+func strToInt(str string) int {
+	newStr := strings.TrimSpace(str)
+	if len(newStr) == 0 {
+		return 0
 	}
-	mid := size / 2
-	return merge(sortArr(nums[:mid]), sortArr(nums[mid:]))
-}
-
-func merge(a, b []int) []int {
-	i, j := 0, 0
-	res := make([]int, len(a)+len(b))
-	for i < len(a) && j < len(b) {
-		if a[i] < b[j] {
-			res[i+j] = a[i]
-			i++
-		} else {
-			res[i+j] = b[j]
-			j++
+	res, i, intSign := 0, 1, 1
+	if newStr[0] == '-' {
+		intSign = -1
+	} else if newStr[0] != '+' {
+		i = 0
+	}
+	max, min, boundary := math.MinInt32, math.MinInt32, math.MinInt32/10
+	for _, v := range newStr[i:] {
+		if !(v >= '0' && v <= '9') {
+			break
 		}
+		if res > boundary || (res == boundary && v > '7') {
+			if intSign == 1 {
+				return max
+			} else {
+				return min
+			}
+		}
+		res = res*10 + int(v-'0')
 	}
-	for i < len(a) {
-		res[i+j] = a[i]
-		i++
-	}
-	for j < len(b) {
-		res[i+j] = b[j]
-		j++
-	}
-	return res
+	return intSign * res
 }

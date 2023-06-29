@@ -55,6 +55,16 @@
 - [剑指 Offer 20. 表示数值的字符串](desNumByStr/main.go)（中等）
 - [剑指 Offer 67. 把字符串转换成整数](strToInt/main.go)（中等）
 
+## 链表
+- [剑指 Offer 06. 从尾到头打印链表](linkListScan/main.go)（简单）
+- [剑指 Offer 24. 反转链表](linkListReverse/main.go)，同[206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/)（简单）
+- [剑指 Offer 35. 复杂链表的复制](linkListCopyRandomList/READMD.md),同[138. 复制带随机指针的链表](https://leetcode-cn.com/problems/copy-list-with-random-pointer/)（中等）
+
+## 双指针
+- [剑指 Offer 18. 删除链表的节点](deleteNode/main.go)（简单）
+- [剑指 Offer 22. 链表中倒数第k个节点](getKthFromEnd/main.go)（简单）
+
+
 ## 搜索与回溯算法
 - [剑指 Offer 32 - I. 从上到下打印二叉树（结果为一维数组）](binarytreeLevelorder1/main.go)
 - [剑指 Offer 32 - II. 从上到下打印二叉树 II（结果为二维数组）](binaryTreeLevelorder2/main.go)
@@ -101,20 +111,19 @@
 - [剑指 Offer 57 - II. 和为s的连续正数序列](numFindContinuousSequence/main.go)（简单）
 - [剑指 Offer 62. 圆圈中最后剩下的数字](numLastRemaining/main.go)（简单）
 
+
+
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
 - [剑指 Offer 04. 二维数组中的查找](findNumberIn2DArray/main.go)
-- [剑指 Offer 06. 从尾到头打印链表](linkListScan/main.go)
 - [剑指 Offer 09. 用两个栈实现队列](queueImplement/main.go)
 - [剑指 Offer 11. 旋转数组的最小数字](minArray/main.go)
-- [剑指 Offer 18. 删除链表的节点](deleteNode/main.go)
+
 - [剑指 Offer 21. 调整数组顺序使奇数位于偶数前面](exchange/main.go)
-- [剑指 Offer 22. 链表中倒数第k个节点](getKthFromEnd/main.go)
-- [剑指 Offer 24. 反转链表](linkListReverse/main.go)，同[206. 反转链表](https://leetcode-cn.com/problems/reverse-linked-list/)
+
 - [剑指 Offer 25. 合并两个排序的链表](mergeTwoLists/main.go)
 - [剑指 Offer 29. 顺时针打印矩阵](spiralOrder/main.go)
 - [剑指 Offer 30. 包含min函数的栈](minStack/main.go),同[155. 最小栈](https://leetcode-cn.com/problems/min-stack/)
 - [剑指 Offer 31. 栈的压入、弹出序列](validateStackSequences/main.go)
-- [剑指 Offer 35. 复杂链表的复制](copyRandomList/READMD.md),同[138. 复制带随机指针的链表](https://leetcode-cn.com/problems/copy-list-with-random-pointer/)
 - [剑指 Offer 50. 第一个只出现一次的字符](firstUniqChar/main.go)
 - [剑指 Offer 52. 两个链表的第一个公共节点](getIntersectionNode/main.go),同[160. 相交链表]()
 - [剑指 Offer 53 - I. 在排序数组中查找数字 I](searchTargetCnt/main.go)，同[34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
