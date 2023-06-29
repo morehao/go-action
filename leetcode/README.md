@@ -76,6 +76,7 @@
 
 ## 分治算法
 - [剑指 Offer 07. 重建二叉树](binaryTreeBuildTree/main.go)，同[105. 从前序与中序遍历序列构造二叉树](https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)（中等）
+- [剑指 Offer 17. 打印从1到最大的n位数](numPrintNumbers/main.go)
 
 ## 排序
 - [剑指 Offer 45. 把数组排成最小的数](numMinNumber/main.go)
