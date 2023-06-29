@@ -94,8 +94,9 @@
 - [剑指 Offer 49. 丑数](numNthUglyNumber/main.go)，同[264. 丑数 II](https://leetcode.cn/problems/ugly-number-ii/)
 
 ## 数学
--[剑指 Offer 39. 数组中出现次数超过一半的数字](numsMajorityElement/main.go)，同[169. 多数元素](https://leetcode.cn/problems/majority-element/)
--[剑指 Offer 57 - II. 和为s的连续正数序列](numsFindContinuousSequence/main.go)
+- [剑指 Offer 39. 数组中出现次数超过一半的数字](numsMajorityElement/main.go)，同[169. 多数元素](https://leetcode.cn/problems/majority-element/)
+- [剑指 Offer 57 - II. 和为s的连续正数序列](numFindContinuousSequence/main.go)
+- [剑指 Offer 62. 圆圈中最后剩下的数字](numLastRemaining/main.go)
 
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
 - [剑指 Offer 04. 二维数组中的查找](findNumberIn2DArray/main.go)
