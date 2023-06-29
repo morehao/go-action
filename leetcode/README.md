@@ -93,6 +93,9 @@
 - [剑指 Offer 48. 最长不含重复字符的子字符串](stringLongestSubstring/main.go)，同[3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
 - [剑指 Offer 49. 丑数](numNthUglyNumber/main.go)，同[264. 丑数 II](https://leetcode.cn/problems/ugly-number-ii/)
 
+## 数学
+-[剑指 Offer 39. 数组中出现次数超过一半的数字](numsMajorityElement/main.go)，同[169. 多数元素](https://leetcode.cn/problems/majority-element/)
+
 
 
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
