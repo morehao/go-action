@@ -93,10 +93,13 @@
 - [剑指 Offer 48. 最长不含重复字符的子字符串](stringLongestSubstring/main.go)，同[3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
 - [剑指 Offer 49. 丑数](numNthUglyNumber/main.go)，同[264. 丑数 II](https://leetcode.cn/problems/ugly-number-ii/)
 
+## 位运算
+- [剑指 Offer 15. 二进制中1的个数](bitHammingWeight/main.go)，同[191. 位1的个数](https://leetcode.cn/problems/number-of-1-bits/)（简答）
+
 ## 数学
-- [剑指 Offer 39. 数组中出现次数超过一半的数字](numsMajorityElement/main.go)，同[169. 多数元素](https://leetcode.cn/problems/majority-element/)
-- [剑指 Offer 57 - II. 和为s的连续正数序列](numFindContinuousSequence/main.go)
-- [剑指 Offer 62. 圆圈中最后剩下的数字](numLastRemaining/main.go)
+- [剑指 Offer 39. 数组中出现次数超过一半的数字](numsMajorityElement/main.go)，同[169. 多数元素](https://leetcode.cn/problems/majority-element/)（简单）
+- [剑指 Offer 57 - II. 和为s的连续正数序列](numFindContinuousSequence/main.go)（简单）
+- [剑指 Offer 62. 圆圈中最后剩下的数字](numLastRemaining/main.go)（简单）
 
 - [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
 - [剑指 Offer 04. 二维数组中的查找](findNumberIn2DArray/main.go)
