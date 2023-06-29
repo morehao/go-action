@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(unnamed())
-	fmt.Println(named())
+	fmt.Println("unamed fn return：", unnamed())
+	fmt.Println("named fn return：", named())
 }
 
 // 匿名返回值，返回值是return执行时声明的，defer无法访问，等价于return了一个i的值拷贝，defer修改i不影响返回值。

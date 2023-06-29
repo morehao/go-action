@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-// defer函数在函数执行结束后执行，遵循先进后出原则
+// defer中函数参数在defer出现时就已确认，输出结果为：1
 func main() {
 	var res = 1
 	defer fmt.Println(res)
