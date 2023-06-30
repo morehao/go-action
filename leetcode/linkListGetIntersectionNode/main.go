@@ -5,7 +5,7 @@ import "go-practict/dataStructure/linkList"
 /*
 双指针法
 链表
-headA和headB的长度分别是m和n。假设链表headA的不相交部分有a个节点，链表headB的不相交部分有b个节点，两个链表相交的部分有c个节点，则有a+c=m，p2+c=n。
+headA和headB的长度分别是m和n。假设链表headA的不相交部分有a个节点，链表headB的不相交部分有b个节点，两个链表相交的部分有c个节点，则有a+c=m，b+c=n。
 如果p1遍历完指向headB，相当于移动了a+c+b次，同理，p2遍历完相当于移动了b+c+a次，遍历到末尾就可以得到相交节点或nil。
 */
 func getIntersectionNode(headA, headB *linkList.ListNode) *linkList.ListNode {

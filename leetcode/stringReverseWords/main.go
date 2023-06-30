@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	s := "the sky is blue"
+	s := "the sky is blue!"
 	fmt.Println(reverseWords(s))
 }
 func reverseWords(s string) string {

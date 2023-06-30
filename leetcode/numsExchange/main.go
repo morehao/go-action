@@ -8,15 +8,15 @@ func main() {
 }
 
 func exchange(nums []int) []int {
-	n := len(nums)
-	res := make([]int, n, n)
-	left, right := 0, n-1
-	for _, v := range nums {
-		if v%2 == 1 {
-			res[left] = v
+	size := len(nums)
+	res := make([]int, size, size)
+	left, right := 0, size-1
+	for i := range nums {
+		if nums[i]%2 == 1 {
+			res[left] = nums[i]
 			left++
 		} else {
-			res[right] = v
+			res[right] = nums[i]
 			right--
 		}
 	}
