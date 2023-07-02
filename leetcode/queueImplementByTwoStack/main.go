@@ -16,6 +16,7 @@ type CQueue struct {
 }
 
 /*
+Constructor
 队列：先入先出，栈：先入后出。
 将一个栈当作输入栈，用于压入appendTail 传入的数据；另一个栈当作输出栈，用于deleteHead 操作。
 每次deleteHead 时，若输出栈为空则将输入栈的全部数据依次弹出并压入输出栈，这样输出栈从栈顶往栈底的顺序就是队列从队首往队尾的顺序。

@@ -13,12 +13,15 @@ func main() {
 	fmt.Println(minStack.Min())
 }
 
+/*
+栈list中的最小元素始终对应栈minList的栈顶元素，即 min() 函数只需返回栈minList的栈顶元素即可。
+*/
+
 type MinStack struct {
 	list    []int
 	minList []int // 通过辅助栈降低复杂度
 }
 
-// Constructor /** initialize your data structure here. */
 func Constructor() MinStack {
 	return MinStack{
 		list:    []int{},
