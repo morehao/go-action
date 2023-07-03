@@ -6,24 +6,24 @@ import (
 )
 
 func main() {
-	str := "aaabbbbc"
+	str := "aabcccccaaa"
 	fmt.Println(compressString(str))
 }
 
-func compressString(str string) string {
-	res := make([]byte, 0, len(str))
+func compressString(S string) string {
+	res := make([]byte, 0)
 	i, j := 0, 0
-	sLen := len(str)
-	for i < sLen {
-		for j < sLen && str[j] == str[i] {
+	size := len(S)
+	for i < size {
+		for j < size && S[j] == S[i] {
 			j++
 		}
-		res = append(res, str[i])
+		res = append(res, S[i])
 		res = append(res, []byte(strconv.Itoa(j-i))...)
-		if len(res) >= sLen {
-			return str
-		}
 		i = j
+	}
+	if len(res) >= size {
+		return S
 	}
 	return string(res)
 }

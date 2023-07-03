@@ -26,14 +26,13 @@ func twoSum(nums []int, target int) []int {
 
 // 找出两数之和等于目标值的下标
 func twoSum2(nums []int, target int) []int {
-	m := make(map[int]struct{})
+	m := make(map[int]int)
 	for i := range nums {
 		diff := target - nums[i]
-		_, ok := m[diff]
-		if ok {
-			return []int{nums[i], diff}
+		if m[diff] > 0 {
+			return []int{diff, m[diff]}
 		}
-		m[nums[i]] = struct{}{}
+		m[nums[i]] = diff
 	}
 	return nil
 }

@@ -18,16 +18,16 @@ func findNumberIn2DArray(matrix [][]int, target int) bool {
 	if len(matrix) == 0 || len(matrix[0]) == 0 {
 		return false
 	}
-	rows, columns := len(matrix), len(matrix[0])
-	row, column := 0, columns-1
-	for row < rows && column >= 0 {
+	rowSize, columnSize := len(matrix), len(matrix[0])
+	row, column := 0, columnSize-1
+	for row < rowSize && column >= 0 {
 		num := matrix[row][column]
-		if num == target {
+		if target == num {
 			return true
-		} else if num > target {
-			column--
-		} else {
+		} else if target > num {
 			row++
+		} else {
+			column--
 		}
 	}
 	return false

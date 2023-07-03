@@ -1,5 +1,6 @@
 
-# 字符串
+# 题库
+## 字符串
 - [交替合并字符串](mergeSreingAlternately/main.go)
 - [判断字符串中字符是否全都不同](./q2/README.md)
 - [翻转字符串](./q3/README.md)
@@ -8,10 +9,9 @@
 - [字符串替换问题](./q5/README.md)
 - [机器人坐标问题](./q6/README.md)
 - [斐波那切数列](numFibonacci/main.go)
-- [字符串压缩](stringCompress/main.go)
 - [有效的括号](validParentheses/main.go)
 
-# 数组
+## 数组
 - [数字加1](numsTwoSum/main.go)
 - [一个先逆序再正序的数组，求最小值](mountainArrayBottom/main.go)
 - [LRU缓存](lruCache/main.go)
@@ -24,10 +24,10 @@
 - [连续子数组的最大和](arrayMaxSubArray/main.go)
 - [子集](subSets/main.go)
 
-# 栈
+## 栈
 - [用栈实现队列](queueImplementByTwoStack/main.go)
 
-# 二叉搜索树
+## 二叉搜索树
 - [144. 二叉树的前序遍历](binaryTreePreorderTraversal/main.go)
 - [94. 二叉树的中序遍历](binaryTreeInorderTraversal/main.go)
 - [145. 二叉树的后序遍历](binaryTreePostorderTraversal/main.go)
@@ -39,12 +39,12 @@
 - [删除二叉搜索树中的节点](deleteTreeNode/main.go)
 - [递增顺序搜索树](binaryTreeOrderTraversal/ineasingOrder/main.go)
 
-# 链表
+## 链表
 - [反转链表](linkListReverse/main.go)
 - [反转链表 II](linkListReverseBetween/main.go)
 - [从尾到头打印链表](linkListScan/main.go)
 
-# 数字
+## 数字
 
 - [计数质数](primeNumberCount/main.go)
 
@@ -66,6 +66,7 @@
 - [剑指 Offer 25. 合并两个排序的链表](linkListMergeTwoLists/main.go)（简单）
 - [剑指 Offer 52. 两个链表的第一个公共节点](linkListGetIntersectionNode/main.go),同[160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)（简单）
 - [剑指 Offer 21. 调整数组顺序使奇数位于偶数前面](numsExchange/main.go)（简单）
+- [剑指 Offer 57. 和为s的两个数字](numsTwoSum/main.go)（简单）
 - [剑指 Offer 58 - I. 翻转单词顺序](stringReverseWords/main.go)（简单）
 
 ## 栈与队列
@@ -73,6 +74,18 @@
 - [剑指 Offer 30. 包含min函数的栈](stackWithminFunc/main.go)，同[155. 最小栈](https://leetcode-cn.com/problems/min-stack/)（简单）
 - [剑指 Offer 59 - I. 滑动窗口的最大值](queueMaxSlidingWindow/main.go)，同[239. 滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/)（困难）
 - [剑指 Offer 59 - II. 队列的最大值](queueMaxValue/main.go)（中等）
+
+## 模拟
+- [剑指 Offer 29. 顺时针打印矩阵](spiralOrder/main.go)（中等）
+- [剑指 Offer 31. 栈的压入、弹出序列](stackValidateStackSequences/main.go)（中等）
+
+## 查找算法
+- [剑指 Offer 03. 数组中重复的数字](numsFindRepeatNumber/main.go)（简单）
+- [剑指 Offer 53 - I. 在排序数组中查找数字 I](searchTargetCnt/main.go)，同[34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)（简单）
+- [剑指 Offer 53 - II. 0～n-1中缺失的数字](numsMissingNumber/main.go)（简单）
+- [剑指 Offer 04. 二维数组中的查找](numsFindNumberIn2DArray/main.go)（中等）
+- [剑指 Offer 11. 旋转数组的最小数字](numsMinArray/main.go)（简单）
+- [剑指 Offer 50. 第一个只出现一次的字符](stringFirstUniqChar/main.go)（简单）
 
 ## 搜索与回溯算法
 - [剑指 Offer 32 - I. 从上到下打印二叉树（结果为一维数组）](binarytreeLevelorder1/main.go)
@@ -122,20 +135,13 @@
 
 
 
-- [剑指 Offer 03. 数组中重复的数字](findRepeatNumber/main.go)
-- [剑指 Offer 04. 二维数组中的查找](findNumberIn2DArray/main.go)
-- [剑指 Offer 11. 旋转数组的最小数字](minArray/main.go)
-
-
-- [剑指 Offer 29. 顺时针打印矩阵](spiralOrder/main.go)
-- [剑指 Offer 31. 栈的压入、弹出序列](validateStackSequences/main.go)
-- [剑指 Offer 50. 第一个只出现一次的字符](firstUniqChar/main.go)
-- [剑指 Offer 53 - I. 在排序数组中查找数字 I](searchTargetCnt/main.go)，同[34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
-- [剑指 Offer 53 - II. 0～n-1中缺失的数字](missingNumber/main.go)
-- [剑指 Offer 57. 和为s的两个数字](numsTwoSum/main.go)
-
-
 # 剑指Offer Ⅱ
 
 - [剑指 Offer II 072. 求平方根](mySqrt/README.md)
 - [剑指 Offer II 079. 所有子集](subSets/main.go)
+- [剑指 Offer II 041. 滑动窗口的平均值](queueSlideWindowMovingAverage/main.go)（简单）
+
+# 面试题
+
+## 字符串
+- [面试题 01.06. 字符串压缩](stringCompress/main.go)（简单）

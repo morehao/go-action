@@ -9,7 +9,7 @@ func main() {
 	fmt.Println(missingNumber(nums))
 }
 
-// 二分法
+// 二分法，其实也是找数组元素值不等于下标的元素
 func missingNumber(nums []int) int {
 	i, j := 0, len(nums)-1
 	for i <= j {
