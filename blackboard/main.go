@@ -11,21 +11,30 @@ func main() {
 		fmt.Println(nums[i])
 	}
 }
-func findNumberIn2DArray(matrix [][]int, target int) bool {
-	if len(matrix) == 0 || len(matrix[0]) == 0 {
-		return false
-	}
-	rowSize, columnSize := len(matrix), len(matrix[0])
-	row, column := 0, columnSize-1
-	for row < rowSize && column > 0 {
-		num := matrix[row][column]
-		if target == num {
-			return true
-		} else if target > num {
-			column--
-		} else {
-			row++
+func getLeastNumbers(arr []int, k int) []int {
+	partition(arr, 0, len(arr)-1)
+	return arr[len(arr)-k:]
+}
+
+func partition(nums []int, start, end int) {
+	i, j := start, end
+	midValue := nums[(i+j)/2]
+	for i <= j {
+		for nums[i] < midValue {
+			i++
+		}
+		for nums[j] > midValue {
+			j--
+		}
+		if i <= j {
+			nums[i], nums[j] = nums[j], nums[i]
 		}
 	}
-	return false
+	if i < end {
+		partition(nums, i, end)
+	}
+	if j > start {
+		partition(nums, start, j)
+	}
+	return
 }

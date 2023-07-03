@@ -9,9 +9,9 @@ func main() {
 
 func mySqrt(x int) int {
 	l, r := 0, x
-	ans := -1
+	var ans int
 	for l <= r {
-		mid := l + (r-l)/2
+		mid := (l + r) / 2
 		if mid*mid <= x {
 			ans = mid
 			l = mid + 1

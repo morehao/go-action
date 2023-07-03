@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"sort"
 	"strconv"
 	"strings"
@@ -26,7 +25,6 @@ func minNumber(nums []int) string {
 	sort.Slice(sList, func(i, j int) bool {
 		return sList[i]+sList[j] < sList[j]+sList[i]
 	})
-	fmt.Println(sList)
 	for i := range sList {
 		res.WriteString(sList[i])
 	}

@@ -23,13 +23,12 @@ func levelOrder(root *binaryTree.TreeNode) [][]int {
 	for i := 0; len(queue) > 0; i++ {
 		res = append(res, []int{})
 		var tempQueue []*binaryTree.TreeNode
-		qLen := len(queue)
 		for j := 0; j < len(queue); j++ {
 			currNode := queue[j]
 			if (i+1)%2 == 1 {
 				res[i] = append(res[i], currNode.Val)
 			} else {
-				res[i] = append(res[i], queue[qLen-j-1].Val)
+				res[i] = append(res[i], queue[len(queue)-1-j].Val)
 			}
 			if currNode.Left != nil {
 				tempQueue = append(tempQueue, currNode.Left)

@@ -22,7 +22,7 @@
 - [两数之和](numsTwoSum/main.go)
 - [滑动窗口最大值](queueMaxSlidingWindow/main.go)
 - [连续子数组的最大和](arrayMaxSubArray/main.go)
-- [子集](subSets/main.go)
+- [子集](numsSubSets/main.go)
 
 ## 栈
 - [用栈实现队列](queueImplementByTwoStack/main.go)
@@ -88,45 +88,45 @@
 - [剑指 Offer 50. 第一个只出现一次的字符](stringFirstUniqChar/main.go)（简单）
 
 ## 搜索与回溯算法
-- [剑指 Offer 32 - I. 从上到下打印二叉树（结果为一维数组）](binarytreeLevelorder1/main.go)
-- [剑指 Offer 32 - II. 从上到下打印二叉树 II（结果为二维数组）](binaryTreeLevelorder2/main.go)
-- [剑指 Offer 32 - III. 从上到下打印二叉树 III（返回结果为二维数组，奇数行正序访问，偶数行逆序访问）](binaryTreeLevelorder3/main.go)
-- [剑指 Offer 26. 树的子结构](binaryTreeIsSubStructure/main.go)
-- [剑指 Offer 27. 二叉树的镜像](binaryTreeMirrorTree/main.go)
-- [剑指 Offer 28. 对称的二叉树](binaryTreeIsSymmetric/main.go)
-- [剑指 Offer 12. 矩阵中的路径](matrixStringExist/main.go)，同[79. 单词搜索](https://leetcode.cn/problems/word-search/)
-- [剑指 Offer 13. 机器人的运动范围](robotMovingCount/main.go)
-- [剑指 Offer 34. 二叉树中和为某一值的路径](binaryTreePathSum/main.go)，同[113. 路径总和 II](https://leetcode.cn/problems/path-sum-ii/)
-- [剑指 Offer 54. 二叉搜索树的第k大节点](binaryTreeKthLargest/main.go)
-- [剑指 Offer 55 - I. 二叉树的深度](binaryTreeMaxDepth/main.go)，同[104. 二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/submissions/)
-- [剑指 Offer 55 - II. 平衡二叉树](binaryTreeIsBalance/main.go)，同[110. 平衡二叉树](https://leetcode.cn/problems/balanced-binary-tree/)
-- [剑指 Offer 64. 求1+2+…+n](sumNums/main.go)
-- [剑指 Offer 68 - I. 二叉搜索树的最近公共祖先](binaryTreeLowestCommonAncestor/main.go)，同[235. 二叉搜索树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/)
-- [剑指 Offer 68 - II. 二叉树的最近公共祖先（一个节点也可以是它自己的祖先）](binaryTreeLowestCommonAncestor2/main.go)，同[236. 二叉树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/submissions/)
-- [剑指 Offer 37. 序列化二叉树](binaryTreeSerialize/main.go)，同[297. 二叉树的序列化与反序列化](https://leetcode.cn/problems/serialize-and-deserialize-binary-tree/)
-- [剑指 Offer 38. 字符串的排列](stringPermutation/main.go)
+- [剑指 Offer 32 - I. 从上到下打印二叉树（结果为一维数组）](binarytreeLevelorder1/main.go)（中等）
+- [剑指 Offer 32 - II. 从上到下打印二叉树 II（结果为二维数组）](binaryTreeLevelorder2/main.go)（简单）
+- [剑指 Offer 32 - III. 从上到下打印二叉树 III（返回结果为二维数组，奇数行正序访问，偶数行逆序访问）](binaryTreeLevelorder3/main.go)（中等）
+- [剑指 Offer 26. 树的子结构](binaryTreeIsSubStructure/main.go)（中等）
+- [剑指 Offer 27. 二叉树的镜像](binaryTreeMirrorTree/main.go)（简单）
+- [剑指 Offer 28. 对称的二叉树](binaryTreeIsSymmetric/main.go)（简单）
+- [剑指 Offer 12. 矩阵中的路径](matrixStringExist/main.go)，同[79. 单词搜索](https://leetcode.cn/problems/word-search/)（中等）
+- [剑指 Offer 13. 机器人的运动范围](robotMovingCount/main.go)（中等）
+- [剑指 Offer 34. 二叉树中和为某一值的路径](binaryTreePathSum/main.go)，同[113. 路径总和 II](https://leetcode.cn/problems/path-sum-ii/)（中等）
+- [剑指 Offer 54. 二叉搜索树的第k大节点](binaryTreeKthLargest/main.go)（简单）
+- [剑指 Offer 55 - I. 二叉树的深度](binaryTreeMaxDepth/main.go)，同[104. 二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/submissions/)（简单）
+- [剑指 Offer 55 - II. 平衡二叉树](binaryTreeIsBalance/main.go)，同[110. 平衡二叉树](https://leetcode.cn/problems/balanced-binary-tree/)（简单）
+- [剑指 Offer 64. 求1+2+…+n](numSumNums/main.go)（中等）
+- [剑指 Offer 68 - I. 二叉搜索树的最近公共祖先](binaryTreeLowestCommonAncestor/main.go)，同[235. 二叉搜索树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-search-tree/)（中等）
+- [剑指 Offer 68 - II. 二叉树的最近公共祖先（一个节点也可以是它自己的祖先）](binaryTreeLowestCommonAncestor2/main.go)，同[236. 二叉树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/submissions/)（中等）
+- [剑指 Offer 37. 序列化二叉树](binaryTreeSerialize/main.go)，同[297. 二叉树的序列化与反序列化](https://leetcode.cn/problems/serialize-and-deserialize-binary-tree/)（困难）
+- [剑指 Offer 38. 字符串的排列](stringPermutation/main.go)（中等）
 
 ## 分治算法
 - [剑指 Offer 07. 重建二叉树](binaryTreeBuildTree/main.go)，同[105. 从前序与中序遍历序列构造二叉树](https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)（中等）
-- [剑指 Offer 17. 打印从1到最大的n位数](numPrintNumbers/main.go)
+- [剑指 Offer 17. 打印从1到最大的n位数](numPrintNumbers/main.go)（简单）
 
 ## 排序
-- [剑指 Offer 45. 把数组排成最小的数](numMinNumber/main.go)
-- [剑指 Offer 61. 扑克牌中的顺子](numIsStraight/main.go)
-- [剑指 Offer 40. 最小的k个数](arrayGetLeastNumbers/main.go)
+- [剑指 Offer 45. 把数组排成最小的数](numMinNumber/main.go)（中等）
+- [剑指 Offer 61. 扑克牌中的顺子](numIsStraight/main.go)（简单）
+- [剑指 Offer 40. 最小的k个数](arrayGetLeastNumbers/main.go)（简单）
 
 ## 动态规划
-- [剑指 Offer 10- I. 斐波那契数列](numFibonacci/main.go)
-- [剑指 Offer 10- II. 青蛙跳台阶问题](numWays/main.go)，同[70. 爬楼梯](https://leetcode.cn/problems/climbing-stairs/)
-- [剑指 Offer 63. 股票的最大利润](arrayMaxProfit/main.go)，同[121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)
-- [剑指 Offer 42. 连续子数组的最大和](arrayMaxSubArray/main.go)，同[53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/)
-- [剑指 Offer 47. 礼物的最大价值](arrayMaxValue/main.go)
-- [剑指 Offer 46. 把数字翻译成字符串](numTranslateNum/main.go)
-- [剑指 Offer 48. 最长不含重复字符的子字符串](stringLongestSubstring/main.go)，同[3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)
-- [剑指 Offer 49. 丑数](numNthUglyNumber/main.go)，同[264. 丑数 II](https://leetcode.cn/problems/ugly-number-ii/)
+- [剑指 Offer 10- I. 斐波那契数列](numFibonacci/main.go)（简单）
+- [剑指 Offer 10- II. 青蛙跳台阶问题](numWays/main.go)，同[70. 爬楼梯](https://leetcode.cn/problems/climbing-stairs/)（简单）
+- [剑指 Offer 63. 股票的最大利润](arrayMaxProfit/main.go)，同[121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)（中等）
+- [剑指 Offer 42. 连续子数组的最大和](arrayMaxSubArray/main.go)，同[53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/)（简单）
+- [剑指 Offer 47. 礼物的最大价值](arrayMaxValue/main.go)（中等）
+- [剑指 Offer 46. 把数字翻译成字符串](numTranslateNum/main.go)（中等）
+- [剑指 Offer 48. 最长不含重复字符的子字符串](stringLongestSubstring/main.go)，同[3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/)（中等）
+- [剑指 Offer 49. 丑数](numNthUglyNumber/main.go)，同[264. 丑数 II](https://leetcode.cn/problems/ugly-number-ii/)（中等）
 
 ## 位运算
-- [剑指 Offer 15. 二进制中1的个数](bitHammingWeight/main.go)，同[191. 位1的个数](https://leetcode.cn/problems/number-of-1-bits/)（简答）
+- [剑指 Offer 15. 二进制中1的个数](bitHammingWeight/main.go)，同[191. 位1的个数](https://leetcode.cn/problems/number-of-1-bits/)（简单）
 
 ## 数学
 - [剑指 Offer 39. 数组中出现次数超过一半的数字](numsMajorityElement/main.go)，同[169. 多数元素](https://leetcode.cn/problems/majority-element/)（简单）
@@ -137,8 +137,8 @@
 
 # 剑指Offer Ⅱ
 
-- [剑指 Offer II 072. 求平方根](mySqrt/README.md)
-- [剑指 Offer II 079. 所有子集](subSets/main.go)
+- [剑指 Offer II 072. 求平方根](numMySqrt/main.go)，同[69. x 的平方根 ](https://leetcode.cn/problems/sqrtx/)（简单）
+- [剑指 Offer II 079. 所有子集](numsSubSets/main.go)（中等）
 - [剑指 Offer II 041. 滑动窗口的平均值](queueSlideWindowMovingAverage/main.go)（简单）
 
 # 面试题
