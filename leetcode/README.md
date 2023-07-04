@@ -9,7 +9,6 @@
 - [字符串替换问题](./q5/README.md)
 - [机器人坐标问题](./q6/README.md)
 - [斐波那切数列](numFibonacci/main.go)
-- [有效的括号](validParentheses/main.go)
 
 ## 数组
 - [数字加1](numsTwoSum/main.go)
@@ -137,11 +136,19 @@
 
 # 剑指Offer Ⅱ
 
-- [剑指 Offer II 072. 求平方根](numMySqrt/main.go)，同[69. x 的平方根 ](https://leetcode.cn/problems/sqrtx/)（简单）
+## 字符串
+- [剑指 Offer II 018. 有效的回文](stringIsPalindrome/main.go)， 同[125. 验证回文串](https://leetcode.cn/problems/valid-palindrome/)（简单）
+
+## 数字
+- [剑指 Offer II 072. 求平方根](numMySqrt/main.go)，同[69. x 的平方根](https://leetcode.cn/problems/sqrtx/)（简单）
 - [剑指 Offer II 079. 所有子集](numsSubSets/main.go)（中等）
 - [剑指 Offer II 041. 滑动窗口的平均值](queueSlideWindowMovingAverage/main.go)（简单）
 
-# 面试题
+# 常见面试题
 
 ## 字符串
 - [面试题 01.06. 字符串压缩](stringCompress/main.go)（简单）
+- [14. 最长公共前缀](stringLongestCommonPrefix/main.go)（简单）
+- [409. 最长回文串](stringLongestPalindrome/main.go)（简单）
+- [125. 验证回文串](stringIsPalindrome/main.go)（简单）
+- [20. 有效的括号](stringValidParentheses/main.go)（简单）

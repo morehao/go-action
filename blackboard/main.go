@@ -1,40 +1,30 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
-	nums := []int{0, 1, 2, 3}
-	for i := 0; i < len(nums); i++ {
-		fmt.Println("i:", i)
-		fmt.Println(nums[i])
-	}
-}
-func getLeastNumbers(arr []int, k int) []int {
-	partition(arr, 0, len(arr)-1)
-	return arr[len(arr)-k:]
+	fmt.Println(isValid("{}"))
 }
 
-func partition(nums []int, start, end int) {
-	i, j := start, end
-	midValue := nums[(i+j)/2]
-	for i <= j {
-		for nums[i] < midValue {
-			i++
-		}
-		for nums[j] > midValue {
-			j--
-		}
-		if i <= j {
-			nums[i], nums[j] = nums[j], nums[i]
+func isValid(s string) bool {
+	if len(s)%2 == 1 {
+		return false
+	}
+	m := map[byte]byte{
+		')': '(',
+		']': '[',
+		'}': '{',
+	}
+	var stack []byte
+	for _, v := range []byte(s) {
+		if m[v] > 0 {
+			if len(stack) == 0 || m[v] != stack[len(stack)-1] {
+				return false
+			}
+			stack = stack[:len(stack)-1]
+		} else {
+			stack = append(stack, v)
 		}
 	}
-	if i < end {
-		partition(nums, i, end)
-	}
-	if j > start {
-		partition(nums, start, j)
-	}
-	return
+	return true
 }

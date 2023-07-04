@@ -23,6 +23,7 @@ func lengthOfLongestSubstring(s string) int {
 	res := 0
 	for i := 0; i < len(s); i++ {
 		if i != 0 {
+			// 左指针向右移动一格，移除一个字符
 			delete(m, s[i-1])
 		}
 		for rk+1 < len(s) && !m[s[rk+1]] {
