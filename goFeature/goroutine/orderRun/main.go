@@ -9,12 +9,11 @@ func main() {
 	var count int
 	process := func(i int, fn func()) {
 		for {
-			if count == i {
+			if i == count {
 				fn()
 				count++
 				break
 			}
-			time.Sleep(time.Nanosecond)
 		}
 	}
 	for i := 0; i < 10; i++ {
@@ -25,5 +24,5 @@ func main() {
 			process(i, fn)
 		}(i)
 	}
-	process(10, func() {})
+	time.Sleep(time.Second * 3)
 }

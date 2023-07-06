@@ -12,14 +12,17 @@ func main() {
 }
 
 func reversePrint(head *linkList.ListNode) []int {
-	res := make([]int, 0)
-	current := head
-	for current != nil {
-		res = append(res, current.Val)
-		current = current.Next
+	var res []int
+	curr := head
+	for curr != nil {
+		res = append(res, curr.Val)
+		curr = curr.Next
 	}
-	for i := 0; i < len(res)/2; i++ {
-		res[i], res[len(res)-i-1] = res[len(res)-i-1], res[i]
+	i, j := 0, len(res)-1
+	for i < j {
+		res[i], res[j] = res[j], res[i]
+		i++
+		j--
 	}
 	return res
 }

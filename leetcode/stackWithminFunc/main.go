@@ -40,17 +40,11 @@ func (this *MinStack) Push(x int) {
 }
 
 func (this *MinStack) Pop() {
-	if len(this.list) == 0 {
-		return
-	}
 	this.list = this.list[:len(this.list)-1]
 	this.minList = this.minList[:len(this.minList)-1]
 }
 
 func (this *MinStack) Top() int {
-	if len(this.list) == 0 {
-		return 0
-	}
 	return this.list[len(this.list)-1]
 }
 

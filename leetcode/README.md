@@ -22,6 +22,8 @@
 - [滑动窗口最大值](queueMaxSlidingWindow/main.go)
 - [连续子数组的最大和](arrayMaxSubArray/main.go)
 - [子集](numsSubSets/main.go)
+- [349. 两个数组的交集](numsIntersection/main.go)（简单）
+- [350. 两个数组的交集 II](numsIntersect/main.go)（简单）
 
 ## 栈
 - [用栈实现队列](queueImplementByTwoStack/main.go)
