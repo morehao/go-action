@@ -19,9 +19,9 @@ func findContinuousSequence(target int) [][]int {
 			sum += j
 		} else {
 			if target == sum {
-				tmp := make([]int, j-i+1)
+				tmp := make([]int, 0)
 				for k := i; k <= j; k++ {
-					tmp[k-i] = k
+					tmp = append(tmp, k)
 				}
 				res = append(res, tmp)
 			}
