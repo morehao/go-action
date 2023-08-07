@@ -3,17 +3,25 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(printNumbers(2))
+	fmt.Println(isValid(""))
 }
 
-func printNumbers(n int) []int {
-	max := 1
-	for i := 0; i < n; i++ {
-		max *= 10
+func isValid(s string) bool {
+	m := map[byte]byte{
+		'}': '{',
+		')': '(',
+		']': '[',
 	}
-	var res []int
-	for i := 0; i < max; i++ {
-		res = append(res, i)
+	var stack []byte
+	for i := range s {
+		if m[s[i]] > 0 {
+			if stack[len(stack)-1] != m[s[i]] {
+				return false
+			}
+			stack = stack[:len(stack)-1]
+		} else {
+			stack = append(stack, s[i])
+		}
 	}
-	return res
+	return len(stack) == 0
 }
