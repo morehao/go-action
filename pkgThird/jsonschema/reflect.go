@@ -56,28 +56,23 @@ func (r *Reflector) Reflect(v interface{}) *Schema {
 
 // ReflectFromType generates root schema
 func (r *Reflector) ReflectFromType(t reflect.Type) *Schema {
-	if t.Kind() == reflect.Ptr {
-		t = t.Elem() // re-assign from pointer
+	if t.Kind() == reflect.Pointer {
+		t = t.Elem()
 	}
 
-	s := new(Schema)
+	s := &Schema{}
 	definitions := Definitions{}
 	s.Definitions = definitions
 	bs := r.reflectTypeToSchema(definitions, t)
-	*s = *bs
+	s = bs
 	return s
 }
 
-// Definitions hold schema definitions.
-// http://json-schema.org/latest/json-schema-validation.html#rfc.section.5.26
-// RFC draft-wright-json-schema-validation-00, section 5.26
 type Definitions map[string]*Schema
 
-// Available Go defined types for JSON Schema Validation.
-// RFC draft-wright-json-schema-validation-00, section 7.3
 var (
-	timeType = reflect.TypeOf(time.Time{}) // date-time RFC section 7.3.1
-	uriType  = reflect.TypeOf(url.URL{})   // uri RFC section 7.3.6
+	timeType = reflect.TypeOf(time.Time{})
+	uriType  = reflect.TypeOf(url.URL{})
 )
 
 // Byte slices will be encoded as base64
@@ -87,7 +82,7 @@ var byteSliceType = reflect.TypeOf([]byte(nil))
 var rawMessageType = reflect.TypeOf(json.RawMessage{})
 
 func (r *Reflector) reflectTypeToSchema(definitions Definitions, t reflect.Type) *Schema {
-	st := new(Schema)
+	st := &Schema{}
 	switch t.Kind() {
 	case reflect.Struct:
 		r.reflectStruct(definitions, t, st)
@@ -190,7 +185,7 @@ func (r *Reflector) reflectStructFields(st *Schema, definitions Definitions, t r
 		}
 
 		property := r.reflectTypeToSchema(definitions, f.Type)
-		property.structKeywordsFromTags(f, st, name)
+		property.structKeywordsFromTags(f)
 
 		if nullable {
 			property = &Schema{
@@ -224,9 +219,7 @@ func appendUniqueString(base []string, value string) []string {
 	return append(base, value)
 }
 
-func (t *Schema) structKeywordsFromTags(f reflect.StructField, parent *Schema, propertyName string) {
-	t.Description = f.Tag.Get("jsonschema_description")
-
+func (t *Schema) structKeywordsFromTags(f reflect.StructField) {
 	desc := f.Tag.Get("doc")
 	t.Title = desc
 	t.Description = desc
