@@ -3,7 +3,6 @@ package jsonschema
 import (
 	"encoding/json"
 	"fmt"
-	"reflect"
 	"testing"
 )
 
@@ -25,10 +24,27 @@ type Child struct {
 
 func Test_fn(t *testing.T) {
 	// res := DefaultRender{Data: User{}}
-	res := User{}
-	rt := reflect.TypeOf(&res)
-	r := &Reflector{}
-	s := r.ReflectFromType(rt)
+	// res := DefaultRender{
+	// 	Data: User{},
+	// }
+	// rt := reflect.TypeOf(&User{})
+	// r := &Reflector{}
+	// s := r.ReflectFromType(rt)
+	s := Reflect(&User{})
+	data, err := json.MarshalIndent(s, "", "  ")
+	if err != nil {
+		panic(err.Error())
+	}
+	fmt.Println(string(data))
+}
+
+func Test_Res(t *testing.T) {
+	type Res struct {
+		Code    int         `json:"code" form:"code" doc:"错误码"`
+		Data    interface{} `json:"data" form:"data" doc:"数据"`
+		Message string      `json:"message" form:"message" doc:"错误信息"`
+	}
+	s := Reflect(&Res{})
 	data, err := json.MarshalIndent(s, "", "  ")
 	if err != nil {
 		panic(err.Error())

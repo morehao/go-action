@@ -3,11 +3,10 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
-	"sort"
-
 	"golang.org/x/text/encoding/simplifiedchinese"
 	"golang.org/x/text/transform"
+	"io/ioutil"
+	"sort"
 )
 
 type ByPinyin []string
@@ -29,13 +28,13 @@ func (s ByPinyin) Less(i, j int) bool {
 	return true
 }
 
-//UTF82GBK : transform UTF8 rune into GBK byte array
+// UTF82GBK : transform UTF8 rune into GBK byte array
 func UTF82GBK(src string) ([]byte, error) {
 	GB18030 := simplifiedchinese.All[0]
 	return ioutil.ReadAll(transform.NewReader(bytes.NewReader([]byte(src)), GB18030.NewEncoder()))
 }
 
-//GBK2UTF8 : transform  GBK byte array into UTF8 string
+// GBK2UTF8 : transform  GBK byte array into UTF8 string
 func GBK2UTF8(src []byte) (string, error) {
 	GB18030 := simplifiedchinese.All[0]
 	bytes, err := ioutil.ReadAll(transform.NewReader(bytes.NewReader(src), GB18030.NewDecoder()))
@@ -43,13 +42,18 @@ func GBK2UTF8(src []byte) (string, error) {
 }
 
 func main() {
-	b := []string{"330", "你", "a", "本来", ",", "y"}
-
-	sort.Strings(b)
-	//output: [, ha 呼 哈 嚯]
-	fmt.Println("Default sort: ", b)
-
-	sort.Sort(ByPinyin(b))
-	//output: [, ha 哈 呼 嚯]
-	fmt.Println("By Pinyin sort: ", b)
+	// b := []string{"330", "你", "a", "本来", ",", "y"}
+	//
+	// sort.Strings(b)
+	// //output: [, ha 呼 哈 嚯]
+	// fmt.Println("Default sort: ", b)
+	//
+	// sort.Sort(ByPinyin(b))
+	// //output: [, ha 哈 呼 嚯]
+	// fmt.Println("By Pinyin sort: ", b)
+	list := []uint{5, 1, 2, 7, 3}
+	sort.Slice(list, func(i, j int) bool {
+		return list[i] < list[j]
+	})
+	fmt.Println(list)
 }

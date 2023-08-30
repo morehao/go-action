@@ -26,6 +26,7 @@ type Schema struct {
 
 // Reflect reflects to Schema from a value using the default Reflector
 func Reflect(v interface{}) *Schema {
+
 	return ReflectFromType(reflect.TypeOf(v))
 }
 
