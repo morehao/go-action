@@ -26,8 +26,10 @@ type Schema struct {
 
 // Reflect reflects to Schema from a value using the default Reflector
 func Reflect(v interface{}) *Schema {
-
-	return ReflectFromType(reflect.TypeOf(v))
+	doc := ReflectFromType(reflect.TypeOf(v))
+	render := ReflectFromType(reflect.TypeOf(&DefaultRender{}))
+	render.Properties.Set("data", doc)
+	return render
 }
 
 // ReflectFromType generates root schema using the default Reflector
