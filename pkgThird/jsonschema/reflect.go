@@ -62,13 +62,7 @@ func (r *Reflector) ReflectFromType(t reflect.Type) *Schema {
 	if t.Kind() == reflect.Pointer {
 		t = t.Elem()
 	}
-
-	s := &Schema{}
-	definitions := Definitions{}
-	s.Definitions = definitions
-	bs := r.reflectTypeToSchema(definitions, t)
-	s = bs
-	return s
+	return r.reflectTypeToSchema(Definitions{}, t)
 }
 
 type Definitions map[string]*Schema
@@ -177,7 +171,7 @@ func (r *Reflector) reflectStructFields(st *Schema, definitions Definitions, t r
 	}
 
 	handleField := func(f reflect.StructField) {
-		name, shouldEmbed, required, nullable := r.reflectFieldName(f)
+		name, shouldEmbed, required := r.reflectFieldName(f)
 		// if anonymous and exported type should be processed recursively
 		// current type should inherit properties of anonymous one
 		if name == "" {
@@ -189,17 +183,6 @@ func (r *Reflector) reflectStructFields(st *Schema, definitions Definitions, t r
 
 		property := r.reflectTypeToSchema(definitions, f.Type)
 		property.structKeywordsFromTags(f)
-
-		if nullable {
-			property = &Schema{
-				OneOf: []*Schema{
-					property,
-					{
-						Type: "null",
-					},
-				},
-			}
-		}
 
 		st.Properties.Set(name, property)
 		if required {
@@ -224,7 +207,7 @@ func appendUniqueString(base []string, value string) []string {
 
 func (t *Schema) structKeywordsFromTags(f reflect.StructField) {
 	desc := f.Tag.Get("doc")
-	t.Title = desc
+	// t.Title = desc
 	t.Description = desc
 }
 
@@ -241,67 +224,24 @@ func requiredFromJSONTags(tags []string) bool {
 	return true
 }
 
-func requiredFromJSONSchemaTags(tags []string) bool {
-	if ignoredByJSONSchemaTags(tags) {
-		return false
-	}
-	for _, tag := range tags {
-		if tag == "required" {
-			return true
-		}
-	}
-	return false
-}
-
-func nullableFromJSONSchemaTags(tags []string) bool {
-	if ignoredByJSONSchemaTags(tags) {
-		return false
-	}
-	for _, tag := range tags {
-		if tag == "nullable" {
-			return true
-		}
-	}
-	return false
-}
-
 func ignoredByJSONTags(tags []string) bool {
 	return tags[0] == "-"
 }
 
-func ignoredByJSONSchemaTags(tags []string) bool {
-	return tags[0] == "-"
-}
-
-func (r *Reflector) reflectFieldName(f reflect.StructField) (string, bool, bool, bool) {
+func (r *Reflector) reflectFieldName(f reflect.StructField) (string, bool, bool) {
 	jsonTagString, _ := f.Tag.Lookup("json")
 	jsonTags := strings.Split(jsonTagString, ",")
-
-	if ignoredByJSONTags(jsonTags) {
-		return "", false, false, false
-	}
-
-	schemaTags := strings.Split(f.Tag.Get("jsonschema"), ",")
-	if ignoredByJSONSchemaTags(schemaTags) {
-		return "", false, false, false
-	}
-
 	required := requiredFromJSONTags(jsonTags)
-	if r.RequiredFromJSONSchemaTags {
-		required = requiredFromJSONSchemaTags(schemaTags)
-	}
-
-	nullable := nullableFromJSONSchemaTags(schemaTags)
 
 	if f.Anonymous && jsonTags[0] == "" {
 		// As per JSON Marshal rules, anonymous structs are inherited
 		if f.Type.Kind() == reflect.Struct {
-			return "", true, false, false
+			return "", true, false
 		}
 
 		// As per JSON Marshal rules, anonymous pointer to structs are inherited
 		if f.Type.Kind() == reflect.Ptr && f.Type.Elem().Kind() == reflect.Struct {
-			return "", true, false, false
+			return "", true, false
 		}
 	}
 
@@ -317,5 +257,5 @@ func (r *Reflector) reflectFieldName(f reflect.StructField) (string, bool, bool,
 		name = r.KeyNamer(name)
 	}
 
-	return name, false, required, nullable
+	return name, false, required
 }
