@@ -33,9 +33,9 @@ func BuildCsv(request interface{}) []string {
 		// 如果类型为结构体，则递归
 		if fieldKind == reflect.Struct || (fieldKind == reflect.Ptr && field.Elem().Kind() == reflect.Struct) {
 			var subCsvDocs []string
-			if fieldKind == reflect.Ptr {
+			if fieldKind == reflect.Ptr && !field.IsNil() {
 				subCsvDocs = BuildCsv(field.Interface())
-			} else {
+			} else if fieldKind == reflect.Struct {
 				subCsvDocs = BuildCsv(field.Addr().Interface())
 			}
 			// 如果返回值不为空，则拼接字符串

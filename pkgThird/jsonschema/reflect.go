@@ -24,12 +24,20 @@ type Schema struct {
 	Description       string                 `json:"description,omitempty"`
 }
 
-// Reflect reflects to Schema from a value using the default Reflector
-func Reflect(v interface{}) *Schema {
+// BuildJsonschema reflects to Schema from a value using the default Reflector
+func BuildJsonschema(v interface{}, needRender bool) string {
 	doc := ReflectFromType(reflect.TypeOf(v))
-	render := ReflectFromType(reflect.TypeOf(&DefaultRender{}))
-	render.Properties.Set("data", doc)
-	return render
+	res := doc
+	if needRender {
+		render := ReflectFromType(reflect.TypeOf(&DefaultRender{}))
+		render.Properties.Set("data", doc)
+		res = render
+	}
+	data, err := json.MarshalIndent(res, "", "  ")
+	if err != nil {
+		panic(err.Error())
+	}
+	return string(data)
 }
 
 // ReflectFromType generates root schema using the default Reflector

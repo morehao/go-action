@@ -1,7 +1,6 @@
 package jsonschema
 
 import (
-	"encoding/json"
 	"fmt"
 	"testing"
 )
@@ -23,31 +22,32 @@ type Child struct {
 }
 
 func Test_fn(t *testing.T) {
-	// res := DefaultRender{Data: User{}}
-	// res := DefaultRender{
-	// 	Data: User{},
-	// }
-	// rt := reflect.TypeOf(&User{})
-	// r := &Reflector{}
-	// s := r.ReflectFromType(rt)
-	s := Reflect(&User{})
-	data, err := json.MarshalIndent(s, "", "  ")
-	if err != nil {
-		panic(err.Error())
-	}
-	fmt.Println(string(data))
+	res := BuildJsonschema(&User{}, false)
+	fmt.Println(res)
+}
+
+type AppVersionListRes struct {
+	List []AppVersionListItem `json:"list" doc:"列表"`
+}
+
+type AppVersionListItem struct {
+	Id            uint   `json:"id" doc:"数据自增id"`
+	VersionNo     string `json:"versionNo" doc:"版本号"`
+	BuildNo       string `json:"buildNo" doc:"构建号"`
+	OsType        uint   `json:"osType" doc:"系统类型，1：ios，2：安卓"`
+	IsForce       uint   `json:"isForce" doc:"是否强更，1：是，2：否"`
+	IsSilent      uint   `json:"isSilent" doc:"是否静默更新，1：是，2：否"`
+	VersionUrl    string `json:"versionUrl" doc:"版本地址"`
+	VersionDesc   string `json:"versionDesc" doc:"版本描述"`
+	CreatedBy     uint   `json:"createdBy" doc:"创建人id"`
+	CreateByName  string `json:"createByName" doc:"创建人名称"`
+	CreatedAt     string `json:"createdAt" doc:"创建时间"`
+	UpdatedBy     uint   `json:"updatedBy" doc:"更新人id"`
+	UpdatedByName string `json:"updatedByName" doc:"更新人名称"`
+	UpdatedAt     string `json:"updatedAt" doc:"更新时间"`
 }
 
 func Test_Res(t *testing.T) {
-	type Res struct {
-		Code    int         `json:"code" form:"code" doc:"错误码"`
-		Data    interface{} `json:"data" form:"data" doc:"数据"`
-		Message string      `json:"message" form:"message" doc:"错误信息"`
-	}
-	s := Reflect(&Res{})
-	data, err := json.MarshalIndent(s, "", "  ")
-	if err != nil {
-		panic(err.Error())
-	}
-	fmt.Println(string(data))
+	res := BuildJsonschema(&AppVersionListRes{}, true)
+	fmt.Println(res)
 }
