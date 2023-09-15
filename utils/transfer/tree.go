@@ -83,22 +83,21 @@ func BuildValidTree(nodes []NodeItem) []*NodeTree {
 	}
 
 	// 删除状态为false的叶子节点
-	var prune func(node *NodeTree) bool
-	prune = func(node *NodeTree) bool {
+	stack := make([]*NodeTree, len(roots))
+	copy(stack, roots)
+	for len(stack) > 0 {
+		node := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
 		for i := 0; i < len(node.Children); i++ {
-			if prune(node.Children[i]) {
+			if len(node.Children[i].Children) == 0 && !node.Children[i].Status {
 				node.Children = append(node.Children[:i], node.Children[i+1:]...)
 				i--
+			} else {
+				stack = append(stack, node.Children[i])
 			}
 		}
-		return len(node.Children) == 0 && !node.Status
 	}
-	for i := 0; i < len(roots); i++ {
-		if prune(roots[i]) {
-			roots = append(roots[:i], roots[i+1:]...)
-			i--
-		}
-	}
+
 	jsonRes, _ := json.Marshal(roots)
 	fmt.Println(string(jsonRes))
 	return roots
