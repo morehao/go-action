@@ -102,3 +102,48 @@ func BuildValidTree(nodes []NodeItem) []*NodeTree {
 	fmt.Println(string(jsonRes))
 	return roots
 }
+
+func BuildValidTreeWithOption(nodes, validNodes NodeList) []*NodeTree {
+	nodeMap := make(map[uint64]*NodeTree)
+	var roots []*NodeTree
+	validNodeMap := validNodes.ToMap()
+	// 创建所有节点
+	for i := range nodes {
+		nodeMap[nodes[i].Id] = &NodeTree{
+			NodeItem: nodes[i],
+			Children: make([]*NodeTree, 0),
+		}
+	}
+
+	// 构建树
+	for i := range nodes {
+		node := nodeMap[nodes[i].Id]
+		if nodes[i].Pid == 0 {
+			roots = append(roots, node)
+		} else {
+			parentNode := nodeMap[nodes[i].Pid]
+			parentNode.Children = append(parentNode.Children, node)
+		}
+	}
+
+	// 删除状态为false的叶子节点
+	stack := make([]*NodeTree, len(roots))
+	copy(stack, roots)
+	for len(stack) > 0 {
+		node := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		for i := 0; i < len(node.Children); i++ {
+			_, isValid := validNodeMap[node.Children[i].Id]
+			if len(node.Children[i].Children) == 0 && !isValid {
+				node.Children = append(node.Children[:i], node.Children[i+1:]...)
+				i--
+			} else {
+				stack = append(stack, node.Children[i])
+			}
+		}
+	}
+
+	jsonRes, _ := json.Marshal(roots)
+	fmt.Println(string(jsonRes))
+	return roots
+}
