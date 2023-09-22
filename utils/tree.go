@@ -77,7 +77,10 @@ func BuildValidTree(nodes []NodeItem) []*NodeTree {
 		if nodes[i].Pid == 0 {
 			roots = append(roots, node)
 		} else {
-			parentNode := nodeMap[nodes[i].Pid]
+			parentNode, ok := nodeMap[nodes[i].Pid]
+			if !ok {
+				continue
+			}
 			parentNode.Children = append(parentNode.Children, node)
 		}
 	}
@@ -121,12 +124,15 @@ func BuildValidTreeWithOption(nodes, validNodes NodeList) []*NodeTree {
 		if nodes[i].Pid == 0 {
 			roots = append(roots, node)
 		} else {
-			parentNode := nodeMap[nodes[i].Pid]
+			parentNode, ok := nodeMap[nodes[i].Pid]
+			if !ok {
+				continue
+			}
 			parentNode.Children = append(parentNode.Children, node)
 		}
 	}
 
-	// 删除状态为false的叶子节点
+	// 删除无效的节点
 	stack := make([]*NodeTree, len(roots))
 	copy(stack, roots)
 	for len(stack) > 0 {
