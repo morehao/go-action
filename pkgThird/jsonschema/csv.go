@@ -21,12 +21,7 @@ func BuildCsv(request interface{}) []string {
 	}
 	var csvDocs []string
 	for i := 0; i < t.NumField(); i++ {
-		// 定义 参数名,类型,说明
-		// 获取当前字段名
 		fieldName := t.Field(i).Name
-		// 定义固定占位字符串（是否必填,示例值,固定参数）
-		// 获取当前字段的值
-		// 获取当前字段的类型
 		fieldKind := t.Field(i).Type.Kind()
 		field := rv.Field(i)
 
@@ -36,7 +31,7 @@ func BuildCsv(request interface{}) []string {
 			if fieldKind == reflect.Ptr && !field.IsNil() {
 				subCsvDocs = BuildCsv(field.Interface())
 			} else if fieldKind == reflect.Struct {
-				subCsvDocs = BuildCsv(field.Addr().Interface())
+				subCsvDocs = BuildCsv(field.Interface())
 			}
 			// 如果返回值不为空，则拼接字符串
 			if len(subCsvDocs) > 0 {
