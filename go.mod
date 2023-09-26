@@ -1,15 +1,14 @@
-module go-practice
+module github.com/morehao/go-practice
 
-go 1.18
+go 1.19
 
 require (
 	github.com/gin-gonic/gin v1.9.1
-	github.com/iancoleman/orderedmap v0.0.0-20190318233801-ac98e3ecb4b0
+	github.com/iancoleman/orderedmap v0.3.0
 	github.com/json-iterator/go v1.1.12
-	github.com/mitchellh/mapstructure v1.4.2
-	github.com/mozillazg/go-pinyin v0.19.0
-	go.uber.org/zap v1.26.0
-	golang.org/x/text v0.9.0
+	github.com/mitchellh/mapstructure v1.5.0
+	github.com/mozillazg/go-pinyin v0.20.0
+	golang.org/x/text v0.13.0
 )
 
 require (
@@ -29,7 +28,6 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
-	go.uber.org/multierr v1.10.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.9.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
