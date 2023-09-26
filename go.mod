@@ -1,4 +1,4 @@
-module github.com/morehao/go-practice
+module github.com/morehao/go-action
 
 go 1.19
 
