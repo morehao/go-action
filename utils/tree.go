@@ -94,6 +94,9 @@ func BuildValidTree(nodes []NodeItem) []*NodeTree {
 		for i := 0; i < len(node.Children); i++ {
 			if len(node.Children[i].Children) == 0 && !node.Children[i].Status {
 				node.Children = append(node.Children[:i], node.Children[i+1:]...)
+				if len(node.Children) > 0 {
+					stack = append(stack, node)
+				}
 				i--
 			} else {
 				stack = append(stack, node.Children[i])
@@ -142,6 +145,9 @@ func BuildValidTreeWithOption(nodes, validNodes NodeList) []*NodeTree {
 			_, isValid := validNodeMap[node.Children[i].Id]
 			if len(node.Children[i].Children) == 0 && !isValid {
 				node.Children = append(node.Children[:i], node.Children[i+1:]...)
+				if len(node.Children) > 0 {
+					stack = append(stack, node)
+				}
 				i--
 			} else {
 				stack = append(stack, node.Children[i])
