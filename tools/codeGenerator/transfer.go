@@ -10,7 +10,7 @@ import (
 // @param src 源结构体
 // @param dest 目标结构体
 // @return string 生成的代码片段
-func GenStructTransferCode(src, dest interface{}) string {
+func GenStructAssignCode(src, dest interface{}) string {
 	srcType := reflect.TypeOf(src)
 	destType := reflect.TypeOf(dest)
 

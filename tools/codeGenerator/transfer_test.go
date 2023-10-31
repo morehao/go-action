@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestGenStructTransferCode(t *testing.T) {
+func TestGenStructAssignCode(t *testing.T) {
 	type SourceStruct struct {
 		Field1 int
 		Field2 string
@@ -18,6 +18,6 @@ func TestGenStructTransferCode(t *testing.T) {
 	}
 	var src SourceStruct
 	var dest DestinationStruct
-	code := GenStructTransferCode(src, dest)
+	code := GenStructAssignCode(src, dest)
 	fmt.Println(code)
 }
