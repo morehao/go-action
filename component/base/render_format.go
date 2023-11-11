@@ -132,8 +132,10 @@ func setFloat64Prec(v interface{}) {
 				}
 			}
 		case reflect.Map:
-			for _, key := range field.MapKeys() {
-				value := field.MapIndex(key)
+			mapRange := field.MapRange()
+			for mapRange.Next() {
+				key := mapRange.Key()
+				value := mapRange.Value()
 				switch value.Kind() {
 				case reflect.Ptr, reflect.Interface:
 					if !value.IsNil() {
@@ -152,8 +154,24 @@ func setFloat64Prec(v interface{}) {
 					}
 					rounded := round(value.Float(), precision)
 					field.SetMapIndex(key, reflect.ValueOf(rounded))
+				case reflect.Slice:
+					for j := 0; j < value.Len(); j++ {
+						elem := value.Index(j)
+						if elem.Kind() == reflect.Float64 {
+							precision, err := strconv.Atoi(precisionTag)
+							if err != nil {
+								fmt.Println("Invalid precision:", err)
+								continue
+							}
+							rounded := round(elem.Float(), precision)
+							elem.SetFloat(rounded)
+						} else {
+							setFloat64Prec(elem.Addr().Interface())
+						}
+					}
 				}
 			}
+
 		}
 	}
 }
