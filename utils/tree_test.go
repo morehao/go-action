@@ -32,7 +32,7 @@ func Test_BuildValidTree(t *testing.T) {
 		{Id: 7, Pid: 6, Label: "5-6-7"},
 		{Id: 8, Pid: 6, Label: "5-6-8"},
 		{Id: 9, Pid: 8, Label: "5-6-8-9"},
-		{Id: 10, Pid: 9, Label: "5-6-8-10", Status: true},
+		{Id: 10, Pid: 9, Label: "5-6-8-10", Status: false},
 	}
 	fmt.Println("tree:", BuildValidTree(nodes))
 }

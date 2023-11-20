@@ -85,28 +85,35 @@ func BuildValidTree(nodes []NodeItem) []*NodeTree {
 		}
 	}
 
-	// 删除状态为false的叶子节点
-	stack := make([]*NodeTree, len(roots))
-	copy(stack, roots)
-	for len(stack) > 0 {
-		node := stack[len(stack)-1]
-		stack = stack[:len(stack)-1]
-		for i := 0; i < len(node.Children); i++ {
-			if len(node.Children[i].Children) == 0 && !node.Children[i].Status {
-				node.Children = append(node.Children[:i], node.Children[i+1:]...)
-				if len(node.Children) > 0 {
-					stack = append(stack, node)
+	// 删除状态为false的节点
+	anyRemoved := true
+	for anyRemoved {
+		anyRemoved = false
+		for _, node := range nodeMap {
+			for i := 0; i < len(node.Children); {
+				child := node.Children[i]
+				if !child.Status && len(child.Children) == 0 {
+					// 删除无效的叶子节点
+					node.Children = append(node.Children[:i], node.Children[i+1:]...)
+					anyRemoved = true
+				} else {
+					i++
 				}
-				i--
-			} else {
-				stack = append(stack, node.Children[i])
 			}
 		}
 	}
 
-	jsonRes, _ := json.Marshal(roots)
+	// 过滤出有效的根节点
+	validRoots := roots[:0]
+	for _, root := range roots {
+		if root.Status || len(root.Children) > 0 {
+			validRoots = append(validRoots, root)
+		}
+	}
+
+	jsonRes, _ := json.Marshal(validRoots)
 	fmt.Println(string(jsonRes))
-	return roots
+	return validRoots
 }
 
 func BuildValidTreeWithOption(nodes, validNodes NodeList) []*NodeTree {
