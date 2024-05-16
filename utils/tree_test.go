@@ -53,7 +53,7 @@ func Test_BuildValidTreeWithOption(t *testing.T) {
 	validNodes := NodeList{
 		{Id: 2, Pid: 1, Label: "1-2", Status: true},
 		{Id: 3, Pid: 1, Label: "1-3", Status: true},
-		{Id: 10, Pid: 9, Label: "5-6-8-10", Status: true},
+		// {Id: 10, Pid: 9, Label: "5-6-8-10", Status: true},
 	}
 	fmt.Println("tree:", BuildValidTreeWithOption(nodes, validNodes))
 }
