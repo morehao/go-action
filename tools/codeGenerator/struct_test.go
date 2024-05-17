@@ -18,6 +18,6 @@ func TestGenStructAssignCode(t *testing.T) {
 	}
 	var src SourceStruct
 	var dest DestinationStruct
-	code := GenStructAssignCode(src, dest)
+	code := GenStructAssignCode(src, dest, "src", "dest")
 	fmt.Println(code)
 }
