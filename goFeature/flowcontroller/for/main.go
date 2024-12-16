@@ -4,7 +4,7 @@ import "fmt"
 
 func main() {
 	s := []string{"monkey"}
-	fmt.Printf("findMonkey: %v", findMonkey(s))
+	fmt.Printf("findMonkey: %v\n", findMonkey(s))
 	rangeDemo()
 }
 

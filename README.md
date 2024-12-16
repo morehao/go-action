@@ -3,7 +3,7 @@
 - [基础数据结构的实现](dataStructure/README.md)
 - [算法](algorithm/README.md)
 - [场景编程题](sceneCode/README.md)
-- [leetcode](leetcode/README.md)
+- [leetcode](leetcodeOld/README.md)
 - [Go原生包探索](pkgNative/README.md)
 - [Go第三方包探索](pkgThird/README.md)
 - [工具函数](utils/README.md)
