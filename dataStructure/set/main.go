@@ -8,7 +8,7 @@ import (
 
 // map实现set
 func main() {
-	//初始化
+	// 初始化
 	s := New()
 
 	s.Add(1)

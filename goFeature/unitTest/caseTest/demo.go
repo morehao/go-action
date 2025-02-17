@@ -1,4 +1,4 @@
-package exampleTest
+package caseTest
 
 import "fmt"
 
