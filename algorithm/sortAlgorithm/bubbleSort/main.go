@@ -4,8 +4,8 @@ import "fmt"
 
 func main() {
 	var arr = []int{19, 8, 16, 15, 23, 34, 6, 3, 1, 0, 2, 9, 7}
-	bubbleSortAsc(arr)
-	fmt.Println("bubbleSortAsc:", arr)
+	bubbleSort(arr)
+	fmt.Println("bubbleSort:", arr)
 }
 
 /*
@@ -15,9 +15,10 @@ func main() {
 3、针对所有的元素重复以上的步骤，除了最后一个；
 4、重复步骤 1~3，直到排序完成。
 */
-func bubbleSortAsc(nums []int) []int {
-	for range nums {
-		for j := 0; j < len(nums)-1; j++ {
+
+func bubbleSort(nums []int) []int {
+	for i := 0; i < len(nums)-1; i++ {
+		for j := 0; j < len(nums)-i-1; j++ {
 			// 相邻两个元素比较大小，然后交换
 			if nums[j] > nums[j+1] {
 				nums[j], nums[j+1] = nums[j+1], nums[j]

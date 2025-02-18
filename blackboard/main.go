@@ -2,23 +2,107 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
-	_ "net/http/pprof" // 导入 pprof 包
 )
 
 func main() {
-	go func() {
-		// 启动一个 HTTP 服务器，监听 localhost:6060 端口，暴露 pprof 相关的信息。
-		log.Println(http.ListenAndServe("localhost:6060", nil)) // 启动 pprof 服务
-	}()
+	var arr = []int{19, 8, 16, 15, 23, 34, 6, 3, 1, 0, 2, 9, 7}
+	fmt.Println(mergeSort(arr))
+}
+func bubbleSort(nums []int) []int {
+	for i := 0; i < len(nums)-1; i++ {
+		for j := 0; j < len(nums)-i-1; j++ {
+			if nums[j] > nums[j+1] {
+				nums[j], nums[j+1] = nums[j+1], nums[j]
+			}
+		}
+	}
+	return nums
+}
 
-	// 模拟代码中的字符串截取操作
-	var str0 = "12345678901234567890"
-	str1 := str0[:10]
+func inertSort(nums []int) []int {
+	for i := range nums {
+		currentItem := nums[i]
+		j := i
+		for j > 0 && nums[j-1] > currentItem {
+			nums[j] = nums[j-1]
+			j--
+		}
+		nums[j] = currentItem
+	}
+	return nums
+}
 
-	fmt.Println(str1)
+func selectSort(nums []int) []int {
+	for i := range nums {
+		minIndex := i
+		for j := i + 1; j < len(nums); j++ {
+			if nums[j] < nums[minIndex] {
+				minIndex = j
+			}
+		}
+		nums[i], nums[minIndex] = nums[minIndex], nums[i]
+	}
+	return nums
+}
 
-	// 阻塞主程序，让它运行，直到用户手动终止
-	select {}
+func quickSort(nums []int) []int {
+	return quickPartition(nums, 0, len(nums)-1)
+}
+
+func quickPartition(nums []int, start, end int) []int {
+	i, j := start, end
+	midValue := nums[(start+end)/2]
+	for i <= j {
+		for nums[i] < midValue {
+			i++
+		}
+		for nums[j] > midValue {
+			j--
+		}
+		if i <= j {
+			nums[i], nums[j] = nums[j], nums[i]
+			i++
+			j--
+		}
+	}
+	if i < end {
+		quickPartition(nums, i, end)
+	}
+	if j > start {
+		quickPartition(nums, start, j)
+	}
+	return nums
+}
+
+func mergeSort(nums []int) []int {
+	if len(nums) <= 1 {
+		return nums
+	}
+	midIndex := len(nums) / 2
+	a := mergeSort(nums[:midIndex])
+	b := mergeSort(nums[midIndex:])
+	return merge(a, b)
+}
+
+func merge(a, b []int) []int {
+	i, j := 0, 0
+	res := make([]int, len(a)+len(b))
+	for i < len(a) && j < len(b) {
+		if a[i] < b[j] {
+			res[i+j] = a[i]
+			i++
+		} else {
+			res[i+j] = b[j]
+			j++
+		}
+	}
+	for i < len(a) {
+		res[i+j] = a[i]
+		i++
+	}
+	for j < len(b) {
+		res[i+j] = b[j]
+		j++
+	}
+	return res
 }

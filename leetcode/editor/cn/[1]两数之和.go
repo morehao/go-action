@@ -50,16 +50,14 @@ package main
 // leetcode submit region begin(Prohibit modification and deletion)
 func twoSum(nums []int, target int) []int {
 	m := make(map[int]int)
-	res := make([]int, 0, 2)
-	for i, num := range nums {
-		diff := target - num
-		if idx, ok := m[diff]; ok {
-			res = append(res, idx, i)
-			return res
+	for i, v := range nums {
+		diff := target - v
+		if index, ok := m[diff]; ok {
+			return []int{i, index}
 		}
-		m[num] = i
+		m[v] = i
 	}
-	return res
+	return []int{}
 }
 
 // leetcode submit region end(Prohibit modification and deletion)
