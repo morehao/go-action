@@ -68,14 +68,14 @@ package main
 // leetcode submit region begin(Prohibit modification and deletion)
 // 双指针法
 func removeElement(nums []int, val int) int {
-	p1 := 0 // 用来记录不等于 val 的元素的数量
-	for p2 := 0; p2 < len(nums); p2++ {
-		if nums[p2] != val {
-			nums[p1] = nums[p2] // 将不等于 val 的元素放到前面
-			p1++
+	k := 0
+	for i := range nums {
+		if nums[i] != val {
+			nums[k] = nums[i] // 将不等于 val 的元素放到前面
+			k++
 		}
 	}
-	return p1
+	return k
 }
 
 // leetcode submit region end(Prohibit modification and deletion)
