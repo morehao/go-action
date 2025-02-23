@@ -44,31 +44,21 @@
 package main
 
 // leetcode submit region begin(Prohibit modification and deletion)
+// 滑动窗口
 func lengthOfLongestSubstring(s string) int {
-	// 窗口集合，用来存储当前窗口中的字符
-	windowsMap := make(map[byte]struct{})
+	maxLen := 0
 	left := 0
-	maxLength := 0
-
-	// 遍历字符串，right 是右边指针
-	for right := 0; right < len(s); right++ {
+	m := make(map[byte]int) // 使用 map 存储字符的最后出现位置
+	for right := range s {
 		rightChar := s[right]
-		// 如果当前字符在窗口中已经出现，移动左指针
-		for _, exists := windowsMap[rightChar]; exists; {
-			delete(windowsMap, s[left])       // 删除左边字符
-			left++                            // 左指针向右移动
-			_, exists = windowsMap[rightChar] // 检查新的字符
+		// 如果当前字符曾经出现过，更新 left 指针的位置
+		if lastPos, ok := m[rightChar]; ok && lastPos >= left {
+			left = lastPos + 1
 		}
-
-		// 将当前字符加入窗口
-		windowsMap[rightChar] = struct{}{}
-		// 更新最大子串长度
-		if right-left+1 > maxLength {
-			maxLength = right - left + 1
-		}
+		m[rightChar] = right
+		maxLen = max(maxLen, right-left+1)
 	}
-
-	return maxLength
+	return maxLen
 }
 
 // leetcode submit region end(Prohibit modification and deletion)
