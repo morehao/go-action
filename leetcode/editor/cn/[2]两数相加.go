@@ -54,6 +54,7 @@ package main
  * }
  */
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	// 初始化虚拟链表
 	head := &ListNode{}
 	current := head
 	carry := 0
@@ -75,6 +76,7 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 		}
 		current = current.Next
 	}
+	// 如果有进位，添加新的节点
 	if carry > 0 {
 		current.Next = &ListNode{
 			Val: carry,
