@@ -40,10 +40,12 @@
 package main
 
 // leetcode submit region begin(Prohibit modification and deletion)
+// 动态规划
 func climbStairs(n int) int {
 	if n <= 1 {
 		return 1
 	}
+	// f(x)=f(x−1)+f(x−2)
 	pre, curr := 1, 1
 	for i := 2; i <= n; i++ {
 		next := pre + curr
