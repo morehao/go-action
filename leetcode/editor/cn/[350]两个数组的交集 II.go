@@ -44,18 +44,15 @@ package main
 
 // leetcode submit region begin(Prohibit modification and deletion)
 func intersect(nums1 []int, nums2 []int) []int {
-	if len(nums1) < len(nums2) {
-		return intersect(nums2, nums1)
-	}
-	m1 := make(map[int]int)
-	for i := range nums1 {
-		m1[nums1[i]]++
+	m := make(map[int]int)
+	for _, v := range nums1 {
+		m[v]++
 	}
 	var res []int
-	for i := range nums2 {
-		if m1[nums2[i]] > 0 {
-			res = append(res, nums2[i])
-			m1[nums2[i]]--
+	for _, v := range nums2 {
+		if m[v] > 0 {
+			res = append(res, v)
+			m[v]--
 		}
 	}
 	return res
