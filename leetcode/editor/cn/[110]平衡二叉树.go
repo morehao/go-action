@@ -50,6 +50,8 @@ import "math"
  *     Right *TreeNode
  * }
  */
+
+// 平衡二叉树定义：左右最大高度差不超过 1
 func isBalanced(root *TreeNode) bool {
 	if root == nil {
 		return true
