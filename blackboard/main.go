@@ -2,29 +2,19 @@ package main
 
 import (
 	"fmt"
-	"sync"
-	"time"
 )
 
-func main() {
-	const execNum = 3
-	var wg sync.WaitGroup
-	ch := make(chan struct{}, execNum)
-	for i := 0; i < 10; i++ {
-		wg.Add(1)
-		go func(idx int) {
-			defer wg.Done()
-			ch <- struct{}{}
-			task(idx, ch)
-		}(i)
+// 计算最大公约数
+func gcd(a, b int) int {
+	for b != 0 {
+		a, b = b, a%b
 	}
-	wg.Wait()
+	fmt.Println("a:", a)
+	fmt.Println("b:", b)
+	return a
 }
 
-func task(idx int, ch chan struct{}) {
-	defer func() {
-		<-ch
-	}()
-	fmt.Println("idx: ", idx)
-	time.Sleep(time.Second * 2)
+func main() {
+	fmt.Println(gcd(48, 18)) // 输出 6
+	fmt.Println(gcd(17, 23)) // 输出 1
 }
