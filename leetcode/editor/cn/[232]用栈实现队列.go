@@ -105,6 +105,7 @@ func (this *MyQueue) Empty() bool {
 
 func (this *MyQueue) inToOut() {
 	for len(this.inStack) > 0 {
+		// 后进先出，将 inStack 的栈顶元素弹出，并压入 outStack（outStack 逆序存储）
 		this.outStack = append(this.outStack, this.inStack[len(this.inStack)-1])
 		this.inStack = this.inStack[:len(this.inStack)-1]
 	}
