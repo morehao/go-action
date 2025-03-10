@@ -49,20 +49,20 @@ func shortestToChar(s string, c byte) []int {
 		return nil
 	}
 	res := make([]int, n)
-	// 在开始遍历的时候 est 可能不存在，为了简化逻辑，我们可以用 −n 或 2n 表示
-	est := -n
+	// 在开始遍历的时候 index 可能不存在，为了简化逻辑，我们可以用 −n 或 2n 表示
+	index := -n
 	for i := range s {
 		if s[i] == c {
-			est = i
+			index = i
 		}
-		res[i] = i - est
+		res[i] = i - index
 	}
-	est = 2 * n
+	index = 2 * n
 	for i := n - 1; i >= 0; i-- {
 		if s[i] == c {
-			est = i
+			index = i
 		}
-		res[i] = min(est-i, res[i])
+		res[i] = min(index-i, res[i])
 	}
 	return res
 }
