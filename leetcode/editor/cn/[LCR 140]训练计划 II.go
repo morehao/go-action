@@ -41,6 +41,7 @@ func trainingPlan(head *ListNode, cnt int) *ListNode {
 		n++
 	}
 	kthNode := head
+	// 倒数第 cnt 个节点相当于是第 n-cnt 个节点
 	for n > cnt {
 		kthNode = kthNode.Next
 		n--
