@@ -44,23 +44,23 @@ package main
 
 // leetcode submit region begin(Prohibit modification and deletion)
 func searchRange(nums []int, target int) []int {
-	left := fn(nums, target)    // 找到 target 的最左索引
-	right := fn(nums, target+1) // 找到比 target 大的第一个元素索引
+	left := findIndex(nums, target)    // 找到 target 的最左索引
 	if left == len(nums) || nums[left] != target {
 		return []int{-1, -1} // 说明 target 不存在
 	}
+	right := findIndex(nums, target+1) // 找到比 target 大的第一个元素索引
 	return []int{left, right - 1} // 右边界修正为 right-1
 }
 
 // 查找 >= target 的最左索引
-func fn(nums []int, target int) int {
-	left, right := 0, len(nums)
-	for left < right {
-		mid := left + (right-left)/2
+func findIndex(nums []int, target int) int {
+	left, right := 0, len(nums)-1
+	for left <= right {
+		mid := (left + right) / 2
 		if nums[mid] < target {
 			left = mid + 1
 		} else {
-			right = mid
+			right = mid - 1
 		}
 	}
 	return left // 返回 >= target 的第一个位置
