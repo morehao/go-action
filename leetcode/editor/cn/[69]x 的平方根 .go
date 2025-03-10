@@ -39,19 +39,20 @@ package main
 // leetcode submit region begin(Prohibit modification and deletion)
 // 二分查找法
 func mySqrt(x int) int {
-	l, r := 0, x
-	res := 0
-	for l <= r {
-		mid := (l + r) / 2
+	left, right := 0, x
+	for left <= right {
+		mid := (left + right) / 2
 		n := mid * mid
-		if n <= x {
-			l = mid + 1
-			res = mid
+		if n >= x {
+			right = mid - 1
 		} else {
-			r = mid - 1
+			left = mid + 1
 		}
 	}
-	return res
+	if left*left > x {
+		return right
+	}
+	return left
 }
 
 // leetcode submit region end(Prohibit modification and deletion)
