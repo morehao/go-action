@@ -56,9 +56,9 @@ func maxSlidingWindow(nums []int, k int) []int {
 	// 双端队列，存储数组元素的索引
 	deque := make([]int, 0)
 
-	for i := 0; i < len(nums); i++ {
+	for i := range nums {
 		// 移除队列中不在当前窗口的元素，窗口的范围为 [i-k+1, i]
-		for len(deque) > 0 && deque[0] < i-k+1 {
+		if len(deque) > 0 && deque[0] < i-k+1 {
 			deque = deque[1:]
 		}
 
