@@ -47,6 +47,7 @@ func subsets(nums []int) [][]int {
 
 	for _, num := range nums {
 		n := len(result)
+		// 遍历 res 中已有的所有子集，将当前元素放入到子集中
 		for i := 0; i < n; i++ {
 			// 复制当前子集并加入新元素
 			newSubset := make([]int, len(result[i]))
