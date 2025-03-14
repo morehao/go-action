@@ -37,12 +37,30 @@
 
 package main
 
-import "sort"
-
 // leetcode submit region begin(Prohibit modification and deletion)
+// 核心思想：通过“投票”和“抵消”来找到出现次数超过 n/2 的元素。
 func majorityElement(nums []int) int {
-	sort.Ints(nums)
-	return nums[len(nums)/2]
+	var res int
+	var count int
+	for _, num := range nums {
+		if num == res {
+			count++
+		} else if count == 0 {
+			res = num
+		} else {
+			count--
+		}
+	}
+	count = 0
+	for _, num := range nums {
+		if num == res {
+			count++
+		}
+	}
+	if count >= len(nums)/2 {
+		return res
+	}
+	return -1
 }
 
 // leetcode submit region end(Prohibit modification and deletion)
