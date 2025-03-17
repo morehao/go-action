@@ -57,6 +57,7 @@ func reverseBetween(head *ListNode, left, right int) *ListNode {
 	}
 	cur := pre.Next
 	for i := 0; i < right-left; i++ {
+		// curr.Next要设置为 pre.Next
 		next := cur.Next
 		cur.Next = next.Next
 		next.Next = pre.Next
