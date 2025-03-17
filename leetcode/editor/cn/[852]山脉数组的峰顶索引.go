@@ -46,7 +46,7 @@ package main
 
 // leetcode submit region begin(Prohibit modification and deletion)
 func peakIndexInMountainArray(arr []int) int {
-	for i := 1; i < len(arr); i++ {
+	for i := 0; i < len(arr); i++ {
 		if arr[i] > arr[i+1] {
 			return i
 		}

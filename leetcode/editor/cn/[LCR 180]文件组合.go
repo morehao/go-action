@@ -49,6 +49,7 @@ func fileCombination(target int) [][]int {
 	left, right := 1, 1 // 滑动窗口的左右边界
 	sum := 0            // 当前窗口内文件编号的总和
 
+	// 如果 left > target/2，那么 left 本身已经大于 target 一半，再往后扩展不可能找到满足 sum == target 的组合了
 	for left <= target/2 {
 		if sum < target {
 			// 如果总和小于 target，扩大窗口（右边界右移）
