@@ -44,31 +44,26 @@ package main
 
 // leetcode submit region begin(Prohibit modification and deletion)
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
-	totalLength := len(nums1) + len(nums2)
-	if totalLength%2 == 1 {
-		midIndex := totalLength / 2
-		return float64(getKthElement(nums1, nums2, midIndex+1))
+	nums := mergeNums(nums1, nums2)
+	n := len(nums)
+	if n%2 == 1 {
+		return float64(nums[n/2])
+	} else {
+		return float64(nums[n/2]+nums[n/2-1]) / 2
 	}
-	midIndex1, midIndex2 := totalLength/2-1, totalLength/2
-	return float64(getKthElement(nums1, nums2, midIndex1+1)+getKthElement(nums1, nums2, midIndex2+1)) / 2.0
 }
 
-func getKthElement(nums1, nums2 []int, k int) int {
-	m, n := len(nums1), len(nums2)
+func mergeNums(nums1, nums2 []int) []int {
 	p1, p2 := 0, 0
-	sorted := make([]int, 0, m+n)
+	m, n := len(nums1), len(nums2)
+	var sorted []int
 	for {
-		if p1 >= k || p2 >= k {
-			break
-		}
-		// nums1遍历完
 		if p1 == m {
-			sorted = append(sorted, nums2[p2:]...) // 将 nums2 剩余元素追加到 sorted
+			sorted = append(sorted, nums2[p2:]...)
 			break
 		}
-		// nums2遍历完
 		if p2 == n {
-			sorted = append(sorted, nums1[p1:]...) // 将 nums1 剩余元素追加到 sorted
+			sorted = append(sorted, nums1[p1:]...)
 			break
 		}
 		if nums1[p1] < nums2[p2] {
@@ -79,10 +74,7 @@ func getKthElement(nums1, nums2 []int, k int) int {
 			p2++
 		}
 	}
-	if len(sorted) < k {
-		return 0
-	}
-	return sorted[k-1]
+	return sorted
 }
 
 // leetcode submit region end(Prohibit modification and deletion)
