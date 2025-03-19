@@ -49,15 +49,13 @@ package main
 // 双指针
 func isSubsequence(s string, t string) bool {
 	m, n := len(s), len(t)
-	i, j := 0, 0
-	for i < m && j < n {
-		if s[i] == t[j] {
+	i := 0
+	for j := 0; j < n; j++ {
+		if i < m && s[i] == t[j] {
 			i++
 		}
-		j++
 	}
 	return i == m
-
 }
 
 // leetcode submit region end(Prohibit modification and deletion)
