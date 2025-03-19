@@ -45,13 +45,31 @@
 package main
 
 // leetcode submit region begin(Prohibit modification and deletion)
+
+// O(log(n)) 时间复杂度
 func peakIndexInMountainArray(arr []int) int {
-	for i := 0; i < len(arr); i++ {
-		if arr[i] > arr[i+1] {
-			return i
+	left, right := 0, len(arr)-1
+
+	for left < right {
+		mid := (left + right) / 2
+		if arr[mid] < arr[mid+1] {
+			left = mid + 1 // 峰值在右侧
+		} else {
+			right = mid // 峰值在左侧或当前
 		}
 	}
-	return 0
+
+	return left // left 指向峰值
 }
+
+// 简单版本实现
+// func peakIndexInMountainArray(arr []int) int {
+// 	for i := 0; i < len(arr); i++ {
+// 		if arr[i] > arr[i+1] {
+// 			return i
+// 		}
+// 	}
+// 	return 0
+// }
 
 // leetcode submit region end(Prohibit modification and deletion)
