@@ -59,7 +59,7 @@ func permute(nums []int) [][]int {
 		// 如果当前索引等于数组长度，说明已经找到了一个完整的排列
 		if i == n {
 			// 将当前排列的 path 加入结果集 res，使用 append([]int(nil), path...) 来复制 path 的内容
-			res = append(res, append([]int(nil), path...))
+			res = append(res, append([]int{}, path...))
 			return
 		}
 
