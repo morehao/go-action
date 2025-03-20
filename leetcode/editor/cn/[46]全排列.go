@@ -48,34 +48,34 @@ func permute(nums []int) [][]int {
 	// 获取输入数组 nums 的长度
 	n := len(nums)
 
-	// 创建一个大小为 n 的 path 数组，用于存储当前排列的状态
-	// 创建一个大小为 n 的 onPath 数组，用于标记每个数字是否已经在当前排列中
-	path := make([]int, n)
-	onPath := make([]bool, n)
+	// 创建一个大小为 n 的 curr 数组，用于存储当前排列的状态
+	// 创建一个大小为 n 的 visited 数组，用于标记每个数字是否已经在当前排列中
+	curr := make([]int, n)
+	visited := make([]bool, n)
 
 	// 定义递归函数 dfs，i 表示当前排列的索引位置
 	var dfs func(int)
 	dfs = func(i int) {
 		// 如果当前索引等于数组长度，说明已经找到了一个完整的排列
 		if i == n {
-			// 将当前排列的 path 加入结果集 res，使用 append([]int(nil), path...) 来复制 path 的内容
-			res = append(res, append([]int{}, path...))
+			// 将当前排列的 curr 加入结果集 res，使用 append([]int(nil), curr...) 来复制 curr 的内容
+			res = append(res, append([]int{}, curr...))
 			return
 		}
 
 		// 遍历每个数字，尝试将它放入当前位置 i
-		// onPath[j] 用于检查该数字是否已经在当前排列中
-		for j, on := range onPath {
-			// 如果 nums[j] 还没有被放入排列中（即 onPath[j] 为 false）
+		// visited[j] 用于检查该数字是否已经在当前排列中
+		for j, on := range visited {
+			// 如果 nums[j] 还没有被放入排列中（即 visited[j] 为 false）
 			if !on {
 				// 将 nums[j] 放入当前位置 i
-				path[i] = nums[j]
+				curr[i] = nums[j]
 				// 标记 nums[j] 已经被使用
-				onPath[j] = true
+				visited[j] = true
 				// 递归调用，处理下一个位置
 				dfs(i + 1)
 				// 回溯，将 nums[j] 标记为未使用，恢复状态
-				onPath[j] = false
+				visited[j] = false
 			}
 		}
 	}
