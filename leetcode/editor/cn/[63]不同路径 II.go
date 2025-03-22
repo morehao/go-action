@@ -62,14 +62,14 @@ func uniquePathsWithObstacles(obstacleGrid [][]int) int {
 	// 初始化起点
 	dp[0][0] = 1
 
-	// 按列处理（如果有障碍物，后续全为 0）
+	// 按行处理（如果有障碍物，后续全为 0）
 	for i := 1; i < m; i++ {
 		if obstacleGrid[i][0] == 0 {
 			dp[i][0] = dp[i-1][0]
 		}
 	}
 
-	// 按行处理（如果有障碍物，后续全为 0）
+	// 按列处理（如果有障碍物，后续全为 0）
 	for j := 1; j < n; j++ {
 		if obstacleGrid[0][j] == 0 {
 			dp[0][j] = dp[0][j-1]
