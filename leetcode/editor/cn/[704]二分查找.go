@@ -40,7 +40,8 @@ func search(nums []int, target int) int {
 	}
 	left, right := 0, n-1
 	for left <= right {
-		mid := (left + right) / 2
+		// 防止整数溢出，和(left + right) / 2 在数学上是等价的
+		mid := left + (right-left)/2
 		midVal := nums[mid]
 		if target == midVal {
 			return mid
