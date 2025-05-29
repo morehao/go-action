@@ -8,32 +8,30 @@ import (
 
 	"github.com/Jeffail/tunny"
 
-	"github.com/morehao/go-tools/dbClient"
-	"github.com/morehao/go-tools/glog"
-	"github.com/morehao/go-tools/gutils"
+	"github.com/morehao/golib/glog"
+	"github.com/morehao/golib/gutils"
+	"github.com/morehao/golib/storages/dbmysql"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
 )
 
 func initMysqlClient() (*gorm.DB, error) {
-	if err := glog.NewLogger(&glog.LoggerConfig{
+	if err := glog.InitLogger(&glog.LogConfig{
 		Service:   "test",
 		Level:     glog.DebugLevel,
 		Dir:       "./log",
-		Stdout:    true,
 		ExtraKeys: []string{"requestId"},
 	}); err != nil {
 		return nil, err
 	}
 
-	cfg := dbClient.MysqlConfig{
-		Service:  "test",
+	cfg := &dbmysql.MysqlConfig{
 		Addr:     "127.0.0.1:3306",
 		Database: "demo",
 		User:     "root",
 		Password: "123456",
 	}
-	return dbClient.InitMysql(cfg)
+	return dbmysql.InitMysql(cfg)
 }
 
 func TestTunnyRun2(t *testing.T) {
