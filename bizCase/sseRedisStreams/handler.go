@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/morehao/golib/glog"
 )
 
 func Chat(ctx *gin.Context) {
@@ -32,7 +32,7 @@ func Chat(ctx *gin.Context) {
 
 	// 如果没有数据，启动写入任务（写 redis + 写 channel）
 	if length == 0 {
-		go MockModelStream(ctx.Copy(), ch)
+		go MockModelStream(ctx.Copy(), hash)
 	} else {
 		close(ch) // 没有新任务生成，就关闭通道
 	}
@@ -48,46 +48,34 @@ func Chat(ctx *gin.Context) {
 	for {
 		select {
 		case <-clientDone:
-			log.Println("客户端断开，保存 offset", lastID)
+			glog.Infof(ctx, "[Chat] client done")
 			rdb.Set(ctx, offsetKey, lastID, time.Hour)
 			return
 
-		case data, ok := <-ch: // 优先从 MockModelStream 写入的 channel 读
-			if !ok {
-				ch = nil // 通道结束，关闭该 case
-				continue
-			}
-			id := SaveToStream(ctx, streamKey, data)
-			lastID = id
-
-			fmt.Fprintf(ctx.Writer, "id: %s\ndata: %s\n\n", id, data)
-			ctx.Writer.Flush()
-
-			if data == "[DONE]" {
-				rdb.Del(ctx, offsetKey)
-				return
-			}
-
 		default:
-			// 若通道已关闭，继续从 Redis Stream 读未发送的历史数据
-			if ch == nil {
-				msgs, _ := ReadFromStream(ctx, streamKey, lastID, 10, 3*time.Second)
-				if len(msgs) == 0 {
-					time.Sleep(300 * time.Millisecond)
+			// 阻塞等待 Redis 有新消息推送
+			msgs, err := ReadFromStream(ctx, streamKey, lastID, 10, 5*time.Second)
+			if err != nil || len(msgs) == 0 {
+				glog.Infof(ctx, "[Chat] retrying")
+				continue // 自动重试
+			}
+
+			for _, msg := range msgs {
+				data, ok := msg.Values["data"].(string)
+				if !ok {
 					continue
 				}
-				for _, msg := range msgs {
-					data := msg.Values["data"].(string)
-					lastID = msg.ID
-					fmt.Fprintf(ctx.Writer, "id: %s\ndata: %s\n\n", msg.ID, data)
-					ctx.Writer.Flush()
-					if data == "[DONE]" {
-						rdb.Del(ctx, offsetKey)
-						return
-					}
+				lastID = msg.ID
+
+				glog.Infof(ctx, "[Chat] send data: %s", data)
+				sseMsg := fmt.Sprintf("id: %s\ndata: %s\n\n", msg.ID, data)
+				ctx.Writer.Write([]byte(sseMsg))
+				ctx.Writer.Flush()
+
+				if data == "[DONE]" {
+					rdb.Del(ctx, offsetKey)
+					return
 				}
-			} else {
-				time.Sleep(100 * time.Millisecond)
 			}
 		}
 	}

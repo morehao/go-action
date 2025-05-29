@@ -27,16 +27,22 @@ func init() {
 	rdb = redisClient
 }
 
-func ReadFromStream(ctx *gin.Context, stream, lastID string, count int64, block time.Duration) ([]redis.XMessage, error) {
-	res, err := rdb.XRead(ctx, &redis.XReadArgs{
-		Streams: []string{stream, lastID},
+func ReadFromStream(ctx *gin.Context, streamKey, lastID string, count int64, block time.Duration) ([]redis.XMessage, error) {
+	streams, err := rdb.XRead(ctx, &redis.XReadArgs{
+		Streams: []string{streamKey, lastID},
 		Count:   count,
 		Block:   block,
 	}).Result()
-	if err != nil || len(res) == 0 {
+	if err != nil {
+		// 例如 i/o timeout、context canceled 都会走这里
 		return nil, err
 	}
-	return res[0].Messages, nil
+	if len(streams) == 0 {
+		// 没有任何 Stream 返回
+		return nil, nil
+	}
+	// 我们只关心第一个 Stream 的 Message（因为我们只传了一个 streamKey）
+	return streams[0].Messages, nil
 }
 
 func SaveToStream(ctx *gin.Context, stream, data string) string {
