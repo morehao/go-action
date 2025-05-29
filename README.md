@@ -2,7 +2,7 @@
 - [Go语言特性探索](goFeature/README.md)
 - [基础数据结构的实现](dataStructure/README.md)
 - [算法](algorithm/README.md)
-- [场景编程题](sceneCode/README.md)
+- [场景编程题](bizCase/alternatelyPrint/README.md)
 - [leetcode](leetcodeOld/README.md)
 - [Go原生包探索](pkgBuiltIn/README.md)
 - [Go第三方包探索](pkgThird/README.md)
