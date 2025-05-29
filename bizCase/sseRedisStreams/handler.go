@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -43,40 +44,41 @@ func Chat(ctx *gin.Context) {
 	ctx.Writer.Header().Set("Connection", "keep-alive")
 	ctx.Writer.Flush()
 
-	clientDone := ctx.Request.Context().Done()
-
-	for {
-		select {
-		case <-clientDone:
-			glog.Infof(ctx, "[Chat] client done")
-			rdb.Set(ctx, offsetKey, lastID, time.Hour)
-			return
-
-		default:
-			// 阻塞等待 Redis 有新消息推送
-			msgs, err := ReadFromStream(ctx, streamKey, lastID, 10, 5*time.Second)
-			if err != nil || len(msgs) == 0 {
-				glog.Infof(ctx, "[Chat] retrying")
-				continue // 自动重试
+	clientGone := ctx.Stream(func(w io.Writer) bool {
+		// 阻塞等待 Redis 有新消息推送
+		msgs, err := ReadFromStream(ctx, streamKey, lastID, 1000, 5*time.Second)
+		if err != nil {
+			glog.Infof(ctx, "[Chat] read fail, error: %s", err)
+			return false
+		}
+		if len(msgs) == 0 {
+			return false
+		}
+		for _, msg := range msgs {
+			data, ok := msg.Values["data"].(string)
+			if !ok {
+				continue
 			}
+			lastID = msg.ID
 
-			for _, msg := range msgs {
-				data, ok := msg.Values["data"].(string)
-				if !ok {
-					continue
-				}
-				lastID = msg.ID
+			glog.Infof(ctx, "[Chat] send data: %s", data)
+			dataMsg := fmt.Sprintf(`{"id": %s, "data": "%s"}`, msg.ID, data)
+			ctx.SSEvent("message", dataMsg)
 
-				glog.Infof(ctx, "[Chat] send data: %s", data)
-				sseMsg := fmt.Sprintf("id: %s\ndata: %s\n\n", msg.ID, data)
-				ctx.Writer.Write([]byte(sseMsg))
-				ctx.Writer.Flush()
-
-				if data == "[DONE]" {
-					rdb.Del(ctx, offsetKey)
-					return
-				}
+			if data == "[DONE]" {
+				rdb.Del(ctx, offsetKey)
+				return false
 			}
 		}
+		return false
+	})
+
+	if clientGone {
+		glog.Infof(ctx, "[Chat] Client disconnected during streaming")
+		rdb.Set(ctx, offsetKey, lastID, time.Hour)
+	} else {
+		glog.Infof(ctx, "[Chat] Stream completed normally")
 	}
+
+	return
 }
