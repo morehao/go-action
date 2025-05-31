@@ -10,24 +10,25 @@ import (
 
 const (
 	ModuleName = "LLM_call"
-
-	LLMHost   = "https://api.deepseek.com/v1"
-	LLMModel  = "deepseek-chat"
-	LLMAPIKey = "xxxx"
+	LLMHost    = "https://api.deepseek.com/v1"
+	LLMModel   = "deepseek-chat"
+	LLMAPIKey  = "xxxx"
 )
 
 var llmClient = openai.NewClient(
 	option.WithBaseURL(LLMHost),
 	option.WithAPIKey(LLMAPIKey))
 
-func NewChat(ctx *gin.Context) {
-	type Response struct {
-		Success bool   `json:"success"`
-		Message string `json:"message"`
-	}
+type Response struct {
+	Success bool   `json:"success"`
+	Message string `json:"message"`
+}
+
+// 原有的普通调用
+func Chat(ctx *gin.Context) {
 	chatCompletion, err := llmClient.Chat.Completions.New(context.TODO(), openai.ChatCompletionNewParams{
 		Messages: []openai.ChatCompletionMessageParamUnion{
-			openai.UserMessage("你好，我是测试"),
+			openai.UserMessage("世界上最高的山峰"),
 		},
 		Model: LLMModel,
 	})
@@ -42,5 +43,4 @@ func NewChat(ctx *gin.Context) {
 		Success: true,
 		Message: chatCompletion.Choices[0].Message.Content,
 	})
-
 }

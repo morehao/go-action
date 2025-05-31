@@ -6,6 +6,7 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.GET("/newChat", NewChat)
+	r.GET("/chat", Chat)
+	r.GET("/streamChat", StreamChat)
 	r.Run(":8080")
 }
