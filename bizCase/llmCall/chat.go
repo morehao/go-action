@@ -1,8 +1,6 @@
 package main
 
 import (
-	"context"
-
 	"github.com/gin-gonic/gin"
 	"github.com/openai/openai-go"
 	"github.com/openai/openai-go/option"
@@ -24,9 +22,9 @@ type Response struct {
 	Message string `json:"message"`
 }
 
-// 原有的普通调用
+// Chat 普通调用
 func Chat(ctx *gin.Context) {
-	chatCompletion, err := llmClient.Chat.Completions.New(context.TODO(), openai.ChatCompletionNewParams{
+	completion, err := llmClient.Chat.Completions.New(ctx, openai.ChatCompletionNewParams{
 		Messages: []openai.ChatCompletionMessageParamUnion{
 			openai.UserMessage("世界上最高的山峰"),
 		},
@@ -41,6 +39,6 @@ func Chat(ctx *gin.Context) {
 	}
 	ctx.JSON(200, Response{
 		Success: true,
-		Message: chatCompletion.Choices[0].Message.Content,
+		Message: completion.Choices[0].Message.Content,
 	})
 }
