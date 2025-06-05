@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
@@ -36,8 +37,24 @@ func main() {
 		),
 	)
 
-	// Add the calculator handler
+	// Add the calculator tool
 	s.AddTool(calculatorTool, calculatorToolHandler)
+
+	// Add a resource for the readme file
+	resource := mcp.NewResource("docs://readme", "README",
+		mcp.WithResourceDescription("This is a readme file about this demo"),
+		mcp.WithMIMEType("text/markdown"))
+
+	s.AddResource(resource, resourceHandler)
+
+	// Add Prompts
+	prompt := mcp.NewPrompt("greeting",
+		mcp.WithPromptDescription("A friendly greeting prompt"),
+		mcp.WithArgument("name",
+			mcp.ArgumentDescription("The name of the person to greet"),
+		),
+	)
+	s.AddPrompt(prompt, promptHandler)
 
 	// Start the stdio server
 	if err := server.ServeStdio(s); err != nil {
@@ -78,4 +95,36 @@ func calculatorToolHandler(ctx context.Context, request mcp.CallToolRequest) (*m
 	}
 
 	return mcp.NewToolResultText(fmt.Sprintf("%.2f", result)), nil
+}
+
+func resourceHandler(ctx context.Context, request mcp.ReadResourceRequest) ([]mcp.ResourceContents, error) {
+	content, err := os.ReadFile("./README.md")
+	if err != nil {
+		return nil, err
+	}
+
+	return []mcp.ResourceContents{
+		mcp.TextResourceContents{
+			URI:      "docs://readme",
+			MIMEType: "text/markdown",
+			Text:     string(content),
+		},
+	}, nil
+}
+
+func promptHandler(ctx context.Context, request mcp.GetPromptRequest) (*mcp.GetPromptResult, error) {
+	name := request.Params.Arguments["name"]
+	if name == "" {
+		name = "friend"
+	}
+
+	return mcp.NewGetPromptResult(
+		"Friendly Greeting",
+		[]mcp.PromptMessage{
+			mcp.NewPromptMessage(
+				mcp.RoleAssistant,
+				mcp.NewTextContent(fmt.Sprintf("Hello, %s! How can I assist you today?", name)),
+			),
+		},
+	), nil
 }
