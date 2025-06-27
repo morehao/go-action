@@ -21,7 +21,7 @@ require (
 	gorm.io/gorm v1.25.12
 )
 
-replace github.com/ygpkg/yg-go v1.3.37 => /Users/morehao/Documents/works/yangu/ygpkg/yg-go
+// replace github.com/ygpkg/yg-go v1.3.37 => /Users/morehao/Documents/works/yangu/ygpkg/yg-go
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
@@ -71,7 +71,7 @@ require (
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	github.com/xen0n/go-workwx v1.7.0 // indirect
-	github.com/ygpkg/yg-go v1.3.37 // indirect
+	github.com/ygpkg/yg-go v1.3.42 // indirect
 	github.com/yosida95/uritemplate/v3 v3.0.2 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect

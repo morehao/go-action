@@ -1,82 +1,62 @@
 package main
 
 import (
-	"io"
+	"fmt"
 	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/morehao/golib/glog"
-	"github.com/ygpkg/yg-go/apis/ssecache"
+	"github.com/morehao/golib/gutils"
+	"github.com/ygpkg/yg-go/apis/sseclient"
 )
 
 func Chat(ctx *gin.Context) {
-	questionID := "2025"
-	ch := make(chan string)
-	sseCache := ssecache.NewSSEClient(ssecache.WithChannel(ch), ssecache.WithRedisClient(rdb))
+	questionID := "202506261643"
+	sseClient := sseclient.New(sseclient.WithRedisClient(rdb))
+	sseClient.SetHeaders(ctx.Writer)
 	var writeCount int
 	var mu sync.Mutex
-
-	go func() {
-		ticker := time.NewTicker(200 * time.Millisecond)
-		defer ticker.Stop()
-
-		for {
-			select {
-			case <-ctx.Done():
-				return
-			case <-ticker.C:
-				mu.Lock()
-				if writeCount > 100 {
-					mu.Unlock()
-					return
-				}
-				msg := time.Now().Format(time.RFC3339)
-				if err := sseCache.WriteMessage(ctx, questionID, msg); err != nil {
-					glog.Errorf(ctx, "[Chat] WriteMessage failed: %v", err)
-					mu.Unlock()
-					return
-				}
-				writeCount++
-				mu.Unlock()
-			}
+	for i := 0; i < 100; i++ {
+		msg := time.Now().Format(time.RFC3339)
+		msg = fmt.Sprintf("id: %d, message: %s\n", writeCount, msg)
+		if stoped, err := sseClient.WriteMessage(ctx, ctx.Writer, questionID, msg); err != nil {
+			glog.Errorf(ctx, "[Chat] WriteMessage failed: %v", err)
+			mu.Unlock()
+			return
+		} else if stoped {
+			mu.Unlock()
+			return
 		}
-	}()
-
-	ctx.Stream(func(w io.Writer) bool {
-		stoped, err := sseCache.GetStopSignal(ctx, questionID)
-		if err != nil || stoped {
-			return false
-		}
-
-		select {
-		case msg := <-ch:
-			ctx.SSEvent("message", msg)
-		case <-time.After(100 * time.Millisecond):
-		}
-
-		return true
-	})
-
-	// TODO：结束后的操作，关闭 channel、删除 redis？
+		writeCount++
+		time.Sleep(500 * time.Millisecond)
+	}
 }
 
 func StopChat(ctx *gin.Context) {
-	questionID := "2025"
-	sseCache := ssecache.NewSSEClient(ssecache.WithRedisClient(rdb))
-	if err := sseCache.Stop(ctx, questionID); err != nil {
-		glog.Errorf(ctx, "[StopChat] sseCache.Stop failed, err: %v", err)
+	questionID := "202506261643"
+	sseClient := sseclient.New(sseclient.WithRedisClient(rdb))
+	if err := sseClient.Stop(ctx, questionID); err != nil {
+		glog.Errorf(ctx, "[StopChat] sseClient.Stop failed, err: %v", err)
 	}
 	glog.Infof(ctx, "[StopChat] completed")
 }
 
 func GetMessage(ctx *gin.Context) {
-	questionID := "2025"
-	sseCache := ssecache.NewSSEClient(ssecache.WithRedisClient(rdb))
-	messages, err := sseCache.ReadMessages(ctx, questionID, "")
-	if err != nil {
-		glog.Errorf(ctx, "[GetMessage] sseCache.ReadMessages failed, err: %v", err)
-	} else {
-		ctx.JSON(200, messages)
+	questionID := "202506261643"
+	sseClient := sseclient.New(sseclient.WithRedisClient(rdb))
+	latestID, historyMessages, getHistoryMessageErr := sseClient.ReadMessages(ctx, questionID)
+	if getHistoryMessageErr != nil {
+		glog.Errorf(ctx, "[GetMessage] sseClient.ReadMessages failed, err: %v", getHistoryMessageErr)
 	}
+	glog.Infof(ctx, "[GetMessage] latestID: %s, historyMessages: %v", latestID, gutils.ToJsonString(historyMessages))
+	ctx.SSEvent("history", gutils.ToJsonString(historyMessages))
+	ctx.Writer.Flush()
+	done, affectedRaw, readErr := sseClient.BlockRead(ctx, ctx.Writer, questionID, latestID)
+	if readErr != nil {
+		glog.Errorf(ctx, "[GetMessage] sseClient.BlockRead failed, err: %v", readErr)
+	}
+	glog.Infof(ctx, "[GetMessage] affectedRaw: %d, done: %v", affectedRaw, done)
+	glog.Infof(ctx, "[GetMessage] completed")
+
 }
