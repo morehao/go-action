@@ -21,7 +21,7 @@ require (
 	gorm.io/gorm v1.25.12
 )
 
-// replace github.com/ygpkg/yg-go v1.3.37 => /Users/morehao/Documents/works/yangu/ygpkg/yg-go
+// replace github.com/ygpkg/yg-go v1.3.42 => /Users/morehao/Documents/works/yangu/ygpkg/yg-go
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect

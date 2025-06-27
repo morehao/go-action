@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -13,19 +12,16 @@ import (
 
 func Chat(ctx *gin.Context) {
 	questionID := "202506261643"
-	sseClient := sseclient.New(sseclient.WithRedisClient(rdb))
+	sseClient := sseclient.New(sseclient.WithRedisClient(rdb), sseclient.WithExpiration(time.Minute*5))
 	sseClient.SetHeaders(ctx.Writer)
 	var writeCount int
-	var mu sync.Mutex
 	for i := 0; i < 100; i++ {
 		msg := time.Now().Format(time.RFC3339)
 		msg = fmt.Sprintf("id: %d, message: %s\n", writeCount, msg)
 		if stoped, err := sseClient.WriteMessage(ctx, ctx.Writer, questionID, msg); err != nil {
 			glog.Errorf(ctx, "[Chat] WriteMessage failed: %v", err)
-			mu.Unlock()
 			return
 		} else if stoped {
-			mu.Unlock()
 			return
 		}
 		writeCount++
@@ -50,8 +46,13 @@ func GetMessage(ctx *gin.Context) {
 		glog.Errorf(ctx, "[GetMessage] sseClient.ReadMessages failed, err: %v", getHistoryMessageErr)
 	}
 	glog.Infof(ctx, "[GetMessage] latestID: %s, historyMessages: %v", latestID, gutils.ToJsonString(historyMessages))
-	ctx.SSEvent("history", gutils.ToJsonString(historyMessages))
-	ctx.Writer.Flush()
+
+	// 发送历史消息
+	if err := sseClient.SendEvent(ctx.Writer, fmt.Sprintf("history: %s\n", gutils.ToJsonString(historyMessages))); err != nil {
+		glog.Errorf(ctx, "[GetMessage] sseClient.SendEvent failed, err: %v", err)
+	}
+
+	// 阻塞读取剩余消息
 	done, affectedRaw, readErr := sseClient.BlockRead(ctx, ctx.Writer, questionID, latestID)
 	if readErr != nil {
 		glog.Errorf(ctx, "[GetMessage] sseClient.BlockRead failed, err: %v", readErr)
