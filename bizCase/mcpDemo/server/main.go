@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/mark3labs/mcp-go/server"
@@ -42,7 +43,7 @@ func main() {
 
 	// Add a resource for the readme file
 	resource := mcp.NewResource("docs://readme", "README",
-		mcp.WithResourceDescription("This is a readme file about this demo"),
+		mcp.WithResourceDescription("readme file"),
 		mcp.WithMIMEType("text/markdown"))
 
 	s.AddResource(resource, resourceHandler)
@@ -98,7 +99,13 @@ func calculatorToolHandler(ctx context.Context, request mcp.CallToolRequest) (*m
 }
 
 func resourceHandler(ctx context.Context, request mcp.ReadResourceRequest) ([]mcp.ResourceContents, error) {
-	content, err := os.ReadFile("./README.md")
+	exePath, err := os.Executable()
+	if err != nil {
+		return nil, err
+	}
+	exeDir := filepath.Dir(exePath)
+	readmePath := filepath.Join(exeDir, "README.md")
+	content, err := os.ReadFile(readmePath)
 	if err != nil {
 		return nil, err
 	}
