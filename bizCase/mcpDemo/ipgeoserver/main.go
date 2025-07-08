@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 
@@ -51,9 +52,17 @@ func main() {
 	s.AddTool(tool, ipLocationHandler)
 
 	// Start the stdio server
-	if err := server.ServeStdio(s); err != nil {
-		fmt.Printf("Server error: %v\n", err)
+	// if err := server.ServeStdio(s); err != nil {
+	// 	fmt.Printf("Server error: %v\n", err)
+	// }
+
+	// Start the HTTP server with streaming support
+	log.Printf("Starting server on port 8011")
+	httpServer := server.NewStreamableHTTPServer(s)
+	if err := httpServer.Start(":8011"); err != nil {
+		log.Fatal(err)
 	}
+	log.Printf("Server started on port 8011")
 }
 
 func ipLocationHandler(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
