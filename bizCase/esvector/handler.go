@@ -13,31 +13,37 @@ import (
 )
 
 func PutVector(ctx *gin.Context) {
-	text := "这是一个用于测试的文本"
-	embedding := make([]float32, 384)
-	for i := range embedding {
-		embedding[i] = float32(i) * 0.001
-	}
 
-	doc := map[string]any{
-		"content":   text,
-		"embedding": embedding,
-	}
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(doc); err != nil {
-		glog.Errorf(ctx, "[PutVector] json.NewEncoder.Encode error: %v", err)
-		gincontext.Fail(ctx, err)
-		return
-	}
+	for _, v := range contentTestList {
 
-	res, err := ESClient.Index("vector_test", &buf)
-	if err != nil {
-		glog.Errorf(ctx, "[PutVector] ESClient.Index error: %v", err)
-		gincontext.Fail(ctx, err)
-		return
+		embedding, embeddingErr := singleEmbedding(ctx, v.Content)
+		if embeddingErr != nil {
+			glog.Errorf(ctx, "[PutVector] singleEmbedding error: %v", embeddingErr)
+			gincontext.Fail(ctx, embeddingErr)
+			return
+		}
+		doc := map[string]any{
+			"content":   v.Content,
+			"embedding": embedding,
+			"category":  v.Category,
+		}
+		var buf bytes.Buffer
+		if err := json.NewEncoder(&buf).Encode(doc); err != nil {
+			glog.Errorf(ctx, "[PutVector] json.NewEncoder.Encode error: %v", err)
+			gincontext.Fail(ctx, err)
+			return
+		}
+		res, err := ESClient.Index("vector_research", &buf)
+		if err != nil {
+			glog.Errorf(ctx, "[PutVector] ESClient.Index error: %v", err)
+			gincontext.Fail(ctx, err)
+			return
+		}
+		defer res.Body.Close()
+		fmt.Printf("res: %s\n", res.String())
+
 	}
-	defer res.Body.Close()
-	gincontext.Success(ctx, res.String())
+	gincontext.Success(ctx, "success")
 }
 
 func GetVector(ctx *gin.Context) {
