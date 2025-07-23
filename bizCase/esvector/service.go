@@ -1,30 +1,19 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/morehao/golib/protocol"
 	"github.com/morehao/golib/protocol/gresty"
+	"github.com/morehao/golib/storages/dbes"
 )
-
-type EmbeddingRequest struct {
-	Model string `json:"model"`
-	Input string `json:"input"`
-}
-
-type EmbeddingResponse struct {
-	Data []EmbeddingDataItem `json:"data"`
-}
-
-type EmbeddingDataItem struct {
-	Embedding []float32 `json:"embedding"`
-}
 
 func singleEmbedding(ctx *gin.Context, content string) (embedding []float32, err error) {
 	httpClientCfg := &protocol.HttpClientConfig{
 		Module: "esvector",
-		Host:   "https://xxxxx",
+		Host:   "xxxx",
 	}
 	restyClient := gresty.NewClient(httpClientCfg)
 	embeddingReq := map[string]any{
@@ -45,4 +34,96 @@ func singleEmbedding(ctx *gin.Context, content string) (embedding []float32, err
 	}
 	return embeddingRes.Data[0].Embedding, nil
 
+}
+
+func textSearch(ctx *gin.Context, searchValue string) (any, error) {
+	queryBuilder := dbes.NewBuilder().SetSource([]string{"doc_id", "content", "category"}).
+		SetQuery(dbes.BuildMap("match", dbes.BuildMap("content", searchValue)))
+	searchBody, buildErr := queryBuilder.BuildReader()
+	if buildErr != nil {
+		return nil, buildErr
+	}
+	searchRes, searchErr := ESClient.Search(
+		ESClient.Search.WithContext(ctx),
+		ESClient.Search.WithIndex(ESIndexName),
+		ESClient.Search.WithBody(searchBody))
+	if searchErr != nil {
+		return nil, searchErr
+	}
+
+	defer searchRes.Body.Close()
+
+	if searchRes.StatusCode != 200 {
+		return nil, fmt.Errorf("%s", searchRes.Status())
+	}
+	var res map[string]any
+	if err := json.NewDecoder(searchRes.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func vectorSearch(ctx *gin.Context, searchValue string) (any, error) {
+	embedding, embeddingErr := singleEmbedding(ctx, searchValue)
+	if embeddingErr != nil {
+		return nil, embeddingErr
+	}
+	queryBuilder := dbes.NewBuilder().SetSource([]string{"doc_id", "content", "category"}).
+		Set("knn", dbes.BuildMap("field", "embedding", "query_vector", embedding, "k", 10, "num_candidates", 100))
+	searchBody, buildErr := queryBuilder.BuildReader()
+	if buildErr != nil {
+		return nil, buildErr
+	}
+	searchRes, searchErr := ESClient.Search(
+		ESClient.Search.WithContext(ctx),
+		ESClient.Search.WithIndex(ESIndexName),
+		ESClient.Search.WithBody(searchBody))
+	if searchErr != nil {
+		return nil, searchErr
+	}
+
+	defer searchRes.Body.Close()
+
+	if searchRes.StatusCode != 200 {
+		return nil, fmt.Errorf("%s", searchRes.Status())
+	}
+
+	var res map[string]any
+	if err := json.NewDecoder(searchRes.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func hybridSearch(ctx *gin.Context, searchValue string) (any, error) {
+	embedding, embeddingErr := singleEmbedding(ctx, searchValue)
+	if embeddingErr != nil {
+		return nil, embeddingErr
+	}
+	queryBuilder := dbes.NewBuilder().SetSource([]string{"doc_id", "content", "category"}).
+		Set("knn", dbes.BuildMap("field", "embedding", "query_vector", embedding, "k", 10, "num_candidates", 100)).
+		SetQuery(dbes.BuildMap("match", dbes.BuildMap("content", searchValue)))
+	searchBody, buildErr := queryBuilder.BuildReader()
+	if buildErr != nil {
+		return nil, buildErr
+	}
+	searchRes, searchErr := ESClient.Search(
+		ESClient.Search.WithContext(ctx),
+		ESClient.Search.WithIndex(ESIndexName),
+		ESClient.Search.WithBody(searchBody))
+	if searchErr != nil {
+		return nil, searchErr
+	}
+
+	defer searchRes.Body.Close()
+
+	if searchRes.StatusCode != 200 {
+		return nil, fmt.Errorf("%s", searchRes.Status())
+	}
+
+	var res map[string]any
+	if err := json.NewDecoder(searchRes.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+	return res, nil
 }

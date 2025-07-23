@@ -19,6 +19,14 @@ func init() {
 	ESClient = simpleClient
 }
 
+const (
+	ESIndexName = "vector_research"
+
+	SearchTypeText   = "text"
+	SearchTypeVector = "vector"
+	SearchTypeHybrid = "hybrid"
+)
+
 type contentItem struct {
 	Content  string `json:"content"`
 	Category string `json:"category"`
