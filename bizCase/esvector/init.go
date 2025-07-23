@@ -22,12 +22,14 @@ func init() {
 const (
 	ESIndexName = "vector_research"
 
-	EmbeddingHost = "xxxx"
+	EmbeddingHost = "xxx"
 
-	SearchTypeText      = "text"
-	SearchTypeVector    = "vector"
-	SearchTypeHybrid    = "hybrid"
-	SearchTypeHybridRFF = "hybrid_rff"
+	SearchTypeText              = "text"
+	SearchTypeVector            = "vector"
+	SearchTypeTextVector        = "text_vector"
+	SearchTypeHybridScriptScore = "hybrid_script_score"
+	SearchTypeHybridMemoryScore = "hybrid_memory_score" // 内存中重新计算分数
+	SearchTypeHybridRRF         = "hybrid_rrf"
 )
 
 type contentItem struct {

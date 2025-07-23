@@ -89,7 +89,7 @@ func SearchData(ctx *gin.Context) {
 		return
 	}
 
-	var searchRes any
+	var searchRes *SearchResponse
 	var searchErr error
 
 	switch req.SearchType {
@@ -97,10 +97,14 @@ func SearchData(ctx *gin.Context) {
 		searchRes, searchErr = textSearch(ctx, req.SearchValue)
 	case SearchTypeVector:
 		searchRes, searchErr = vectorSearch(ctx, req.SearchValue)
-	case SearchTypeHybrid:
-		searchRes, searchErr = hybridSearch(ctx, req.SearchValue)
+	case SearchTypeTextVector:
+		searchRes, searchErr = textVectorSearch(ctx, req.SearchValue)
+	case SearchTypeHybridScriptScore:
+		searchRes, searchErr = hybridSearchByScriptScore(ctx, req.SearchValue)
+	case SearchTypeHybridMemoryScore:
+		searchRes, searchErr = hybridSearchByMemory(ctx, req.SearchValue)
 	case SearchTypeHybridRRF:
-		searchRes, searchErr = rrfSearch(ctx, req.SearchValue)
+		searchRes, searchErr = hybridSearchByRRF(ctx, req.SearchValue)
 	default:
 		searchRes, searchErr = textSearch(ctx, req.SearchValue)
 	}

@@ -36,11 +36,47 @@ var DefaultSearchConfig = SearchConfig{
 	VectorWeight:  0.5,
 }
 
-// SearchResult 标准化的搜索结果
-type SearchResult struct {
-	DocID    string                 `json:"doc_id"`
-	Content  string                 `json:"content"`
-	Category string                 `json:"category"`
-	Score    float64                `json:"score"`
-	Source   map[string]interface{} `json:"_source,omitempty"`
+// ESSearchResponse 标准化的搜索结果
+type ESSearchResponse struct {
+	Hits    ESSearchHits  `json:"hits"`
+	TimeOut bool          `json:"time_out"`
+	Took    int           `json:"took"`
+	Shard   ESSearchShard `json:"_shards"`
+}
+
+type ESSearchShard struct {
+	Total      int `json:"total"`
+	Successful int `json:"successful"`
+	Failed     int `json:"failed"`
+	Skipped    int `json:"skipped"`
+}
+
+type ESSearchHits struct {
+	Hits     []ESSearchHitsItem `json:"hits"`
+	MaxScore float64            `json:"max_score"`
+	Total    ESSearchHitsTotal  `json:"total"`
+}
+
+type ESSearchHitsTotal struct {
+	Relation string `json:"relation"`
+	Value    int    `json:"value"`
+}
+
+type ESSearchHitsItem struct {
+	ID     string                 `json:"_id"`
+	Index  string                 `json:"_index"`
+	Score  float64                `json:"_score"`
+	Source ESSearchHitsItemSource `json:"_source"`
+}
+
+type ESSearchHitsItemSource struct {
+	DocID    uint   `json:"doc_id"`
+	Content  string `json:"content"`
+	Category string `json:"category"`
+}
+
+type SearchResponse struct {
+	Total    int                `json:"total"`
+	MaxScore float64            `json:"max_score"`
+	List     []ESSearchHitsItem `json:"list"`
 }
