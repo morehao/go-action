@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"time"
@@ -9,7 +10,40 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/morehao/golib/gcontext/gincontext"
 	"github.com/morehao/golib/glog"
+	"github.com/morehao/golib/storages/dbes"
 )
+
+func ClearData(ctx *gin.Context) {
+	queryBuilder := dbes.NewBuilder().SetQuery(dbes.BuildMap("match_all", map[string]any{}))
+	queryBody, buildErr := queryBuilder.BuildReader()
+	if buildErr != nil {
+		glog.Errorf(ctx, "[ClearData] queryBuilder.BuildReader error: %v", buildErr)
+		gincontext.Fail(ctx, buildErr)
+		return
+	}
+
+	// 发起请求
+	res, err := ESClient.DeleteByQuery(
+		[]string{ESIndexName},
+		queryBody,
+		ESClient.DeleteByQuery.WithContext(context.Background()),
+		ESClient.DeleteByQuery.WithConflicts("proceed"),
+		ESClient.DeleteByQuery.WithRefresh(true),
+	)
+	if err != nil {
+		glog.Errorf(ctx, "[ClearData] ESClient.DeleteByQuery error: %v", err)
+		gincontext.Fail(ctx, err)
+		return
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		glog.Errorf(ctx, "[ClearData] res.IsError: %s", res.String())
+		gincontext.Fail(ctx, fmt.Errorf(res.String()))
+		return
+	}
+	gincontext.Success(ctx, "success")
+}
 
 func InsertData(ctx *gin.Context) {
 
@@ -65,6 +99,8 @@ func SearchData(ctx *gin.Context) {
 		searchRes, searchErr = vectorSearch(ctx, req.SearchValue)
 	case SearchTypeHybrid:
 		searchRes, searchErr = hybridSearch(ctx, req.SearchValue)
+	case SearchTypeHybridRFF:
+		searchRes, searchErr = rrfSearch(ctx, req.SearchValue)
 	default:
 		searchRes, searchErr = textSearch(ctx, req.SearchValue)
 	}

@@ -22,9 +22,12 @@ func init() {
 const (
 	ESIndexName = "vector_research"
 
-	SearchTypeText   = "text"
-	SearchTypeVector = "vector"
-	SearchTypeHybrid = "hybrid"
+	EmbeddingHost = "xxxx"
+
+	SearchTypeText      = "text"
+	SearchTypeVector    = "vector"
+	SearchTypeHybrid    = "hybrid"
+	SearchTypeHybridRFF = "hybrid_rff"
 )
 
 type contentItem struct {
