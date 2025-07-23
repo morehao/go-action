@@ -99,7 +99,7 @@ func SearchData(ctx *gin.Context) {
 		searchRes, searchErr = vectorSearch(ctx, req.SearchValue)
 	case SearchTypeHybrid:
 		searchRes, searchErr = hybridSearch(ctx, req.SearchValue)
-	case SearchTypeHybridRFF:
+	case SearchTypeHybridRRF:
 		searchRes, searchErr = rrfSearch(ctx, req.SearchValue)
 	default:
 		searchRes, searchErr = textSearch(ctx, req.SearchValue)
