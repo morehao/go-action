@@ -19,8 +19,8 @@ build: check-vars
 	@echo "  - Deploy Mode:     $(DeployMode)"
 	@echo "  - Deploy Version:  $(DeployVersion)"
 	go build -ldflags "\
-		-X '$(VERSION_PKG).DeployMode=$(DeployMode)' \
-		-X '$(VERSION_PKG).DeployVersion=$(DeployVersion)'" \
+		-X '$(VERSION_PKG).deployMode=$(DeployMode)' \
+		-X '$(VERSION_PKG).deployVersion=$(DeployVersion)'" \
 		-o myapp main.go
 
 # 编译并运行

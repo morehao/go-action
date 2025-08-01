@@ -1,14 +1,14 @@
 package version
 
 var (
-	DeployVersion string
-	DeployMode    string
+	deployVersion string
+	deployMode    string
 )
 
 func GetDeployVersion() string {
-	return DeployVersion
+	return deployVersion
 }
 
 func GetDeployMode() string {
-	return DeployMode
+	return deployMode
 }
