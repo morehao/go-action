@@ -130,10 +130,12 @@ func textVectorSearch(ctx *gin.Context, searchValue string) (*SearchResponse, er
 			"field", "embedding",
 			"query_vector", embedding,
 			"k", cfg.K,
-			"num_candidates", cfg.NumCandidates)).
+			"num_candidates", cfg.NumCandidates,
+			"boost", 0.5)).
 		SetQuery(dbes.BuildMap("match", dbes.BuildMap(
 			"content", dbes.BuildMap(
-				"query", searchValue))))
+				"query", searchValue,
+				"boost", 1.0))))
 
 	return executeSearch(ctx, queryBuilder)
 }
@@ -152,7 +154,7 @@ func hybridSearchByScriptScore(ctx *gin.Context, searchValue string) (*SearchRes
 	scriptScoreQuery := dbes.BuildMap("script_score",
 		dbes.BuildMap("query", textQuery,
 			"script",
-			dbes.BuildMap("source", "cosineSimilarity(params.query_vector, 'embedding') + 1.0", "params", dbes.BuildMap("query_vector", embedding))))
+			dbes.BuildMap("source", "(cosineSimilarity(params.query_vector, 'embedding') + 1.0) * _score", "params", dbes.BuildMap("query_vector", embedding))))
 
 	queryBuilder := dbes.NewBuilder().
 		SetSource([]string{"doc_id", "content", "category"}).
