@@ -6,6 +6,12 @@ import (
 	"strings"
 )
 
+const (
+	DeployModelPhysical   = "physical"
+	DeployModelKubernetes = "kubernetes"
+	DeployModelDocker     = "docker"
+)
+
 // 检测运行环境
 func DetectEnvironment() string {
 	// 检查是否在 Kubernetes 中

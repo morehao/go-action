@@ -8,7 +8,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/shirou/gopsutil/disk"
+	"github.com/shirou/gopsutil/v4/disk"
 )
 
 // Linux: 读取 /etc/machine-id 或 /var/lib/dbus/machine-id

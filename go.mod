@@ -12,7 +12,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/mark3labs/mcp-go v0.31.0
 	github.com/mitchellh/mapstructure v1.5.0
-	github.com/morehao/golib v1.2.11
+	github.com/morehao/golib v1.2.15
 	github.com/mozillazg/go-pinyin v0.20.0
 	github.com/openai/openai-go v1.2.0
 	github.com/redis/go-redis/v9 v9.8.0

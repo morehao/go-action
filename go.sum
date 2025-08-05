@@ -88,6 +88,8 @@ github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd h1:TRLaZ9cD/w
 github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd/go.mod h1:6dJC0mAP4ikYIbvyc7fijjWJddQyLn8Ig3JB5CqoB9Q=
 github.com/modern-go/reflect2 v1.0.2 h1:xBagoLtFs94CBntxluKeaWgTMpvLxC4ur3nMaC9Gz0M=
 github.com/modern-go/reflect2 v1.0.2/go.mod h1:yWuevngMOJpCy52FWWMvUC8ws7m/LJsjYzDa0/r8luk=
+github.com/morehao/golib v1.2.15 h1:1jeQl2kZTlN1PUM7RLbudjqtxVFi2IP/thrEZXEfqVs=
+github.com/morehao/golib v1.2.15/go.mod h1:tRawFcpi4ZEfUnmpVuU4498vL7L+06J+n7Wf0tIXJ0w=
 github.com/mozillazg/go-pinyin v0.20.0 h1:BtR3DsxpApHfKReaPO1fCqF4pThRwH9uwvXzm+GnMFQ=
 github.com/mozillazg/go-pinyin v0.20.0/go.mod h1:iR4EnMMRXkfpFVV5FMi4FNB6wGq9NV6uDWbUuPhP4Yc=
 github.com/openai/openai-go v1.2.0 h1:6pcZcz1u/hYeSn6KXil3AKXks3+wKPTWKgpuq8eQbU0=
