@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  server-fingerprint:
+    build: .
+    container_name: server-fingerprint
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - GIN_MODE=release
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    # 挂载主机信息以获取更准确的硬件信息
+    volumes:
+      - /sys:/host/sys:ro
+      - /proc:/host/proc:ro
+    # 特权模式以访问硬件信息（可选）
+    # privileged: true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fingerprint.rule=Host(`fingerprint.local`)"
+      - "traefik.http.services.fingerprint.loadbalancer.server.port=8080"
+
+networks:
+  default:
+    name: fingerprint-network
