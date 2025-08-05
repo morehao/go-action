@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: go-app
+  name: server-fingerprint
   labels:
-    app: go-app
+    app: server-fingerprint
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: go-app
+      app: server-fingerprint
   template:
     metadata:
       labels:
-        app: go-app
+        app: server-fingerprint
     spec:
       containers:
-        - name: go-app
-          image: go-app:latest
+        - name: server-fingerprint
+          image: server-fingerprint:1.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -32,12 +32,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: go-app
+  name: server-fingerprint
 spec:
+  type: ClusterIP
   selector:
-    app: go-app
+    app: server-fingerprint
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8080
-  type: ClusterIP
