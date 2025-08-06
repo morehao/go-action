@@ -52,8 +52,8 @@ dev: ## 开发模式运行（带热重载，需要安装 air）
 
 # Docker 相关
 docker-build: ## 构建 Docker 镜像
-	docker build -t $(DOCKER_IMAGE) -f ./Dockerfile .
-	echo "✅ Docker 镜像 $(DOCKER_IMAGE) 已构建完成"
+	docker build -t $(DOCKER_IMAGE_LATEST) -f ./Dockerfile .
+	echo "✅ Docker 镜像 $(DOCKER_IMAGE_LATEST) 已构建完成"
 
 docker-run: ## 运行 Docker 容器
 	docker run -d \

@@ -41,7 +41,7 @@ spec:
       serviceAccountName: server-fingerprint-sa   # ✅ 使用有权限的 SA
       containers:
         - name: server-fingerprint
-          image: server-fingerprint:1.0.0
+          image: server-fingerprint:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

@@ -30,7 +30,7 @@ func HealthHandler(c *gin.Context) {
 
 // GetSystemInfoHandler 获取服务器系统信息
 func GetSystemInfoHandler(ctx *gin.Context) {
-	fingerprint, err := getServerInfo()
+	fingerprint, err := getServerInfo(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error":   "Failed to get server fingerprint",
@@ -46,7 +46,7 @@ func GetSystemInfoHandler(ctx *gin.Context) {
 }
 
 // getServerInfo 获取服务器信息
-func getServerInfo() (*SystemInfoResponse, error) {
+func getServerInfo(ctx *gin.Context) (*SystemInfoResponse, error) {
 	fp := &SystemInfoResponse{
 		Timestamp: time.Now().Unix(),
 	}
@@ -56,7 +56,7 @@ func getServerInfo() (*SystemInfoResponse, error) {
 	fp.Platform = runtime.GOOS
 	fp.OS = runtime.GOOS
 	fp.Arch = runtime.GOARCH
-	fp.Environment = DetectEnvironment()
+	fp.Environment = DetectEnvironment(ctx)
 
 	// 获取主机信息
 	if hostInfo, err := host.Info(); err == nil {
@@ -119,7 +119,7 @@ func generateFingerprint(fp *SystemInfoResponse) string {
 func GetFingerprint(ctx *gin.Context) {
 	var fingerprint string
 
-	deployMode := DetectEnvironment()
+	deployMode := DetectEnvironment(ctx)
 	glog.Infof(ctx, "[GetFingerprint] detected deploy mode: %s", deployMode)
 	switch deployMode {
 	case DeployModelPhysical:

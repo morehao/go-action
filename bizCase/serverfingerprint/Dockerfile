@@ -10,6 +10,6 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o app .
 
 # 第二阶段：创建极小镜像
-FROM scratch
+FROM alpine:latest
 COPY --from=builder /app/app /app
 ENTRYPOINT ["/app"]

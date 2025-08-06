@@ -4,6 +4,9 @@ import (
 	"os"
 	"runtime"
 	"strings"
+
+	"github.com/gin-gonic/gin"
+	"github.com/morehao/golib/glog"
 )
 
 const (
@@ -12,30 +15,43 @@ const (
 	DeployModelDocker   = "docker"
 )
 
-// 检测运行环境
-func DetectEnvironment() string {
-	// 检查是否在 Kubernetes 中
+// DetectEnvironment 仅适配 cgroup v2，自动判断 K8s、Docker、物理机
+func DetectEnvironment(ctx *gin.Context) string {
+	// 优先：K8s 环境变量（非常可靠）
 	if os.Getenv("KUBERNETES_SERVICE_HOST") != "" {
-		return "kubernetes"
+		glog.Infof(ctx, "Detected Kubernetes environment via env var")
+		return DeployModelK8S
 	}
 
-	// 检查是否在 Docker 中
+	// 检查 .dockerenv 文件（仅适用于标准 Docker 环境）
 	if _, err := os.Stat("/.dockerenv"); err == nil {
-		return "docker"
+		glog.Infof(ctx, "Detected Docker environment via .dockerenv")
+		return DeployModelDocker
 	}
 
-	// 检查 cgroup 信息
-	if data, err := os.ReadFile("/proc/1/cgroup"); err == nil {
-		content := string(data)
-		if strings.Contains(content, "docker") {
-			return "docker"
-		}
-		if strings.Contains(content, "kubepods") {
-			return "kubernetes"
+	// 读取 cgroup v2 信息
+	// data, err := os.ReadFile("/proc/1/cgroup")
+	// if err != nil {
+	// 	glog.Warnf(ctx, "Failed to read /proc/1/cgroup: %v", err)
+	// 	return DeployModelPhysical
+	// }
+
+	return DeployModelPhysical
+}
+
+func isLikelyContainerID(path string) bool {
+	segments := strings.Split(path, "/")
+	last := segments[len(segments)-1]
+	return len(last) >= 30 && len(last) <= 64 && isHex(last)
+}
+
+func isHex(s string) bool {
+	for _, c := range s {
+		if !((c >= 'a' && c <= 'f') || (c >= '0' && c <= '9')) {
+			return false
 		}
 	}
-
-	return "physical"
+	return true
 }
 
 // GetMachineID 返回当前机器的唯一标识（多平台适配）
