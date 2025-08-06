@@ -1,3 +1,27 @@
+# 1. ServiceAccount
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: server-fingerprint-sa
+  namespace: default
+
+---
+# 2. ClusterRoleBinding（授予 kube-system 的只读权限）
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: server-fingerprint-get-kube-system
+subjects:
+  - kind: ServiceAccount
+    name: server-fingerprint-sa
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: view
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# 3. Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,6 +38,7 @@ spec:
       labels:
         app: server-fingerprint
     spec:
+      serviceAccountName: server-fingerprint-sa   # ✅ 使用有权限的 SA
       containers:
         - name: server-fingerprint
           image: server-fingerprint:1.0.0
@@ -29,6 +54,7 @@ spec:
               memory: "256Mi"
 
 ---
+# 4. Service
 apiVersion: v1
 kind: Service
 metadata:

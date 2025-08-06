@@ -120,6 +120,7 @@ func GetFingerprint(ctx *gin.Context) {
 	var fingerprint string
 
 	deployMode := DetectEnvironment()
+	glog.Infof(ctx, "[GetFingerprint] detected deploy mode: %s", deployMode)
 	switch deployMode {
 	case DeployModelPhysical:
 		hostInfo, err := host.Info()
@@ -129,6 +130,18 @@ func GetFingerprint(ctx *gin.Context) {
 			return
 		}
 		fingerprint = hostInfo.HostID
+	case DeployModelK8S:
+		clusterInfo, err := GetClusterInfo(ctx)
+		if err != nil {
+			glog.Errorf(ctx, "[GetFingerprint] get K8s cluster info error: %v", err)
+			gincontext.Fail(ctx, err)
+			return
+		}
+		fingerprint = clusterInfo.UID
+	default:
+		gincontext.Fail(ctx, fmt.Errorf("unsupported deploy model: %s", deployMode))
+		return
+
 	}
 	gincontext.Success(ctx, &FingerprintResponse{
 		Fingerprint: fingerprint,

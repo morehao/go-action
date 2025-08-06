@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	DeployModelPhysical   = "physical"
-	DeployModelKubernetes = "kubernetes"
-	DeployModelDocker     = "docker"
+	DeployModelPhysical = "physical"
+	DeployModelK8S      = "kubernetes"
+	DeployModelDocker   = "docker"
 )
 
 // 检测运行环境

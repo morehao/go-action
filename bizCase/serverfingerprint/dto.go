@@ -47,3 +47,7 @@ type DiskInfo struct {
 type FingerprintResponse struct {
 	Fingerprint string `json:"fingerprint"` // 指纹信息
 }
+
+type K8SClusterInfo struct {
+	UID string `json:"uid"`
+}
