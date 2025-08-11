@@ -1,8 +1,6 @@
 module github.com/morehao/go-action
 
-go 1.23.0
-
-toolchain go1.23.3
+go 1.24
 
 require (
 	github.com/Jeffail/tunny v0.1.4
@@ -12,7 +10,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/mark3labs/mcp-go v0.31.0
 	github.com/mitchellh/mapstructure v1.5.0
-	github.com/morehao/golib v1.2.15
+	github.com/morehao/golib v1.2.16
 	github.com/mozillazg/go-pinyin v0.20.0
 	github.com/openai/openai-go v1.2.0
 	github.com/redis/go-redis/v9 v9.8.0
@@ -22,8 +20,6 @@ require (
 	google.golang.org/protobuf v1.36.6
 	gorm.io/gorm v1.25.12
 )
-
-replace github.com/morehao/golib v1.2.11 => /Users/morehao/Documents/practice/go/golib
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect

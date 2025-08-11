@@ -6,9 +6,9 @@ import (
 	"sort"
 
 	"github.com/gin-gonic/gin"
+	"github.com/morehao/golib/dbstore/dbes"
 	"github.com/morehao/golib/protocol"
 	"github.com/morehao/golib/protocol/gresty"
-	"github.com/morehao/golib/storages/dbes"
 )
 
 func singleEmbedding(ctx *gin.Context, content string) (embedding []float32, err error) {

@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/elastic/go-elasticsearch/v8"
-	"github.com/morehao/golib/storages/dbes"
+	"github.com/morehao/golib/dbstore/dbes"
 )
 
 var ESClient *elasticsearch.Client
