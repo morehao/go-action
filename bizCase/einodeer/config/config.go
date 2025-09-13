@@ -53,7 +53,7 @@ var (
 	Config *DeerConfig = &DeerConfig{}
 )
 
-func LoadDeerConfig(ctx context.Context) {
+func LoadDeerConfig() {
 
 	configPath := conf.GetAppRootDir() + "/config/config.yaml"
 
@@ -61,7 +61,7 @@ func LoadDeerConfig(ctx context.Context) {
 	var deerConfig DeerConfig
 	conf.LoadConfig(configPath, &deerConfig)
 
-	glog.Infof(ctx, "load_config: %s", deerConfig)
+	glog.Infof(context.Background(), "load_config: %s", deerConfig)
 
 	Config = &deerConfig
 }

@@ -19,7 +19,7 @@ package infra
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
+
 	"os"
 	"path/filepath"
 )
@@ -36,7 +36,7 @@ func GetPromptTemplate(ctx context.Context, promptName string) (string, error) {
 	templatePath := filepath.Join(dir, "biz", "prompts", fmt.Sprintf("%s.md", promptName))
 
 	// 读取模板文件内容
-	content, err := ioutil.ReadFile(templatePath)
+	content, err := os.ReadFile(templatePath)
 	if err != nil {
 		return "", fmt.Errorf("读取模板文件 %s 失败: %w", promptName, err)
 	}

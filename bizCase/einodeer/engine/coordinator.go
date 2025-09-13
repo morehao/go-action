@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/cloudwego/eino-examples/flow/agent/deer-go/biz/infra"
 	"github.com/cloudwego/eino/components/prompt"
 	"github.com/cloudwego/eino/compose"
 	"github.com/cloudwego/eino/schema"
 	"github.com/morehao/go-action/bizCase/einodeer/constants"
+	"github.com/morehao/go-action/bizCase/einodeer/infra"
 	"github.com/morehao/go-action/bizCase/einodeer/model"
 	"github.com/morehao/golib/glog"
 )
