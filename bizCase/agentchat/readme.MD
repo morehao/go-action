@@ -1,0 +1,3 @@
+- Agent 输入输出规范
+- 规划只做检索 Agent，输入都是 string，输出都是 chunks
+- 多个检索 Agent 并行执行

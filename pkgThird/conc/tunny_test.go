@@ -8,9 +8,9 @@ import (
 
 	"github.com/Jeffail/tunny"
 
+	"github.com/morehao/golib/dbstore/dbmysql"
 	"github.com/morehao/golib/glog"
 	"github.com/morehao/golib/gutils"
-	"github.com/morehao/golib/storages/dbmysql"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
 )
