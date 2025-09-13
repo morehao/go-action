@@ -17,7 +17,7 @@ mcp:
       ]
 model:
   default_model: "deepseek-chat"
-  api_key: "sk-1cb533c2d65f4b7d957a0860d8cf6c40"
+  api_key: "xxx"
   base_url: "https://api.deepseek.com/v1/chat/completions"
 
 setting:
