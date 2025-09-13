@@ -106,8 +106,8 @@ func NewCoder[I, O any](ctx context.Context) *compose.Graph[I, O] {
 	// 获取所有工具并转换为BaseTool列表
 	tools := infra.DefaultToolManager.GetAllTools()
 	for name, t := range tools {
-		// 只添加Python相关工具
-		if strings.HasPrefix(name, "python") {
+		// 只添加Golang相关工具
+		if strings.HasPrefix(name, "golang") {
 			if baseTool, ok := t.(tool.BaseTool); ok {
 				researchTools = append(researchTools, baseTool)
 			}
