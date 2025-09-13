@@ -7,13 +7,13 @@ require (
 	github.com/cloudwego/eino v0.5.2
 	github.com/cloudwego/eino-ext/callbacks/apmplus v0.0.1
 	github.com/cloudwego/eino-ext/components/model/openai v0.0.0-20250514085234-473e80da5261
-	github.com/cloudwego/eino-ext/components/tool/mcp v0.0.4
+
 	github.com/cloudwego/eino-ext/libs/acl/openai v0.0.0-20250422092704-54e372e1fa3d
 	github.com/getkin/kin-openapi v0.118.0
 	github.com/hertz-contrib/cors v0.1.0
 	github.com/hertz-contrib/obs-opentelemetry/provider v0.3.0
 	github.com/hertz-contrib/obs-opentelemetry/tracing v0.4.1
-	github.com/mark3labs/mcp-go v0.39.1
+
 	gopkg.in/yaml.v3 v3.0.1
 )
 

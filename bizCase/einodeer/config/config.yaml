@@ -1,17 +1,18 @@
-mcp:
+# 工具配置
+tools:
   servers:
     tavily:
       command: "npx"
-      args: ["-y", "tavily-mcp@0.1.3"]
+      args: ["-y", "tavily-tool@0.1.3"]
       env: { "TAVILY_API_KEY": "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-1cb533c2d65f4b7d957a0860d8cf6c40" }
     firecrawl:
       command: "npx"
-      args: [ "-y", "firecrawl-mcp" ]
+      args: [ "-y", "firecrawl-tool" ]
       env: { "FIRECRAWL_API_KEY": "<your api key>" }
     python:
       command: "uv"
       args: [ "--directory",
-              "/Users/morehao/Documents/study/go/framework/eino-examples/flow/agent/deer-go/biz/mcps/python",
+              "/Users/morehao/Documents/study/go/framework/eino-examples/flow/agent/deer-go/biz/tools/python",
               "run",
               "server.py",
       ]

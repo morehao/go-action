@@ -6,7 +6,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cloudwego/eino-ext/components/tool/mcp"
 	"github.com/cloudwego/eino/components/prompt"
 	"github.com/cloudwego/eino/components/tool"
 	"github.com/cloudwego/eino/compose"
@@ -102,14 +101,16 @@ func modifyCoderfunc(ctx context.Context, input []*schema.Message) []*schema.Mes
 func NewCoder[I, O any](ctx context.Context) *compose.Graph[I, O] {
 	cag := compose.NewGraph[I, O]()
 
+	// 使用新的工具系统获取工具
 	researchTools := []tool.BaseTool{}
-	for mcpName, cli := range infra.MCPServer {
-		ts, err := mcp.GetTools(ctx, &mcp.Config{Cli: cli})
-		if err != nil {
-			glog.Errorf(ctx, "get tools error: %v", err)
-		}
-		if strings.HasPrefix(mcpName, "python") {
-			researchTools = append(researchTools, ts...)
+	// 获取所有工具并转换为BaseTool列表
+	tools := infra.DefaultToolManager.GetAllTools()
+	for name, t := range tools {
+		// 只添加Python相关工具
+		if strings.HasPrefix(name, "python") {
+			if baseTool, ok := t.(tool.BaseTool); ok {
+				researchTools = append(researchTools, baseTool)
+			}
 		}
 	}
 	glog.Debugf(ctx, "coder_end coder_tools: %s", glog.ToJsonString(researchTools))

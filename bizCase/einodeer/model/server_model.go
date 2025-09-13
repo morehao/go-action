@@ -12,7 +12,7 @@ type ChatRequest struct {
 	MaxStepNum                    int                    `json:"max_step_num,omitempty" form:"max_step_num"`
 	AutoAcceptedPlan              bool                   `json:"auto_accepted_plan,omitempty" form:"auto_accepted_plan"`
 	InterruptFeedback             string                 `json:"interrupt_feedback,omitempty" form:"interrupt_feedback"`
-	MCPSettings                   map[string]interface{} `json:"mcp_settings,omitempty" form:"mcp_settings"`
+	ToolSettings                  map[string]interface{} `json:"tool_settings,omitempty" form:"tool_settings"`
 	EnableBackgroundInvestigation bool                   `json:"enable_background_investigation,omitempty" form:"enable_background_investigation"`
 }
 

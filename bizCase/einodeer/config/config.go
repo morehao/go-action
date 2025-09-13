@@ -23,9 +23,9 @@ import (
 	"github.com/morehao/golib/glog"
 )
 
-// 定义一个结构体来解析 YAML 文件中的 mcp.servers 部分
+// 定义一个结构体来解析 YAML 文件中的配置
 type DeerConfig struct {
-	MCP     MCPConfig     `yaml:"mcp"`
+	Tools   ToolsConfig   `yaml:"tools"`
 	Model   ModelConfig   `yaml:"model"`
 	Setting SettingConfig `yaml:"setting"`
 }
@@ -41,7 +41,7 @@ type SettingConfig struct {
 	MaxStepNum        int `yaml:"max_step_num"`
 }
 
-type MCPConfig struct {
+type ToolsConfig struct {
 	Servers map[string]struct {
 		Command string            `yaml:"command"`
 		Args    []string          `yaml:"args"`

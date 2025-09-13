@@ -7,7 +7,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cloudwego/eino-ext/components/tool/mcp"
 	"github.com/cloudwego/eino/components/prompt"
 	"github.com/cloudwego/eino/components/tool"
 	"github.com/cloudwego/eino/compose"
@@ -122,13 +121,14 @@ func toolCallChecker(_ context.Context, sr *schema.StreamReader[*schema.Message]
 func NewResearcher[I, O any](ctx context.Context) *compose.Graph[I, O] {
 	cag := compose.NewGraph[I, O]()
 
+	// 使用新的工具系统获取工具
 	researchTools := []tool.BaseTool{}
-	for _, cli := range infra.MCPServer {
-		ts, err := mcp.GetTools(ctx, &mcp.Config{Cli: cli})
-		if err != nil {
-			glog.Errorf(ctx, "get tools error: %v", err)
+	// 获取所有工具并转换为BaseTool列表
+	tools := infra.DefaultToolManager.GetAllTools()
+	for _, t := range tools {
+		if baseTool, ok := t.(tool.BaseTool); ok {
+			researchTools = append(researchTools, baseTool)
 		}
-		researchTools = append(researchTools, ts...)
 	}
 	glog.Debugf(ctx, "researcher_end researcher_tools: %s", glog.ToJsonString(researchTools))
 
