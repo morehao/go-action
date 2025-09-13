@@ -53,28 +53,28 @@ func generateMockSearchResults(query string) MockSearchResult {
 	// 随机生成2-5个搜索结果
 	resultCount := rand.Intn(4) + 2
 	results := make([]SearchResult, resultCount)
-	
+
 	// 常见的域名列表
 	domains := []string{"example.com", "mockdata.org", "testsite.net", "demoinfo.io", "sampledata.com"}
-	
+
 	// 生成随机的搜索结果
 	for i := 0; i < resultCount; i++ {
 		// 随机选择一个域名
 		domain := domains[rand.Intn(len(domains))]
-		
+
 		// 生成随机的标题
 		title := fmt.Sprintf("关于 %s 的信息 #%d", query, i+1)
-		
+
 		// 生成随机的URL
 		url := fmt.Sprintf("https://%s/article-%d-%s", domain, rand.Intn(1000), strings.ReplaceAll(query, " ", "-"))
-		
+
 		// 生成随机的描述
 		description := fmt.Sprintf("这是关于 %s 的详细信息。包含了相关的背景、历史和最新发展。这是一个模拟的搜索结果，用于测试目的。", query)
-		
+
 		// 生成随机的发布日期（过去一年内）
 		daysAgo := rand.Intn(365)
 		publishDate := time.Now().AddDate(0, 0, -daysAgo).Format("2006-01-02")
-		
+
 		results[i] = SearchResult{
 			Title:       title,
 			URL:         url,
@@ -82,7 +82,7 @@ func generateMockSearchResults(query string) MockSearchResult {
 			Published:   publishDate,
 		}
 	}
-	
+
 	return MockSearchResult{
 		Results: results,
 		Query:   query,
@@ -100,10 +100,10 @@ func generateMockCrawlResults(url string) MockCrawlResult {
 	if lastPart == "" {
 		lastPart = "homepage"
 	}
-	
+
 	// 生成随机的标题
 	title := fmt.Sprintf("%s - 网页内容", strings.ReplaceAll(lastPart, "-", " "))
-	
+
 	// 生成随机的内容段落
 	paragraphs := []string{
 		"这是一个模拟的网页内容，用于测试目的。",
@@ -114,34 +114,34 @@ func generateMockCrawlResults(url string) MockCrawlResult {
 		"3. 这是第三个要点，包含了一些结论。",
 		"总结：这是一个模拟的网页爬取结果，仅用于测试和开发目的。",
 	}
-	
+
 	// 将段落组合成内容
 	content := strings.Join(paragraphs, "\n\n")
-	
+
 	// 生成随机的链接（1-3个）
 	linkCount := rand.Intn(3) + 1
 	links := make([]Link, linkCount)
-	
+
 	// 常见的域名列表
 	domains := []string{"example.com", "mockdata.org", "testsite.net", "demoinfo.io", "sampledata.com"}
-	
+
 	// 生成随机的链接
 	for i := 0; i < linkCount; i++ {
 		// 随机选择一个域名
 		domain := domains[rand.Intn(len(domains))]
-		
+
 		// 生成随机的链接标题
 		linkTitle := fmt.Sprintf("相关链接 #%d", i+1)
-		
+
 		// 生成随机的链接URL
 		linkURL := fmt.Sprintf("https://%s/related-%d", domain, rand.Intn(100))
-		
+
 		links[i] = Link{
 			URL:   linkURL,
 			Title: linkTitle,
 		}
 	}
-	
+
 	return MockCrawlResult{
 		URL:     url,
 		Title:   title,
@@ -761,9 +761,7 @@ func InitTools() error {
 
 // initToolFromConfig 从配置初始化工具
 func initToolFromConfig(name string, server struct {
-	Command string            `yaml:"command"`
-	Args    []string          `yaml:"args"`
-	Env     map[string]string `yaml:"env,omitempty"`
+	APIKey string `yaml:"api_key"`
 }) error {
 	// 这里简化实现，根据配置创建相应的工具
 	// 在实际应用中，可能需要更复杂的逻辑来创建不同类型的工具
@@ -774,25 +772,18 @@ func initToolFromConfig(name string, server struct {
 
 	// 根据工具名称决定使用哪种Mock实现
 	switch {
-	case strings.Contains(name, "tavily"):
+	case strings.Contains(name, "browser_search"):
 		tool = &MockSearchTool{
 			name: name,
 		}
-	case strings.Contains(name, "firecrawl"):
+	case strings.Contains(name, "web_crawler"):
 		tool = &MockCrawlTool{
 			name: name,
 		}
-	case strings.Contains(name, "python"):
-		tool = &MockGolangTool{
-			name: name,
-		}
 	default:
-		// 默认使用外部进程工具
-		tool = &ExternalProcessTool{
-			name:    name,
-			command: server.Command,
-			args:    server.Args,
-			env:     server.Env,
+		// 默认使用简单的Mock工具
+		tool = &MockSearchTool{
+			name: name,
 		}
 	}
 
@@ -857,16 +848,16 @@ func (t *MockSearchTool) Info(ctx context.Context) (*schema.ToolInfo, error) {
 // InvokableRun 执行模拟搜索
 func (t *MockSearchTool) InvokableRun(ctx context.Context, input string, opts ...tool.Option) (string, error) {
 	glog.Infof(ctx, "Mock search tool running with input: %s", input)
-	
+
 	// 生成随机搜索结果
 	result := generateMockSearchResults(input)
-	
+
 	// 转换为JSON
 	outputJSON, err := json.Marshal(result)
 	if err != nil {
 		return "", err
 	}
-	
+
 	return string(outputJSON), nil
 }
 
@@ -886,16 +877,16 @@ func (t *MockCrawlTool) Info(ctx context.Context) (*schema.ToolInfo, error) {
 // InvokableRun 执行模拟爬取
 func (t *MockCrawlTool) InvokableRun(ctx context.Context, input string, opts ...tool.Option) (string, error) {
 	glog.Infof(ctx, "Mock crawl tool running with input: %s", input)
-	
+
 	// 生成随机爬取结果
 	result := generateMockCrawlResults(input)
-	
+
 	// 转换为JSON
 	outputJSON, err := json.Marshal(result)
 	if err != nil {
 		return "", err
 	}
-	
+
 	return string(outputJSON), nil
 }
 
@@ -908,16 +899,16 @@ type MockGolangTool struct {
 func (t *MockGolangTool) Info(ctx context.Context) (*schema.ToolInfo, error) {
 	return &schema.ToolInfo{
 		Name: t.name,
-		Desc: "Mock Golang tool replacing Python tool",
+		Desc: "Mock Golang tool",
 	}, nil
 }
 
 // InvokableRun 执行模拟Golang代码
 func (t *MockGolangTool) InvokableRun(ctx context.Context, input string, opts ...tool.Option) (string, error) {
 	glog.Infof(ctx, "Mock Golang tool running with input: %s", input)
-	
+
 	// 生成随机Golang代码结果
 	result := generateMockGolangCode(input)
-	
+
 	return result, nil
 }

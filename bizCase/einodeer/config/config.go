@@ -43,9 +43,7 @@ type SettingConfig struct {
 
 type ToolsConfig struct {
 	Servers map[string]struct {
-		Command string            `yaml:"command"`
-		Args    []string          `yaml:"args"`
-		Env     map[string]string `yaml:"env,omitempty"`
+		APIKey string `yaml:"api_key"`
 	} `yaml:"servers"`
 }
 
