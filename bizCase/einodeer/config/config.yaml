@@ -1,0 +1,25 @@
+mcp:
+  servers:
+    tavily:
+      command: "npx"
+      args: ["-y", "tavily-mcp@0.1.3"]
+      env: { "TAVILY_API_KEY": "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-1cb533c2d65f4b7d957a0860d8cf6c40" }
+    firecrawl:
+      command: "npx"
+      args: [ "-y", "firecrawl-mcp" ]
+      env: { "FIRECRAWL_API_KEY": "<your api key>" }
+    python:
+      command: "uv"
+      args: [ "--directory",
+              "/Users/morehao/Documents/study/go/framework/eino-examples/flow/agent/deer-go/biz/mcps/python",
+              "run",
+              "server.py",
+      ]
+model:
+  default_model: "deepseek-chat"
+  api_key: "sk-1cb533c2d65f4b7d957a0860d8cf6c40"
+  base_url: "https://api.deepseek.com/v1/chat/completions"
+
+setting:
+  max_plan_iterations: 1
+  max_step_num: 3
