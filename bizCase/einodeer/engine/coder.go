@@ -122,19 +122,45 @@ func NewCoder[I, O any](ctx context.Context) *compose.Graph[I, O] {
 		MessageModifier:       modifyCoderfunc,
 		StreamToolCallChecker: toolCallChecker,
 	})
+	if err != nil {
+		glog.Errorf(ctx, "coder_end agent: %v", err)
+		return nil
+	}
 
 	agentLambda, err := compose.AnyLambda(agent.Generate, agent.Stream, nil, nil)
 	if err != nil {
-		panic(err)
+		glog.Errorf(ctx, "coder_end agent_lambda: %v", err)
+		return nil
 	}
 
-	_ = cag.AddLambdaNode("load", compose.InvokableLambdaWithOption(loadCoderMsg))
-	_ = cag.AddLambdaNode("agent", agentLambda)
-	_ = cag.AddLambdaNode("router", compose.InvokableLambdaWithOption(routerCoder))
+	if err := cag.AddLambdaNode("load", compose.InvokableLambdaWithOption(loadCoderMsg)); err != nil {
+		glog.Errorf(ctx, "coder_end load: %v", err)
+		return nil
+	}
+	if err := cag.AddLambdaNode("agent", agentLambda); err != nil {
+		glog.Errorf(ctx, "coder_end agent: %v", err)
+		return nil
+	}
+	if err := cag.AddLambdaNode("router", compose.InvokableLambdaWithOption(routerCoder)); err != nil {
+		glog.Errorf(ctx, "coder_end router: %v", err)
+		return nil
+	}
 
-	_ = cag.AddEdge(compose.START, "load")
-	_ = cag.AddEdge("load", "agent")
-	_ = cag.AddEdge("agent", "router")
-	_ = cag.AddEdge("router", compose.END)
+	if err := cag.AddEdge(compose.START, "load"); err != nil {
+		glog.Errorf(ctx, "coder_end load: %v", err)
+		return nil
+	}
+	if err := cag.AddEdge("load", "agent"); err != nil {
+		glog.Errorf(ctx, "coder_end agent: %v", err)
+		return nil
+	}
+	if err := cag.AddEdge("agent", "router"); err != nil {
+		glog.Errorf(ctx, "coder_end router: %v", err)
+		return nil
+	}
+	if err := cag.AddEdge("router", compose.END); err != nil {
+		glog.Errorf(ctx, "coder_end end: %v", err)
+		return nil
+	}
 	return cag
 }

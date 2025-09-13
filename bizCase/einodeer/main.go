@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"path/filepath"
 	"runtime"
 
@@ -19,13 +20,14 @@ func main() {
 	rootDir := filepath.Dir(workDir)
 	conf.SetAppRootDir(rootDir)
 	config.LoadDeerConfig()
-	
+
+	infra.InitModel()
 	// 初始化工具系统
 	if err := infra.InitTools(); err != nil {
-		glog.Errorf(nil, "Failed to initialize tools: %v", err)
+		glog.Errorf(context.Background(), "Failed to initialize tools: %v", err)
 		panic(err)
 	}
-	
+
 	r.POST("/api/chat/stream", handler.ChatStreamEino)
-	r.Run(":8888")
+	r.Run(":8080")
 }

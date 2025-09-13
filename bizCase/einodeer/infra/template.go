@@ -33,7 +33,7 @@ func GetPromptTemplate(ctx context.Context, promptName string) (string, error) {
 	}
 
 	// 构建模板文件路径
-	templatePath := filepath.Join(dir, "biz", "prompts", fmt.Sprintf("%s.md", promptName))
+	templatePath := filepath.Join(dir, "prompts", fmt.Sprintf("%s.md", promptName))
 
 	// 读取模板文件内容
 	content, err := os.ReadFile(templatePath)

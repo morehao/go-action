@@ -2,13 +2,13 @@
 tools:
   servers:
     browser_search:
-      api_key: "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-1cb533c2d65f4b7d957a0860d8cf6c40"
+      api_key: "xx"
     web_crawler:
-      api_key: "<your api key>"
+      api_key: "xx"
 model:
   default_model: "deepseek-chat"
-  api_key: "xxx"
-  base_url: "https://api.deepseek.com/v1/chat/completions"
+  api_key: "xx"
+  base_url: "https://api.deepseek.com/"
 
 setting:
   max_plan_iterations: 1

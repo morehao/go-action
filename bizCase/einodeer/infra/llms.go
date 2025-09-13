@@ -21,6 +21,7 @@ import (
 
 	"github.com/cloudwego/eino-ext/components/model/deepseek"
 	"github.com/morehao/go-action/bizCase/einodeer/config"
+	"github.com/morehao/golib/glog"
 )
 
 var (
@@ -30,16 +31,23 @@ var (
 
 func InitModel() {
 	chatModelConfig := &deepseek.ChatModelConfig{
-		BaseURL: config.Config.Model.BaseURL,
-		APIKey:  config.Config.Model.APIKey,
-		Model:   config.Config.Model.DefaultModel,
+		APIKey: config.Config.Model.APIKey,
+		Model:  config.Config.Model.DefaultModel,
 	}
-	ChatModel, _ = deepseek.NewChatModel(context.Background(), chatModelConfig)
+	var err error
+	ChatModel, err = deepseek.NewChatModel(context.Background(), chatModelConfig)
+	if err != nil {
+		glog.Errorf(context.Background(), "Failed to initialize chat model: %v", err)
+		panic(err)
+	}
 
 	planModelConfig := &deepseek.ChatModelConfig{
-		BaseURL: config.Config.Model.BaseURL,
-		APIKey:  config.Config.Model.APIKey,
-		Model:   config.Config.Model.DefaultModel,
+		APIKey: config.Config.Model.APIKey,
+		Model:  config.Config.Model.DefaultModel,
 	}
-	PlanModel, _ = deepseek.NewChatModel(context.Background(), planModelConfig)
+	PlanModel, err = deepseek.NewChatModel(context.Background(), planModelConfig)
+	if err != nil {
+		glog.Errorf(context.Background(), "Failed to initialize plan model: %v", err)
+		panic(err)
+	}
 }
