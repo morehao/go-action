@@ -14,6 +14,7 @@ type ChatRequest struct {
 	InterruptFeedback             string                 `json:"interrupt_feedback,omitempty" form:"interrupt_feedback"`
 	ToolSettings                  map[string]interface{} `json:"tool_settings,omitempty" form:"tool_settings"`
 	EnableBackgroundInvestigation bool                   `json:"enable_background_investigation,omitempty" form:"enable_background_investigation"`
+	CollectFullResult             bool                   `json:"collect_full_result,omitempty" form:"collect_full_result"`
 }
 
 type ToolResp struct {

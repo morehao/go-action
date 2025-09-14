@@ -28,6 +28,6 @@ func main() {
 		panic(err)
 	}
 
-	r.POST("/api/chat/stream", handler.ChatStreamEino)
+	r.POST("/api/chat/stream", handler.ChatStream)
 	r.Run(":8080")
 }

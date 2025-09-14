@@ -396,6 +396,73 @@ API->>User: 返回流式响应结果
   )
   ```
 
+## 查看执行细节
+
+在使用eino框架开发过程中，可以通过以下方式查看执行过程的细节：
+
+### 1. 设置日志级别
+
+在项目启动时设置日志级别为Debug，可以查看更多执行细节：
+
+```go
+// 在main.go中添加
+glog.SetLevel(glog.LevelDebug)
+```
+
+### 2. 使用LoggerCallback
+
+eino框架提供了回调机制，可以通过LoggerCallback查看执行过程中的输入和输出：
+
+```go
+// 创建一个输出通道
+outChan := make(chan string, 100)
+
+// 在运行Graph时添加LoggerCallback
+_, err := r.Stream(ctx, constants.AgentCoordinator,
+    compose.WithCallbacks(&infra.LoggerCallback{
+        ID:  req.ThreadID,
+        SSE: ctx.Writer,
+        Out: outChan,  // 添加输出通道
+    }),
+)
+
+// 在另一个goroutine中读取输出
+go func() {
+    for msg := range outChan {
+        fmt.Println(msg)  // 打印或处理输出
+    }
+}()
+```
+
+### 3. 前端调试模式
+
+在发送请求时，可以设置`debug`参数为`true`，启用调试模式：
+
+```json
+{
+  "messages": [...],
+  "debug": true,
+  "thread_id": "..."
+}
+```
+
+### 4. 自定义回调函数
+
+可以创建自定义回调函数，记录特定信息：
+
+```go
+type CustomCallback struct {
+    callbacks.HandlerBuilder
+}
+
+func (cb *CustomCallback) OnStart(ctx context.Context, info *callbacks.RunInfo, input callbacks.CallbackInput) context.Context {
+    fmt.Printf("开始执行: %s\n", info.Name)
+    return ctx
+}
+```
+
+完整示例代码可以参考 `examples/debug_output_example.go`。
+
 ## 项目目录结构
 
 项目采用模块化设计，各个目录职责明确，便于维护和扩展：

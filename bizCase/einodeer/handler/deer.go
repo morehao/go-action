@@ -15,7 +15,7 @@ import (
 	"github.com/morehao/golib/glog"
 )
 
-func ChatStreamEino(ctx *gin.Context) {
+func ChatStream(ctx *gin.Context) {
 	// 设置响应头（NewStream 会自动设置部分头，但建议显式声明）
 	ctx.Header("Content-Type", "text/event-stream; charset=utf-8")
 	ctx.Header("Cache-Control", "no-cache")

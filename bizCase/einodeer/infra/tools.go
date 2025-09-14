@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"math/rand"
-	"os/exec"
 	"strings"
 	"time"
 
@@ -775,15 +774,18 @@ func initToolFromConfig(name string, server struct {
 	case strings.Contains(name, "browser_search"):
 		tool = &MockSearchTool{
 			name: name,
+			apiKey: server.APIKey,
 		}
 	case strings.Contains(name, "web_crawler"):
 		tool = &MockCrawlTool{
 			name: name,
+			apiKey: server.APIKey,
 		}
 	default:
 		// 默认使用简单的Mock工具
 		tool = &MockSearchTool{
 			name: name,
+			apiKey: server.APIKey,
 		}
 	}
 
@@ -794,47 +796,55 @@ func initToolFromConfig(name string, server struct {
 
 // ExternalProcessTool 外部进程工具实现
 type ExternalProcessTool struct {
-	name    string
-	command string
-	args    []string
-	env     map[string]string
+	name   string
+	apiKey string
 }
 
 // Info 返回工具信息
 func (t *ExternalProcessTool) Info(ctx context.Context) (*schema.ToolInfo, error) {
 	return &schema.ToolInfo{
 		Name: t.name,
-		Desc: fmt.Sprintf("External process tool: %s", t.command),
+		Desc: "External process tool (mock implementation)",
 	}, nil
 }
 
 // InvokableRun 执行工具
 func (t *ExternalProcessTool) InvokableRun(ctx context.Context, input string, opts ...tool.Option) (string, error) {
-	// 创建命令
-	cmd := exec.CommandContext(ctx, t.command, append(t.args, input)...)
-
-	// 设置环境变量
-	if t.env != nil {
-		env := cmd.Environ()
-		for k, v := range t.env {
-			env = append(env, fmt.Sprintf("%s=%s", k, v))
-		}
-		cmd.Env = env
+	// 由于配置变更，ExternalProcessTool 不再执行外部命令
+	// 而是模拟一个简单的搜索结果
+	glog.Infof(ctx, "ExternalProcessTool running with apiKey: %s, input: %s", t.apiKey, input)
+	
+	// 生成模拟结果
+	result := map[string]interface{}{
+		"query": input,
+		"results": []map[string]interface{}{
+			{
+				"title": "模拟搜索结果1",
+				"content": "这是一个模拟的搜索结果内容。",
+				"url": "https://example.com/1",
+			},
+			{
+				"title": "模拟搜索结果2",
+				"content": "这是另一个模拟的搜索结果内容。",
+				"url": "https://example.com/2",
+			},
+		},
 	}
-
-	// 执行命令并获取输出
-	output, err := cmd.CombinedOutput()
+	
+	// 转换为JSON
+	output, err := json.Marshal(result)
 	if err != nil {
-		glog.Errorf(ctx, "tool execution error: %v, output: %s", err, string(output))
+		glog.Errorf(ctx, "JSON marshaling error: %v", err)
 		return "", err
 	}
-
+	
 	return string(output), nil
 }
 
 // MockSearchTool 模拟搜索工具实现
 type MockSearchTool struct {
-	name string
+	name   string
+	apiKey string
 }
 
 // Info 返回工具信息
@@ -863,7 +873,8 @@ func (t *MockSearchTool) InvokableRun(ctx context.Context, input string, opts ..
 
 // MockCrawlTool 模拟网页爬取工具实现
 type MockCrawlTool struct {
-	name string
+	name   string
+	apiKey string
 }
 
 // Info 返回工具信息

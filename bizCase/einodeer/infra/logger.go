@@ -37,19 +37,22 @@ import (
 type LoggerCallback struct {
 	callbacks.HandlerBuilder // 可以用 callbacks.HandlerBuilder 来辅助实现 callback
 
-	ID  string
-	SSE http.ResponseWriter
-	Out chan string
+	ID         string
+	SSE        http.ResponseWriter
+	Out        chan string
+	ResultChan chan string // 用于收集完整结果的通道
 }
 
 func (cb *LoggerCallback) pushF(ctx context.Context, event string, data *model.ChatResp) error {
 	dataByte, err := json.Marshal(data)
+	fmt.Println("=========[pushF]=========", event, "|", data)
 	if err != nil {
 		glog.Errorf(ctx, "json marshal error: %v, data: %s", err, glog.ToJsonString(data))
-		return err
 	}
 	if cb.SSE != nil {
-		err = WriteSSE(cb.SSE, "", event, dataByte)
+		if err := WriteSSE(cb.SSE, "", event, dataByte); err != nil {
+			glog.Errorf(ctx, "sse error: %v, data: %s", err, glog.ToJsonString(data))
+		}
 	}
 	if cb.Out != nil {
 		cb.Out <- data.Content
@@ -58,6 +61,7 @@ func (cb *LoggerCallback) pushF(ctx context.Context, event string, data *model.C
 }
 
 func (cb *LoggerCallback) pushMsg(ctx context.Context, msgID string, msg *schema.Message) error {
+	fmt.Println("=========[pushMsg]=========", msgID, "|", msg)
 	if msg == nil {
 		return nil
 	}
@@ -123,28 +127,35 @@ func (cb *LoggerCallback) pushMsg(ctx context.Context, msgID string, msg *schema
 }
 
 func (cb *LoggerCallback) OnStart(ctx context.Context, info *callbacks.RunInfo, input callbacks.CallbackInput) context.Context {
-	if inputStr, ok := input.(string); ok {
+	inputStr, ok := input.(string)
+	if ok {
 		if cb.Out != nil {
 			cb.Out <- "\n==================\n"
 			cb.Out <- fmt.Sprintf(" [OnStart] %s ", inputStr)
 			cb.Out <- "\n==================\n"
 		}
 	}
+	fmt.Println("=========[OnStart]=========", info.Name, "|", info.Component, "|", info.Type)
+	fmt.Println("input: ", inputStr)
 	return ctx
 }
 
 func (cb *LoggerCallback) OnEnd(ctx context.Context, info *callbacks.RunInfo, output callbacks.CallbackOutput) context.Context {
-	// fmt.Println("=========[OnEnd]=========", info.Name, "|", info.Component, "|", info.Type)
-	// outputStr, _ := json.MarshalIndent(output, "", "  ")
-	// if len(outputStr) > 200 {
-	//	outputStr = outputStr[:200]
-	// }
-	// fmt.Println(string(outputStr))
+	fmt.Println("=========[OnEnd]=========", info.Name, "|", info.Component, "|", info.Type)
+	outputStr, _ := json.MarshalIndent(output, "", "  ")
+
+	fmt.Println(string(outputStr))
+
+	// 同时输出到Out通道
+	if cb.Out != nil {
+		cb.Out <- fmt.Sprintf("\n[OnEnd] %s | %s | %s\n", info.Name, info.Component, info.Type)
+		cb.Out <- string(outputStr)
+	}
 	return ctx
 }
 
 func (cb *LoggerCallback) OnError(ctx context.Context, info *callbacks.RunInfo, err error) context.Context {
-	fmt.Println("=========[OnError]=========")
+	fmt.Println("=========[OnError]=========, err: ", err)
 	fmt.Println(err)
 	return ctx
 }
@@ -168,15 +179,29 @@ func (cb *LoggerCallback) OnEndWithStreamOutput(ctx context.Context, info *callb
 				glog.Errorf(ctx, "[OnEndStream] recv_error, err: %v, msgID: %s", err, msgID)
 				return
 			}
+			fmt.Println("=========[OnEndStream]=========", info.Name, "|", info.Component, "|", info.Type)
+			fmt.Println("=========[OnEndStream]=========, frame: ", frame)
 
 			switch v := frame.(type) {
 			case *schema.Message:
 				_ = cb.pushMsg(ctx, msgID, v)
+				// 如果设置了结果通道，将消息内容发送到通道
+				if cb.ResultChan != nil {
+					cb.ResultChan <- v.Content
+				}
 			case *ecmodel.CallbackOutput:
 				_ = cb.pushMsg(ctx, msgID, v.Message)
+				// 如果设置了结果通道，将消息内容发送到通道
+				if cb.ResultChan != nil && v.Message != nil {
+					cb.ResultChan <- v.Message.Content
+				}
 			case []*schema.Message:
 				for _, m := range v {
 					_ = cb.pushMsg(ctx, msgID, m)
+					// 如果设置了结果通道，将消息内容发送到通道
+					if cb.ResultChan != nil {
+						cb.ResultChan <- m.Content
+					}
 				}
 			default:
 			}
@@ -189,5 +214,6 @@ func (cb *LoggerCallback) OnEndWithStreamOutput(ctx context.Context, info *callb
 func (cb *LoggerCallback) OnStartWithStreamInput(ctx context.Context, info *callbacks.RunInfo,
 	input *schema.StreamReader[callbacks.CallbackInput]) context.Context {
 	defer input.Close()
+	fmt.Println("=========[OnStartStream]=========", info.Name, "|", info.Component, "|", info.Type)
 	return ctx
 }
