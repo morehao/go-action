@@ -11,7 +11,7 @@ func main() {
 	config := Config{
 		FilePath:  "./test.md",
 		OldPrefix: "http://12.13.14.15:4530",
-		NewPrefix: "http://test.morehao.com:4530",
+		NewPrefix: "https://test.morehao.com:4530",
 	}
 
 	if err := replaceURLsInFile(config); err != nil {
