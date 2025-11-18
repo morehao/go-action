@@ -1,0 +1,85 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "markdownreplace",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/bizCase/markdownreplace"
+        },
+        {
+            "name": "blackboard",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/blackboard"
+        },
+        {
+            "name": "llmCall",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/bizCase/llmCall"
+        },
+        {
+            "name": "sseRedisStream",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/bizCase/sseRedisStreams"
+        },
+        {
+            "name": "sseCache",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/bizCase/sseCache"
+        },
+        {
+            "name": "mcpIPGeo",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/bizCase/mcpDemo/ipgeoserver"
+        },
+        {
+            "name": "mcpClient",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/bizCase/mcpClient"
+        },
+        {
+            "name": "esvector",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/bizCase/esvector"
+        },
+        {
+            "name": "serverfingerprint",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/bizCase/serverfingerprint"
+        },
+        {
+            "name": "einodemo",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/bizCase/einodemo"
+        },
+        {
+            "name": "einodeer",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/bizCase/einodeer"
+        },
+    ]
+}
