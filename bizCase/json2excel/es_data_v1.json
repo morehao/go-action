@@ -1,0 +1,38 @@
+{
+  "took": 0,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 1,
+      "relation": "eq"
+    },
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "project_draft",
+        "_id": "7575379668707049472",
+        "_score": 1,
+        "_source": {
+          "id": 7575379668707049000,
+          "type": 1,
+          "status": 1,
+          "name": "英语聊天(副本)",
+          "space_id": 7575163275852120000,
+          "owner_id": 1,
+          "create_time": 1763780524196,
+          "update_time": 1764137355572,
+          "fav_time": 1763780526901,
+          "is_fav": 1,
+          "is_recently_open": 1,
+          "recently_open_time": 1764131227454
+        }
+      }
+    ]
+  }
+}
