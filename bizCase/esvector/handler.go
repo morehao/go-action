@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/morehao/golib/dbstore/dbes"
-	"github.com/morehao/golib/gcontext/gincontext"
+	"github.com/morehao/golib/biz/gcontext/gincontext"
+	"github.com/morehao/golib/database/dbes"
 	"github.com/morehao/golib/glog"
 )
 

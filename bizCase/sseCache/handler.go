@@ -1,3 +1,11 @@
+/*
+ * @Author: morehao morehao@qq.com
+ * @Date: 2025-07-22 14:36:10
+ * @LastEditors: morehao morehao@qq.com
+ * @LastEditTime: 2025-12-02 20:12:10
+ * @FilePath: /go-action/bizCase/sseCache/handler.go
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 package main
 
 import (
@@ -6,7 +14,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/morehao/golib/glog"
-	"github.com/morehao/golib/gutils"
+	"github.com/morehao/golib/gutil"
 	"github.com/ygpkg/yg-go/apis/sseclient"
 )
 
@@ -45,10 +53,10 @@ func GetMessage(ctx *gin.Context) {
 	if getHistoryMessageErr != nil {
 		glog.Errorf(ctx, "[GetMessage] sseClient.ReadMessages failed, err: %v", getHistoryMessageErr)
 	}
-	glog.Infof(ctx, "[GetMessage] latestID: %s, historyMessages: %v", latestID, gutils.ToJsonString(historyMessages))
+	glog.Infof(ctx, "[GetMessage] latestID: %s, historyMessages: %v", latestID, gutil.ToJsonString(historyMessages))
 
 	// 发送历史消息
-	if err := sseClient.SendEvent(ctx.Writer, fmt.Sprintf("history: %s\n", gutils.ToJsonString(historyMessages))); err != nil {
+	if err := sseClient.SendEvent(ctx.Writer, fmt.Sprintf("history: %s\n", gutil.ToJsonString(historyMessages))); err != nil {
 		glog.Errorf(ctx, "[GetMessage] sseClient.SendEvent failed, err: %v", err)
 	}
 

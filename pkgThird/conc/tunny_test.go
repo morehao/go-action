@@ -8,9 +8,9 @@ import (
 
 	"github.com/Jeffail/tunny"
 
-	"github.com/morehao/golib/dbstore/dbmysql"
+	"github.com/morehao/golib/database/dbmysql"
 	"github.com/morehao/golib/glog"
-	"github.com/morehao/golib/gutils"
+	"github.com/morehao/golib/gutil"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
 )
@@ -47,7 +47,7 @@ func TestTunnyRun2(t *testing.T) {
 		}
 		var userList []interface{}
 		if err := mysqlClient.WithContext(ctx).Table("user").Where("id in ?", ids).Find(&userList).Error; err != nil {
-			glog.Errorf(ctx, "query user err: %s, ids:%s", err, gutils.ToJsonString(ids))
+			glog.Errorf(ctx, "query user err: %s, ids:%s", err, gutil.ToJsonString(ids))
 			return nil
 		}
 		return nil

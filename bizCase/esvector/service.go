@@ -6,7 +6,7 @@ import (
 	"sort"
 
 	"github.com/gin-gonic/gin"
-	"github.com/morehao/golib/dbstore/dbes"
+	"github.com/morehao/golib/database/dbes"
 	"github.com/morehao/golib/protocol"
 	"github.com/morehao/golib/protocol/gresty"
 )

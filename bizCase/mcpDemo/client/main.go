@@ -7,7 +7,7 @@ import (
 
 	"github.com/mark3labs/mcp-go/client"
 	"github.com/mark3labs/mcp-go/mcp"
-	"github.com/morehao/golib/gutils"
+	"github.com/morehao/golib/gutil"
 )
 
 func main() {
@@ -48,7 +48,7 @@ func main() {
 		panic(promptsResultErr)
 	}
 	for _, v := range promptsResult.Prompts {
-		fmt.Printf("Prompt info: %s, Description: %s, Arguments: %s\n", v.Name, v.Description, gutils.ToJsonString(v.Arguments))
+		fmt.Printf("Prompt info: %s, Description: %s, Arguments: %s\n", v.Name, v.Description, gutil.ToJsonString(v.Arguments))
 	}
 
 	fmt.Println("resource list")
@@ -68,7 +68,7 @@ func main() {
 		panic(toolsResultErr)
 	}
 	for _, v := range toolsResult.Tools {
-		fmt.Printf("Tool info, name: %s, Description: %s, Arguments: %s\n", v.Name, v.Description, gutils.ToJsonString(v.InputSchema.Properties))
+		fmt.Printf("Tool info, name: %s, Description: %s, Arguments: %s\n", v.Name, v.Description, gutil.ToJsonString(v.InputSchema.Properties))
 	}
 
 	fmt.Println("tool call")

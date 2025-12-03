@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/morehao/golib/dbstore/dbredis"
+	"github.com/morehao/golib/database/dbredis"
 	"github.com/redis/go-redis/v9"
 )
 
