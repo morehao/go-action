@@ -1,6 +1,10 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+	"time"
+)
 
 // BenchmarkInterfaceAssignment 基准测试函数
 func BenchmarkInterfaceAssignment(b *testing.B) {
@@ -9,4 +13,10 @@ func BenchmarkInterfaceAssignment(b *testing.B) {
 		var i interface{} = a
 		_ = i
 	}
+}
+
+func TestTime(t *testing.T) {
+	now := time.Now()
+	expireAt := now.Add(time.Hour * 24 * 30)
+	fmt.Println(expireAt)
 }

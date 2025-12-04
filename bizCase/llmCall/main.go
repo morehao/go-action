@@ -9,5 +9,7 @@ func main() {
 	r.GET("/chat", Chat)
 	r.GET("/streamChat", StreamChat)
 	r.GET("/functionCall", FunctionCall)
+	r.GET("/customFunctionCall", CustomFunctionCall)
+	r.GET("/customStreamFunctionCall", CustomStreamFunctionCall)
 	r.Run(":8080")
 }
