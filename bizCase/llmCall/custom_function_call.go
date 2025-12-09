@@ -21,13 +21,19 @@ type Tool struct {
 // FunctionCallInfo 函数调用信息
 type FunctionCallInfo struct {
 	Name      string                 `json:"name"`
-	Arguments map[string]interface{} `json:"arguments"`
+	Arguments map[string]interface{} `json:"-"` // 不直接从JSON解析
+}
+
+// FunctionCallRaw 用于解析原始JSON（arguments可能是字符串或对象）
+type FunctionCallRaw struct {
+	Name      string          `json:"name"`
+	Arguments json.RawMessage `json:"arguments"` // 使用RawMessage以支持字符串或对象
 }
 
 // FunctionCallResponse 模型返回的函数调用响应
 type FunctionCallResponse struct {
-	FunctionCall *FunctionCallInfo `json:"function_call,omitempty"`
-	Content      string            `json:"content,omitempty"`
+	FunctionCall *FunctionCallRaw `json:"function_call,omitempty"`
+	Content      string           `json:"content,omitempty"`
 }
 
 const (
@@ -48,12 +54,12 @@ const (
 // buildFunctionPrompt 将工具列表转换为提示词格式
 func buildFunctionPrompt(tools []Tool) string {
 	var builder strings.Builder
-	
+
 	builder.WriteString("函数列表：\n")
 	for i, tool := range tools {
 		builder.WriteString(fmt.Sprintf("%d. %s\n", i+1, tool.Name))
 		builder.WriteString(fmt.Sprintf("   - 描述：%s\n", tool.Description))
-		
+
 		// 格式化参数
 		if tool.Parameters != nil {
 			paramsJSON, err := json.Marshal(tool.Parameters)
@@ -63,7 +69,7 @@ func buildFunctionPrompt(tools []Tool) string {
 		}
 		builder.WriteString("\n")
 	}
-	
+
 	return builder.String()
 }
 
@@ -77,17 +83,17 @@ func buildSystemPromptWithTools(tools []Tool) string {
 func parseFunctionCall(ctx context.Context, response string) (*FunctionCallInfo, error) {
 	// 清理响应文本
 	response = strings.TrimSpace(response)
-	
+
 	// 尝试找到 JSON 部分
 	startIdx := strings.Index(response, "{")
 	endIdx := strings.LastIndex(response, "}")
-	
+
 	if startIdx == -1 || endIdx == -1 {
 		return nil, fmt.Errorf("未找到有效的JSON格式")
 	}
-	
+
 	jsonStr := response[startIdx : endIdx+1]
-	
+
 	// 尝试解析为 FunctionCallResponse
 	var funcCallResp FunctionCallResponse
 	err := json.Unmarshal([]byte(jsonStr), &funcCallResp)
@@ -95,20 +101,48 @@ func parseFunctionCall(ctx context.Context, response string) (*FunctionCallInfo,
 		glog.Errorf(ctx, "[parseFunctionCall] 解析JSON失败: %s, JSON: %s", err.Error(), jsonStr)
 		return nil, fmt.Errorf("解析JSON失败: %w", err)
 	}
-	
-	// 如果包含 function_call 字段，返回函数调用信息
+
+	// 如果包含 function_call 字段，处理 arguments
 	if funcCallResp.FunctionCall != nil {
-		glog.Infof(ctx, "[parseFunctionCall] 成功解析函数调用: %s", funcCallResp.FunctionCall.Name)
-		return funcCallResp.FunctionCall, nil
+		funcInfo := &FunctionCallInfo{
+			Name: funcCallResp.FunctionCall.Name,
+		}
+
+		// 解析 arguments，支持字符串或对象两种格式
+		var args map[string]interface{}
+		rawArgs := strings.TrimSpace(string(funcCallResp.FunctionCall.Arguments))
+
+		if strings.HasPrefix(rawArgs, "\"") {
+			// arguments 是字符串格式，需要先解析字符串，再解析内部的JSON
+			var argsStr string
+			if err := json.Unmarshal([]byte(rawArgs), &argsStr); err != nil {
+				glog.Errorf(ctx, "[parseFunctionCall] 解析arguments字符串失败: %s", err.Error())
+				return nil, fmt.Errorf("解析arguments字符串失败: %w", err)
+			}
+			if err := json.Unmarshal([]byte(argsStr), &args); err != nil {
+				glog.Errorf(ctx, "[parseFunctionCall] 解析arguments内容失败: %s", err.Error())
+				return nil, fmt.Errorf("解析arguments内容失败: %w", err)
+			}
+		} else {
+			// arguments 是对象格式，直接解析
+			if err := json.Unmarshal([]byte(rawArgs), &args); err != nil {
+				glog.Errorf(ctx, "[parseFunctionCall] 解析arguments对象失败: %s", err.Error())
+				return nil, fmt.Errorf("解析arguments对象失败: %w", err)
+			}
+		}
+
+		funcInfo.Arguments = args
+		glog.Infof(ctx, "[parseFunctionCall] 成功解析函数调用: %s, 参数: %v", funcInfo.Name, funcInfo.Arguments)
+		return funcInfo, nil
 	}
-	
+
 	return nil, fmt.Errorf("响应中未包含函数调用信息")
 }
 
 // executeFunctionCall 根据函数名执行对应的函数
 func executeFunctionCall(ctx context.Context, funcName string, args map[string]interface{}) (string, error) {
 	glog.Infof(ctx, "[executeFunctionCall] 执行函数: %s, 参数: %v", funcName, args)
-	
+
 	switch funcName {
 	case "get_weather":
 		// 提取 location 参数
@@ -119,11 +153,11 @@ func executeFunctionCall(ctx context.Context, funcName string, args map[string]i
 		// 调用天气函数
 		result := getWeather(location)
 		return result, nil
-		
+
 	// 可以在这里添加更多函数的支持
 	// case "other_function":
 	//     return handleOtherFunction(args)
-	
+
 	default:
 		return "", fmt.Errorf("未知的函数名: %s", funcName)
 	}
@@ -148,26 +182,26 @@ func CustomFunctionCall(ctx *gin.Context) {
 			},
 		},
 	}
-	
+
 	// 构建系统提示词
 	systemPrompt := buildSystemPromptWithTools(tools)
-	
+
 	// 用户问题
 	userQuestion := "西安今天天气怎么样"
-	
+
 	// 构建消息列表
 	messages := []openai.ChatCompletionMessageParamUnion{
 		openai.SystemMessage(systemPrompt),
 		openai.UserMessage(userQuestion),
 	}
-	
+
 	// 第一次调用：让模型判断是否需要调用函数
 	params := openai.ChatCompletionNewParams{
 		Messages: messages,
 		Model:    LLMModel,
 		Seed:     openai.Int(0),
 	}
-	
+
 	glog.Info(ctx, "[CustomFunctionCall] 发送第一次请求，询问模型是否需要调用函数")
 	completion, err := llmClient.Chat.Completions.New(ctx, params)
 	if err != nil {
@@ -178,10 +212,10 @@ func CustomFunctionCall(ctx *gin.Context) {
 		})
 		return
 	}
-	
+
 	firstResponse := completion.Choices[0].Message.Content
 	glog.Infof(ctx, "[CustomFunctionCall] 模型第一次响应: %s", firstResponse)
-	
+
 	// 尝试解析函数调用
 	funcCall, parseErr := parseFunctionCall(ctx, firstResponse)
 	if parseErr != nil {
@@ -193,7 +227,7 @@ func CustomFunctionCall(ctx *gin.Context) {
 		})
 		return
 	}
-	
+
 	// 执行函数调用
 	glog.Infof(ctx, "[CustomFunctionCall] 检测到函数调用: %s", funcCall.Name)
 	funcResult, execErr := executeFunctionCall(ctx, funcCall.Name, funcCall.Arguments)
@@ -205,18 +239,18 @@ func CustomFunctionCall(ctx *gin.Context) {
 		})
 		return
 	}
-	
+
 	glog.Infof(ctx, "[CustomFunctionCall] 函数执行结果: %s", funcResult)
-	
+
 	// 构建第二次请求的消息
 	// 将函数调用结果作为助手消息添加到对话历史
 	messages = append(messages, openai.AssistantMessage(firstResponse))
 	messages = append(messages, openai.UserMessage(fmt.Sprintf("函数 %s 的执行结果：%s\n\n请根据这个结果回答用户的问题。", funcCall.Name, funcResult)))
-	
+
 	// 第二次调用：让模型基于函数结果生成最终回答
 	params.Messages = messages
 	glog.Info(ctx, "[CustomFunctionCall] 发送第二次请求，让模型基于函数结果生成回答")
-	
+
 	finalCompletion, finalErr := llmClient.Chat.Completions.New(ctx, params)
 	if finalErr != nil {
 		glog.Errorf(ctx, "[CustomFunctionCall] 第二次调用失败: %s", finalErr.Error())
@@ -226,10 +260,10 @@ func CustomFunctionCall(ctx *gin.Context) {
 		})
 		return
 	}
-	
+
 	finalResponse := finalCompletion.Choices[0].Message.Content
 	glog.Infof(ctx, "[CustomFunctionCall] 最终响应: %s", finalResponse)
-	
+
 	ctx.JSON(200, Response{
 		Success: true,
 		Message: finalResponse,
@@ -243,7 +277,7 @@ func CustomStreamFunctionCall(ctx *gin.Context) {
 	ctx.Header("Cache-Control", "no-cache")
 	ctx.Header("Connection", "keep-alive")
 	ctx.Header("Access-Control-Allow-Origin", "*")
-	
+
 	// 定义可用的工具
 	tools := []Tool{
 		{
@@ -261,55 +295,55 @@ func CustomStreamFunctionCall(ctx *gin.Context) {
 			},
 		},
 	}
-	
+
 	// 构建系统提示词
 	systemPrompt := buildSystemPromptWithTools(tools)
-	
+
 	// 用户问题
 	userQuestion := "西安今天天气怎么样"
-	
+
 	// 构建消息列表
 	messages := []openai.ChatCompletionMessageParamUnion{
 		openai.SystemMessage(systemPrompt),
 		openai.UserMessage(userQuestion),
 	}
-	
+
 	// 第一次调用：让模型判断是否需要调用函数（流式）
 	params := openai.ChatCompletionNewParams{
 		Messages: messages,
 		Model:    LLMModel,
 		Seed:     openai.Int(0),
 	}
-	
+
 	ctx.SSEvent("start", "开始处理请求")
 	ctx.Writer.Flush()
-	
+
 	glog.Info(ctx, "[CustomStreamFunctionCall] 发送第一次流式请求")
 	stream := llmClient.Chat.Completions.NewStreaming(ctx, params)
-	
+
 	// 累积第一次响应的内容
 	var firstResponseBuilder strings.Builder
 	acc := openai.ChatCompletionAccumulator{}
-	
+
 	for stream.Next() {
 		chunk := stream.Current()
 		acc.AddChunk(chunk)
-		
+
 		if len(chunk.Choices) > 0 && chunk.Choices[0].Delta.Content != "" {
 			content := chunk.Choices[0].Delta.Content
 			firstResponseBuilder.WriteString(content)
 		}
 	}
-	
+
 	if err := stream.Err(); err != nil {
 		glog.Errorf(ctx, "[CustomStreamFunctionCall] 第一次流式调用失败: %s", err.Error())
 		ctx.SSEvent("error", err.Error())
 		return
 	}
-	
+
 	firstResponse := firstResponseBuilder.String()
 	glog.Infof(ctx, "[CustomStreamFunctionCall] 第一次响应完整内容: %s", firstResponse)
-	
+
 	// 尝试解析函数调用
 	funcCall, parseErr := parseFunctionCall(ctx, firstResponse)
 	if parseErr != nil {
@@ -321,70 +355,69 @@ func CustomStreamFunctionCall(ctx *gin.Context) {
 		ctx.Writer.Flush()
 		return
 	}
-	
+
 	// 执行函数调用
 	glog.Infof(ctx, "[CustomStreamFunctionCall] 检测到函数调用: %s", funcCall.Name)
 	ctx.SSEvent("function_call", fmt.Sprintf("正在调用函数: %s", funcCall.Name))
 	ctx.Writer.Flush()
-	
+
 	funcResult, execErr := executeFunctionCall(ctx, funcCall.Name, funcCall.Arguments)
 	if execErr != nil {
 		glog.Errorf(ctx, "[CustomStreamFunctionCall] 函数执行失败: %s", execErr.Error())
 		ctx.SSEvent("error", fmt.Sprintf("函数执行失败: %s", execErr.Error()))
 		return
 	}
-	
+
 	glog.Infof(ctx, "[CustomStreamFunctionCall] 函数执行结果: %s", funcResult)
 	ctx.SSEvent("function_result", fmt.Sprintf("函数执行完成: %s", funcCall.Name))
 	ctx.Writer.Flush()
-	
+
 	// 构建第二次请求的消息
 	messages = append(messages, openai.AssistantMessage(firstResponse))
 	messages = append(messages, openai.UserMessage(fmt.Sprintf("函数 %s 的执行结果：%s\n\n请根据这个结果回答用户的问题。", funcCall.Name, funcResult)))
-	
+
 	// 第二次调用：让模型基于函数结果生成最终回答（流式）
 	params.Messages = messages
 	glog.Info(ctx, "[CustomStreamFunctionCall] 发送第二次流式请求")
-	
+
 	finalStream := llmClient.Chat.Completions.NewStreaming(ctx, params)
 	finalAcc := openai.ChatCompletionAccumulator{}
-	
+
 	ctx.SSEvent("answer_start", "开始生成最终回答")
 	ctx.Writer.Flush()
-	
+
 	for finalStream.Next() {
 		chunk := finalStream.Current()
 		finalAcc.AddChunk(chunk)
-		
+
 		if len(chunk.Choices) > 0 && chunk.Choices[0].Delta.Content != "" {
 			content := chunk.Choices[0].Delta.Content
 			ctx.SSEvent("content", content)
 			ctx.Writer.Flush()
 		}
-		
+
 		// 判断是否拒绝生成
 		if refusal, ok := finalAcc.JustFinishedRefusal(); ok {
 			ctx.SSEvent("refusal", refusal)
 			ctx.Writer.Flush()
 		}
 	}
-	
+
 	if err := finalStream.Err(); err != nil {
 		glog.Errorf(ctx, "[CustomStreamFunctionCall] 第二次流式调用失败: %s", err.Error())
 		ctx.SSEvent("error", err.Error())
 		return
 	}
-	
+
 	// 发送使用量信息
 	if finalAcc.Usage.TotalTokens > 0 {
 		ctx.SSEvent("usage", finalAcc.Usage.TotalTokens)
 		ctx.Writer.Flush()
 	}
-	
+
 	// 发送结束信号
 	ctx.SSEvent("done", "done")
 	ctx.Writer.Flush()
-	
+
 	glog.Info(ctx, "[CustomStreamFunctionCall] 流式响应完成")
 }
-
