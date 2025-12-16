@@ -8,7 +8,7 @@ import (
 	"github.com/morehao/go-action/bizCase/llmproxy/types"
 )
 
-// GenericRenderer 通用渲染器，使用 XML 格式
+// GenericRenderer 通用渲染器，使用 JSON 格式
 type GenericRenderer struct{}
 
 // RenderTools 实现 Renderer 接口
@@ -26,23 +26,19 @@ func (r *GenericRenderer) RenderTools(req *types.ChatRequest) *types.ChatRequest
 	var sb strings.Builder
 	sb.WriteString("# Available Tools\n\n")
 	sb.WriteString("You may call one or more functions to assist with the user query.\n\n")
-	sb.WriteString("You are provided with function signatures within <tools></tools> XML tags:\n")
-	sb.WriteString("<tools>")
+	sb.WriteString("You are provided with function signatures in JSON array format:\n")
+	sb.WriteString("```json\n")
 
-	for _, tool := range req.Tools {
-		sb.WriteString("\n")
-		toolJSON, err := json.MarshalIndent(tool, "", "  ")
-		if err != nil {
-			continue
-		}
-		sb.Write(toolJSON)
+	toolsJSON, err := json.MarshalIndent(req.Tools, "", "  ")
+	if err == nil {
+		sb.Write(toolsJSON)
 	}
 
-	sb.WriteString("\n</tools>\n\n")
-	sb.WriteString("For each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:\n")
-	sb.WriteString("<tool_call>\n")
+	sb.WriteString("\n```\n\n")
+	sb.WriteString("For each function call, return a JSON object with function name and arguments in the following format:\n")
+	sb.WriteString("```json\n")
 	sb.WriteString(`{"name": "<function-name>", "arguments": <args-json-object>}`)
-	sb.WriteString("\n</tool_call>\n")
+	sb.WriteString("\n```\n")
 
 	toolDesc := sb.String()
 

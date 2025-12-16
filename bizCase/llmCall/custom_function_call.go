@@ -4,140 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/morehao/go-action/bizCase/llmproxy/parser"
+	"github.com/morehao/go-action/bizCase/llmproxy/renderer"
+	"github.com/morehao/go-action/bizCase/llmproxy/types"
 	"github.com/morehao/golib/glog"
 	"github.com/openai/openai-go"
 )
-
-// Tool 工具定义
-type Tool struct {
-	Name        string                 `json:"name"`
-	Description string                 `json:"description"`
-	Parameters  map[string]interface{} `json:"parameters"`
-}
-
-// FunctionCallInfo 函数调用信息
-type FunctionCallInfo struct {
-	Name      string                 `json:"name"`
-	Arguments map[string]interface{} `json:"-"` // 不直接从JSON解析
-}
-
-// FunctionCallRaw 用于解析原始JSON（arguments可能是字符串或对象）
-type FunctionCallRaw struct {
-	Name      string          `json:"name"`
-	Arguments json.RawMessage `json:"arguments"` // 使用RawMessage以支持字符串或对象
-}
-
-// FunctionCallResponse 模型返回的函数调用响应
-type FunctionCallResponse struct {
-	FunctionCall *FunctionCallRaw `json:"function_call,omitempty"`
-	Content      string           `json:"content,omitempty"`
-}
-
-const (
-	// FunctionCallSystemPrompt 函数调用的系统提示词模板
-	FunctionCallSystemPromptTemplate = `你是一个智能助手，可以调用以下函数来帮助用户：
-
-%s
-
-重要规则：
-1. 当你需要调用函数时，必须严格按照以下JSON格式返回，不要包含任何其他内容：
-{"function_call": {"name": "函数名", "arguments": {"参数名": "参数值"}}}
-
-2. 如果不需要调用函数，直接回答用户的问题即可。
-
-3. 只返回JSON或文本回答，不要同时返回两者。`
-)
-
-// buildFunctionPrompt 将工具列表转换为提示词格式
-func buildFunctionPrompt(tools []Tool) string {
-	var builder strings.Builder
-
-	builder.WriteString("函数列表：\n")
-	for i, tool := range tools {
-		builder.WriteString(fmt.Sprintf("%d. %s\n", i+1, tool.Name))
-		builder.WriteString(fmt.Sprintf("   - 描述：%s\n", tool.Description))
-
-		// 格式化参数
-		if tool.Parameters != nil {
-			paramsJSON, err := json.Marshal(tool.Parameters)
-			if err == nil {
-				builder.WriteString(fmt.Sprintf("   - 参数：%s\n", string(paramsJSON)))
-			}
-		}
-		builder.WriteString("\n")
-	}
-
-	return builder.String()
-}
-
-// buildSystemPromptWithTools 构建包含工具定义的完整系统提示词
-func buildSystemPromptWithTools(tools []Tool) string {
-	functionList := buildFunctionPrompt(tools)
-	return fmt.Sprintf(FunctionCallSystemPromptTemplate, functionList)
-}
-
-// parseFunctionCall 解析模型输出的函数调用信息
-func parseFunctionCall(ctx context.Context, response string) (*FunctionCallInfo, error) {
-	// 清理响应文本
-	response = strings.TrimSpace(response)
-
-	// 尝试找到 JSON 部分
-	startIdx := strings.Index(response, "{")
-	endIdx := strings.LastIndex(response, "}")
-
-	if startIdx == -1 || endIdx == -1 {
-		return nil, fmt.Errorf("未找到有效的JSON格式")
-	}
-
-	jsonStr := response[startIdx : endIdx+1]
-
-	// 尝试解析为 FunctionCallResponse
-	var funcCallResp FunctionCallResponse
-	err := json.Unmarshal([]byte(jsonStr), &funcCallResp)
-	if err != nil {
-		glog.Errorf(ctx, "[parseFunctionCall] 解析JSON失败: %s, JSON: %s", err.Error(), jsonStr)
-		return nil, fmt.Errorf("解析JSON失败: %w", err)
-	}
-
-	// 如果包含 function_call 字段，处理 arguments
-	if funcCallResp.FunctionCall != nil {
-		funcInfo := &FunctionCallInfo{
-			Name: funcCallResp.FunctionCall.Name,
-		}
-
-		// 解析 arguments，支持字符串或对象两种格式
-		var args map[string]interface{}
-		rawArgs := strings.TrimSpace(string(funcCallResp.FunctionCall.Arguments))
-
-		if strings.HasPrefix(rawArgs, "\"") {
-			// arguments 是字符串格式，需要先解析字符串，再解析内部的JSON
-			var argsStr string
-			if err := json.Unmarshal([]byte(rawArgs), &argsStr); err != nil {
-				glog.Errorf(ctx, "[parseFunctionCall] 解析arguments字符串失败: %s", err.Error())
-				return nil, fmt.Errorf("解析arguments字符串失败: %w", err)
-			}
-			if err := json.Unmarshal([]byte(argsStr), &args); err != nil {
-				glog.Errorf(ctx, "[parseFunctionCall] 解析arguments内容失败: %s", err.Error())
-				return nil, fmt.Errorf("解析arguments内容失败: %w", err)
-			}
-		} else {
-			// arguments 是对象格式，直接解析
-			if err := json.Unmarshal([]byte(rawArgs), &args); err != nil {
-				glog.Errorf(ctx, "[parseFunctionCall] 解析arguments对象失败: %s", err.Error())
-				return nil, fmt.Errorf("解析arguments对象失败: %w", err)
-			}
-		}
-
-		funcInfo.Arguments = args
-		glog.Infof(ctx, "[parseFunctionCall] 成功解析函数调用: %s, 参数: %v", funcInfo.Name, funcInfo.Arguments)
-		return funcInfo, nil
-	}
-
-	return nil, fmt.Errorf("响应中未包含函数调用信息")
-}
 
 // executeFunctionCall 根据函数名执行对应的函数
 func executeFunctionCall(ctx context.Context, funcName string, args map[string]interface{}) (string, error) {
@@ -163,46 +37,75 @@ func executeFunctionCall(ctx context.Context, funcName string, args map[string]i
 	}
 }
 
+// convertToOpenAIMessages 将 types.Message 转换为 openai.ChatCompletionMessageParamUnion
+func convertToOpenAIMessages(messages []types.Message) []openai.ChatCompletionMessageParamUnion {
+	result := make([]openai.ChatCompletionMessageParamUnion, len(messages))
+	for i, msg := range messages {
+		switch msg.Role {
+		case "system":
+			result[i] = openai.SystemMessage(msg.Content)
+		case "user":
+			result[i] = openai.UserMessage(msg.Content)
+		case "assistant":
+			result[i] = openai.AssistantMessage(msg.Content)
+		default:
+			result[i] = openai.UserMessage(msg.Content)
+		}
+	}
+	return result
+}
+
 // CustomFunctionCall 自定义函数调用处理（普通调用）
 func CustomFunctionCall(ctx *gin.Context) {
-	// 定义可用的工具
-	tools := []Tool{
+	// 定义可用的工具 - 使用 llmproxy 的标准格式
+	tools := []types.Tool{
 		{
-			Name:        "get_weather",
-			Description: "获取指定位置的天气",
-			Parameters: map[string]interface{}{
-				"type": "object",
-				"properties": map[string]interface{}{
-					"location": map[string]interface{}{
-						"type":        "string",
-						"description": "城市名称，例如：北京、上海、西安",
+			Type: "function",
+			Function: types.ToolFunction{
+				Name:        "get_weather",
+				Description: "获取指定位置的天气",
+				Parameters: map[string]interface{}{
+					"type": "object",
+					"properties": map[string]interface{}{
+						"location": map[string]interface{}{
+							"type":        "string",
+							"description": "城市名称，例如：北京、上海、西安",
+						},
 					},
+					"required": []string{"location"},
 				},
-				"required": []string{"location"},
 			},
 		},
 	}
 
-	// 构建系统提示词
-	systemPrompt := buildSystemPromptWithTools(tools)
-
 	// 用户问题
 	userQuestion := "西安今天天气怎么样"
 
-	// 构建消息列表
-	messages := []openai.ChatCompletionMessageParamUnion{
-		openai.SystemMessage(systemPrompt),
-		openai.UserMessage(userQuestion),
+	// 构建请求 - 使用 llmproxy 的 types.ChatRequest
+	chatReq := &types.ChatRequest{
+		Model: string(LLMModel),
+		Messages: []types.Message{
+			{Role: "user", Content: userQuestion},
+		},
+		Tools: tools,
 	}
+
+	// 使用 renderer 渲染工具到系统提示词
+	render := renderer.NewRenderer("generic") // 使用通用 JSON 格式
+	modifiedReq := render.RenderTools(chatReq)
+
+	glog.Info(ctx, "[CustomFunctionCall] 发送第一次请求，询问模型是否需要调用函数")
+
+	// 转换为 OpenAI SDK 格式
+	openaiMessages := convertToOpenAIMessages(modifiedReq.Messages)
 
 	// 第一次调用：让模型判断是否需要调用函数
 	params := openai.ChatCompletionNewParams{
-		Messages: messages,
+		Messages: openaiMessages,
 		Model:    LLMModel,
 		Seed:     openai.Int(0),
 	}
 
-	glog.Info(ctx, "[CustomFunctionCall] 发送第一次请求，询问模型是否需要调用函数")
 	completion, err := llmClient.Chat.Completions.New(ctx, params)
 	if err != nil {
 		glog.Errorf(ctx, "[CustomFunctionCall] 第一次调用失败: %s", err.Error())
@@ -216,10 +119,12 @@ func CustomFunctionCall(ctx *gin.Context) {
 	firstResponse := completion.Choices[0].Message.Content
 	glog.Infof(ctx, "[CustomFunctionCall] 模型第一次响应: %s", firstResponse)
 
-	// 尝试解析函数调用
-	funcCall, parseErr := parseFunctionCall(ctx, firstResponse)
-	if parseErr != nil {
-		// 如果解析失败，说明模型直接回答了问题，不需要函数调用
+	// 使用 parser 解析函数调用
+	p := parser.NewParser("json") // 使用 JSON parser
+	toolCalls, remainingContent, parseErr := p.Parse(firstResponse)
+
+	if parseErr != nil || len(toolCalls) == 0 {
+		// 如果解析失败或没有工具调用，说明模型直接回答了问题
 		glog.Infof(ctx, "[CustomFunctionCall] 未检测到函数调用，直接返回响应: %s", firstResponse)
 		ctx.JSON(200, Response{
 			Success: true,
@@ -228,7 +133,8 @@ func CustomFunctionCall(ctx *gin.Context) {
 		return
 	}
 
-	// 执行函数调用
+	// 执行第一个工具调用
+	funcCall := toolCalls[0]
 	glog.Infof(ctx, "[CustomFunctionCall] 检测到函数调用: %s", funcCall.Name)
 	funcResult, execErr := executeFunctionCall(ctx, funcCall.Name, funcCall.Arguments)
 	if execErr != nil {
@@ -243,12 +149,19 @@ func CustomFunctionCall(ctx *gin.Context) {
 	glog.Infof(ctx, "[CustomFunctionCall] 函数执行结果: %s", funcResult)
 
 	// 构建第二次请求的消息
-	// 将函数调用结果作为助手消息添加到对话历史
-	messages = append(messages, openai.AssistantMessage(firstResponse))
-	messages = append(messages, openai.UserMessage(fmt.Sprintf("函数 %s 的执行结果：%s\n\n请根据这个结果回答用户的问题。", funcCall.Name, funcResult)))
+	modifiedReq.Messages = append(modifiedReq.Messages, types.Message{
+		Role:    "assistant",
+		Content: remainingContent,
+	})
+	modifiedReq.Messages = append(modifiedReq.Messages, types.Message{
+		Role:    "user",
+		Content: fmt.Sprintf("函数 %s 的执行结果：%s\n\n请根据这个结果回答用户的问题。", funcCall.Name, funcResult),
+	})
 
 	// 第二次调用：让模型基于函数结果生成最终回答
-	params.Messages = messages
+	openaiMessages = convertToOpenAIMessages(modifiedReq.Messages)
+	params.Messages = openaiMessages
+
 	glog.Info(ctx, "[CustomFunctionCall] 发送第二次请求，让模型基于函数结果生成回答")
 
 	finalCompletion, finalErr := llmClient.Chat.Completions.New(ctx, params)
@@ -278,51 +191,62 @@ func CustomStreamFunctionCall(ctx *gin.Context) {
 	ctx.Header("Connection", "keep-alive")
 	ctx.Header("Access-Control-Allow-Origin", "*")
 
-	// 定义可用的工具
-	tools := []Tool{
+	// 定义可用的工具 - 使用 llmproxy 的标准格式
+	tools := []types.Tool{
 		{
-			Name:        "get_weather",
-			Description: "获取指定位置的天气",
-			Parameters: map[string]interface{}{
-				"type": "object",
-				"properties": map[string]interface{}{
-					"location": map[string]interface{}{
-						"type":        "string",
-						"description": "城市名称，例如：北京、上海、西安",
+			Type: "function",
+			Function: types.ToolFunction{
+				Name:        "get_weather",
+				Description: "获取指定位置的天气",
+				Parameters: map[string]interface{}{
+					"type": "object",
+					"properties": map[string]interface{}{
+						"location": map[string]interface{}{
+							"type":        "string",
+							"description": "城市名称，例如：北京、上海、西安",
+						},
 					},
+					"required": []string{"location"},
 				},
-				"required": []string{"location"},
 			},
 		},
 	}
 
-	// 构建系统提示词
-	systemPrompt := buildSystemPromptWithTools(tools)
-
 	// 用户问题
 	userQuestion := "西安今天天气怎么样"
 
-	// 构建消息列表
-	messages := []openai.ChatCompletionMessageParamUnion{
-		openai.SystemMessage(systemPrompt),
-		openai.UserMessage(userQuestion),
+	// 构建请求 - 使用 llmproxy 的 types.ChatRequest
+	chatReq := &types.ChatRequest{
+		Model: string(LLMModel),
+		Messages: []types.Message{
+			{Role: "user", Content: userQuestion},
+		},
+		Tools: tools,
 	}
 
-	// 第一次调用：让模型判断是否需要调用函数（流式）
-	params := openai.ChatCompletionNewParams{
-		Messages: messages,
-		Model:    LLMModel,
-		Seed:     openai.Int(0),
-	}
+	// 使用 renderer 渲染工具到系统提示词
+	render := renderer.NewRenderer("generic") // 使用通用 JSON 格式
+	modifiedReq := render.RenderTools(chatReq)
 
 	ctx.SSEvent("start", "开始处理请求")
 	ctx.Writer.Flush()
 
 	glog.Info(ctx, "[CustomStreamFunctionCall] 发送第一次流式请求")
+
+	// 转换为 OpenAI SDK 格式
+	openaiMessages := convertToOpenAIMessages(modifiedReq.Messages)
+
+	// 第一次调用：让模型判断是否需要调用函数（流式）
+	params := openai.ChatCompletionNewParams{
+		Messages: openaiMessages,
+		Model:    LLMModel,
+		Seed:     openai.Int(0),
+	}
+
 	stream := llmClient.Chat.Completions.NewStreaming(ctx, params)
 
-	// 累积第一次响应的内容
-	var firstResponseBuilder strings.Builder
+	// 使用流式解析器
+	streamParser := parser.NewStreamParser("json")
 	acc := openai.ChatCompletionAccumulator{}
 
 	for stream.Next() {
@@ -331,7 +255,8 @@ func CustomStreamFunctionCall(ctx *gin.Context) {
 
 		if len(chunk.Choices) > 0 && chunk.Choices[0].Delta.Content != "" {
 			content := chunk.Choices[0].Delta.Content
-			firstResponseBuilder.WriteString(content)
+			// 使用流式解析器解析
+			_, _, _ = streamParser.Add(content)
 		}
 	}
 
@@ -341,22 +266,24 @@ func CustomStreamFunctionCall(ctx *gin.Context) {
 		return
 	}
 
-	firstResponse := firstResponseBuilder.String()
-	glog.Infof(ctx, "[CustomStreamFunctionCall] 第一次响应完整内容: %s", firstResponse)
+	// 刷新解析器，获取完整的工具调用和剩余内容
+	toolCalls, remainingContent := streamParser.Flush()
 
-	// 尝试解析函数调用
-	funcCall, parseErr := parseFunctionCall(ctx, firstResponse)
-	if parseErr != nil {
-		// 如果解析失败，说明模型直接回答了问题
+	glog.Infof(ctx, "[CustomStreamFunctionCall] 第一次响应解析完成，工具调用数: %d", len(toolCalls))
+
+	if len(toolCalls) == 0 {
+		// 如果没有工具调用，说明模型直接回答了问题
+		fullContent := acc.Choices[0].Message.Content
 		glog.Infof(ctx, "[CustomStreamFunctionCall] 未检测到函数调用，直接流式返回响应")
-		ctx.SSEvent("content", firstResponse)
+		ctx.SSEvent("content", fullContent)
 		ctx.Writer.Flush()
 		ctx.SSEvent("done", "done")
 		ctx.Writer.Flush()
 		return
 	}
 
-	// 执行函数调用
+	// 执行第一个工具调用
+	funcCall := toolCalls[0]
 	glog.Infof(ctx, "[CustomStreamFunctionCall] 检测到函数调用: %s", funcCall.Name)
 	ctx.SSEvent("function_call", fmt.Sprintf("正在调用函数: %s", funcCall.Name))
 	ctx.Writer.Flush()
@@ -373,11 +300,19 @@ func CustomStreamFunctionCall(ctx *gin.Context) {
 	ctx.Writer.Flush()
 
 	// 构建第二次请求的消息
-	messages = append(messages, openai.AssistantMessage(firstResponse))
-	messages = append(messages, openai.UserMessage(fmt.Sprintf("函数 %s 的执行结果：%s\n\n请根据这个结果回答用户的问题。", funcCall.Name, funcResult)))
+	modifiedReq.Messages = append(modifiedReq.Messages, types.Message{
+		Role:    "assistant",
+		Content: remainingContent,
+	})
+	modifiedReq.Messages = append(modifiedReq.Messages, types.Message{
+		Role:    "user",
+		Content: fmt.Sprintf("函数 %s 的执行结果：%s\n\n请根据这个结果回答用户的问题。", funcCall.Name, funcResult),
+	})
 
 	// 第二次调用：让模型基于函数结果生成最终回答（流式）
-	params.Messages = messages
+	openaiMessages = convertToOpenAIMessages(modifiedReq.Messages)
+	params.Messages = openaiMessages
+
 	glog.Info(ctx, "[CustomStreamFunctionCall] 发送第二次流式请求")
 
 	finalStream := llmClient.Chat.Completions.NewStreaming(ctx, params)
@@ -411,7 +346,12 @@ func CustomStreamFunctionCall(ctx *gin.Context) {
 
 	// 发送使用量信息
 	if finalAcc.Usage.TotalTokens > 0 {
-		ctx.SSEvent("usage", finalAcc.Usage.TotalTokens)
+		usageJSON, _ := json.Marshal(map[string]interface{}{
+			"prompt_tokens":     finalAcc.Usage.PromptTokens,
+			"completion_tokens": finalAcc.Usage.CompletionTokens,
+			"total_tokens":      finalAcc.Usage.TotalTokens,
+		})
+		ctx.SSEvent("usage", string(usageJSON))
 		ctx.Writer.Flush()
 	}
 
