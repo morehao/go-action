@@ -8,9 +8,9 @@ import (
 
 const (
 	ModuleName = "LLM_call"
-	LLMHost    = "https://api.deepseek.com/v1"
-	LLMModel   = "deepseek-chat"
-	LLMAPIKey  = "xxxx"
+	LLMHost    = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+	LLMModel   = "qwen2-vl-72b-instruct"
+	LLMAPIKey  = "sk-ff39e6d2c73c48e3bc0e2ebb05e5d04f"
 )
 
 var llmClient = openai.NewClient(
