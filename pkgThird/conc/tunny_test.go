@@ -8,7 +8,7 @@ import (
 
 	"github.com/Jeffail/tunny"
 
-	"github.com/morehao/golib/database/dbmysql"
+	"github.com/morehao/golib/dbaccess/dbgorm"
 	"github.com/morehao/golib/glog"
 	"github.com/morehao/golib/gutil"
 	"github.com/stretchr/testify/assert"
@@ -25,13 +25,16 @@ func initMysqlClient() (*gorm.DB, error) {
 		return nil, err
 	}
 
-	cfg := &dbmysql.MysqlConfig{
-		Addr:     "127.0.0.1:3306",
-		Database: "demo",
-		User:     "root",
-		Password: "123456",
+	cfg := &dbgorm.GormConfig{
+		URL:             "mysql://root:123456@127.0.0.1:3306/demo?charset=utf8mb4&parseTime=True&loc=Local",
+		Service:         "test-service",
+		MaxSqlLen:       1000,
+		SlowThreshold:   time.Second,
+		MaxIdleConns:    10,
+		MaxOpenConns:    100,
+		ConnMaxLifetime: time.Hour,
 	}
-	return dbmysql.InitMysql(cfg)
+	return dbgorm.New(cfg)
 }
 
 func TestTunnyRun2(t *testing.T) {

@@ -10,7 +10,7 @@ package main
 
 import (
 	"github.com/elastic/go-elasticsearch/v8"
-	"github.com/morehao/golib/database/dbes"
+	"github.com/morehao/golib/dbaccess/dbes"
 )
 
 var ESClient *elasticsearch.Client
@@ -20,7 +20,7 @@ func init() {
 		Service: "es",
 		Addr:    "http://localhost:9200",
 	}
-	simpleClient, _, err := dbes.InitES(cfg)
+	simpleClient, _, err := dbes.New(cfg)
 	if err != nil {
 		panic(err)
 	}

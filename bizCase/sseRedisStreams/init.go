@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/morehao/golib/database/dbredis"
+	"github.com/morehao/golib/dbaccess/dbredis"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -18,7 +18,7 @@ func init() {
 		Addr:    "127.0.0.1:6379",
 		DB:      0,
 	}
-	redisClient, initErr := dbredis.InitRedis(&cfg)
+	redisClient, initErr := dbredis.New(&cfg)
 	if initErr != nil {
 		panic(fmt.Sprintf("初始化 Redis 失败: %v", initErr))
 	}

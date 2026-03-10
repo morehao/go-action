@@ -1,6 +1,6 @@
 module github.com/morehao/go-action
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/Jeffail/tunny v0.1.4
@@ -10,7 +10,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/mark3labs/mcp-go v0.31.0
 	github.com/mitchellh/mapstructure v1.5.0
-	github.com/morehao/golib v1.2.23
+	github.com/morehao/golib v1.2.25
 	github.com/mozillazg/go-pinyin v0.20.0
 	github.com/openai/openai-go v1.2.0
 	github.com/redis/go-redis/v9 v9.8.0
@@ -31,6 +31,10 @@ require (
 	github.com/go-openapi/swag v0.23.1 // indirect
 	github.com/goph/emperror v0.17.2 // indirect
 	github.com/invopop/yaml v0.3.1 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
+	github.com/jackc/pgx/v5 v5.6.0 // indirect
+	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/mailru/easyjson v0.9.0 // indirect
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 // indirect
@@ -49,7 +53,9 @@ require (
 	github.com/xuri/nfp v0.0.2-0.20250530014748-2ddeb826f9a9 // indirect
 	github.com/yargevad/filepathx v1.0.0 // indirect
 	golang.org/x/exp v0.0.0-20250305212735-054e65f0b394 // indirect
+	golang.org/x/sync v0.17.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
+	gorm.io/driver/postgres v1.6.0 // indirect
 )
 
 require (
@@ -100,6 +106,6 @@ require (
 	golang.org/x/net v0.46.0 // indirect
 	golang.org/x/sys v0.37.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/driver/mysql v1.5.7 // indirect
+	gorm.io/driver/mysql v1.5.7
 	resty.dev/v3 v3.0.0-beta.3 // indirect
 )
