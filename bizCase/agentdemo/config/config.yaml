@@ -1,0 +1,11 @@
+# LLM model settings
+model:
+  api_key: "your-api-key-here"
+  # Any OpenAI-compatible model name, e.g. deepseek-chat, gpt-4o, etc.
+  model: "deepseek-chat"
+  # Base URL for the OpenAI-compatible API endpoint
+  base_url: "https://api.deepseek.com/v1"
+
+# HTTP server settings
+server:
+  port: ":8080"
