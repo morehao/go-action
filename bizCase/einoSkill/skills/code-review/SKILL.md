@@ -1,34 +1,34 @@
 ---
 name: code-review
-description: Code review guidelines and checklist for reviewing Go code quality, security, performance, and maintainability.
+description: 代码审查指南和清单，用于审查 Go 代码的质量、安全性、性能和可维护性。
 ---
 
-# Code Review Guidelines
+# 代码审查指南
 
-## Correctness
-- Verify that the logic matches the intended behavior described in the task.
-- Check all edge cases: empty input, nil pointers, boundary conditions.
-- Ensure error paths are handled and do not cause panics or data loss.
+## 正确性
+- 验证逻辑是否符合任务描述的预期行为。
+- 检查所有边界情况：空输入、nil 指针、边界条件。
+- 确保错误路径得到处理，不会导致 panic 或数据丢失。
 
-## Security
-- Never log sensitive data (passwords, tokens, PII).
-- Validate and sanitize all user inputs before processing.
-- Avoid SQL injection: use parameterized queries with your ORM/driver.
-- Use `crypto/rand` instead of `math/rand` for security-sensitive randomness.
+## 安全性
+- 永远不要记录敏感数据（密码、令牌、个人隐私信息）。
+- 在处理前验证和清洗所有用户输入。
+- 避免 SQL 注入：使用 ORM/驱动程序提供的参数化查询。
+- 安全敏感的随机数使用 `crypto/rand` 而非 `math/rand`。
 
-## Performance
-- Avoid unnecessary allocations in hot paths; reuse buffers with `sync.Pool`.
-- Prefer `strings.Builder` over `+` concatenation in loops.
-- Use appropriate data structures (maps vs slices) based on access patterns.
-- Defer heavy computations or I/O to background goroutines when latency matters.
+## 性能
+- 热路径中避免不必要的内存分配；使用 `sync.Pool` 复用缓冲区。
+- 循环中使用 `strings.Builder` 而非 `+` 拼接字符串。
+- 根据访问模式选择合适的数据结构（map 还是切片）。
+- 延迟执行重型计算或 I/O 到后台 goroutine 以降低延迟。
 
-## Readability
-- Each function should do one thing; keep functions short and focused.
-- Add comments to explain *why*, not *what* the code does.
-- Avoid deeply nested conditionals; use early returns (guard clauses).
-- Eliminate dead code and unused imports.
+## 可读性
+- 每个函数只做一件事；保持函数简短专注。
+- 注释解释"为什么"而非"是什么"。
+- 避免深层嵌套的条件语句；使用提前返回（卫语句）。
+- 删除死代码和未使用的导入。
 
-## Testing
-- New features must have corresponding unit tests.
-- Refactored code must not reduce existing test coverage.
-- Tests should be deterministic and not rely on external services.
+## 测试
+- 新功能必须有对应的单元测试。
+- 重构代码不得降低现有测试覆盖率。
+- 测试应当是确定性的，不依赖外部服务。
