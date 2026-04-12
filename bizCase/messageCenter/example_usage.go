@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/morehao/go-action/bizcase/messageCenter/dto"
-	"github.com/morehao/go-action/bizcase/messageCenter/service"
+	"github.com/morehao/go-action/bizcase/messagecenter/dto"
+	"github.com/morehao/go-action/bizcase/messagecenter/service"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -197,4 +197,3 @@ func main() {
 
 	fmt.Println("\n========== 示例演示完成 ==========")
 }
-

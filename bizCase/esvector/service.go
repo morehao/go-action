@@ -7,26 +7,22 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/morehao/golib/dbaccess/dbes"
-	"github.com/morehao/golib/protocol"
 	"github.com/morehao/golib/protocol/gresty"
 )
 
 func singleEmbedding(ctx *gin.Context, content string) (embedding []float32, err error) {
-	httpClientCfg := &protocol.HttpClientConfig{
-		Module: "esvector",
-		Host:   EmbeddingHost,
-	}
-	restyClient := gresty.NewClient(httpClientCfg)
+	restyClient := gresty.NewClient()
+	restyClient.SetBaseURL(EmbeddingHost)
 	embeddingReq := map[string]any{
 		"model": "Qwen3-Embedding-0.6B",
 		"input": content,
 	}
 	var embeddingRes EmbeddingResponse
-	request, newRequestErr := restyClient.NewRequestWithResult(ctx, &embeddingRes)
-	if newRequestErr != nil {
-		return nil, newRequestErr
-	}
-	_, err = request.SetBody(embeddingReq).Post("/v1/embeddings")
+	_, err = restyClient.R().
+		SetContext(ctx).
+		SetResult(&embeddingRes).
+		SetBody(embeddingReq).
+		Post("/v1/embeddings")
 	if err != nil {
 		return nil, err
 	}
@@ -34,7 +30,6 @@ func singleEmbedding(ctx *gin.Context, content string) (embedding []float32, err
 		return nil, fmt.Errorf("embeddingRes.Data is empty, content: %s", content)
 	}
 	return embeddingRes.Data[0].Embedding, nil
-
 }
 
 // executeSearch 通用的搜索执行函数

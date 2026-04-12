@@ -21,20 +21,20 @@ type SendMessageResponse struct {
 
 // GetUserMessagesRequest 获取用户消息列表请求
 type GetUserMessagesRequest struct {
-	UserID   uint64  `json:"user_id" binding:"required"` // 用户ID
-	IsRead   *int8   `json:"is_read"`                    // 已读状态：0-未读，1-已读，nil-全部
-	MsgType  string  `json:"msg_type"`                   // 消息类型
-	Page     int     `json:"page"`                       // 页码，从1开始
-	PageSize int     `json:"page_size"`                  // 每页数量
-	BizType  string  `json:"biz_type"`                   // 业务类型
+	UserID   uint64 `json:"user_id" binding:"required"` // 用户ID
+	IsRead   *int8  `json:"is_read"`                    // 已读状态：0-未读，1-已读，nil-全部
+	MsgType  string `json:"msg_type"`                   // 消息类型
+	Page     int    `json:"page"`                       // 页码，从1开始
+	PageSize int    `json:"page_size"`                  // 每页数量
+	BizType  string `json:"biz_type"`                   // 业务类型
 }
 
 // GetUserMessagesResponse 获取用户消息列表响应
 type GetUserMessagesResponse struct {
-	Total    int64                `json:"total"`    // 总数
-	Page     int                  `json:"page"`     // 当前页
-	PageSize int                  `json:"page_size"` // 每页数量
-	List     []UserMessageVO      `json:"list"`     // 消息列表
+	Total    int64           `json:"total"`     // 总数
+	Page     int             `json:"page"`      // 当前页
+	PageSize int             `json:"page_size"` // 每页数量
+	List     []UserMessageVO `json:"list"`      // 消息列表
 }
 
 // UserMessageVO 用户消息视图对象
@@ -55,8 +55,8 @@ type UserMessageVO struct {
 
 // MarkAsReadRequest 标记已读请求
 type MarkAsReadRequest struct {
-	UserID     uint64 `json:"user_id" binding:"required"`     // 用户ID
-	MessageID  uint   `json:"message_id" binding:"required"`  // 消息ID
+	UserID    uint64 `json:"user_id" binding:"required"`    // 用户ID
+	MessageID uint   `json:"message_id" binding:"required"` // 消息ID
 }
 
 // GetUnreadCountRequest 获取未读数量请求

@@ -4,9 +4,9 @@ import (
 	"errors"
 	"time"
 
-	"github.com/morehao/go-action/bizcase/messageCenter/dto"
-	"github.com/morehao/go-action/bizcase/messageCenter/model"
-	"github.com/morehao/go-action/bizcase/messageCenter/utils"
+	"github.com/morehao/go-action/bizcase/messagecenter/dto"
+	"github.com/morehao/go-action/bizcase/messagecenter/model"
+	"github.com/morehao/go-action/bizcase/messagecenter/utils"
 	"gorm.io/gorm"
 )
 

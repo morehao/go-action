@@ -3,7 +3,7 @@ package service
 import (
 	"testing"
 
-	"github.com/morehao/go-action/bizcase/messageCenter/dto"
+	"github.com/morehao/go-action/bizcase/messagecenter/dto"
 	"github.com/stretchr/testify/assert"
 )
 
