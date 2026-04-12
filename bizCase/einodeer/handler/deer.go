@@ -6,11 +6,11 @@ import (
 
 	"github.com/cloudwego/eino/compose"
 	"github.com/gin-gonic/gin"
-	"github.com/morehao/go-action/bizCase/einodeer/constants"
-	"github.com/morehao/go-action/bizCase/einodeer/engine"
-	"github.com/morehao/go-action/bizCase/einodeer/infra"
-	"github.com/morehao/go-action/bizCase/einodeer/model"
-	"github.com/morehao/go-action/bizCase/einodeer/utils"
+	"github.com/morehao/go-action/bizcase/einodeer/constants"
+	"github.com/morehao/go-action/bizcase/einodeer/engine"
+	"github.com/morehao/go-action/bizcase/einodeer/infra"
+	"github.com/morehao/go-action/bizcase/einodeer/model"
+	"github.com/morehao/go-action/bizcase/einodeer/utils"
 	"github.com/morehao/golib/gcontext/gincontext"
 	"github.com/morehao/golib/glog"
 )

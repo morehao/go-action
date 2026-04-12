@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/morehao/go-action/bizCase/llmproxy/types"
+	"github.com/morehao/go-action/bizcase/llmproxy/types"
 )
 
 func TestGenericRenderer_RenderTools(t *testing.T) {

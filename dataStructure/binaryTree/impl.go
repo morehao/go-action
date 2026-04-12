@@ -1,4 +1,4 @@
-package binaryTree
+package binarytree
 
 func (t *TreeNode) Insert(newNode *TreeNode) {
 	if newNode.Val == t.Val {

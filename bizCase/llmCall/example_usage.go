@@ -7,9 +7,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/morehao/go-action/bizCase/llmproxy/parser"
-	"github.com/morehao/go-action/bizCase/llmproxy/renderer"
-	"github.com/morehao/go-action/bizCase/llmproxy/types"
+	"github.com/morehao/go-action/bizcase/llmproxy/parser"
+	"github.com/morehao/go-action/bizcase/llmproxy/renderer"
+	"github.com/morehao/go-action/bizcase/llmproxy/types"
 )
 
 // ExampleBasicUsage 展示基本用法

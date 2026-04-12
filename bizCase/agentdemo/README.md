@@ -60,7 +60,7 @@ go mod download
 在项目根目录执行：
 
 ```bash
-go run ./bizCase/agentdemo/main.go
+go run ./bizcase/agentdemo/main.go
 ```
 
 服务启动后监听 `http://localhost:8080`。

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/morehao/go-action/bizCase/llmproxy/parser"
-	"github.com/morehao/go-action/bizCase/llmproxy/renderer"
-	"github.com/morehao/go-action/bizCase/llmproxy/types"
+	"github.com/morehao/go-action/bizcase/llmproxy/parser"
+	"github.com/morehao/go-action/bizcase/llmproxy/renderer"
+	"github.com/morehao/go-action/bizcase/llmproxy/types"
 )
 
 // Proxy 代理客户端

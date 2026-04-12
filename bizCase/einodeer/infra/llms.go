@@ -20,7 +20,7 @@ import (
 	"context"
 
 	"github.com/cloudwego/eino-ext/components/model/deepseek"
-	"github.com/morehao/go-action/bizCase/einodeer/config"
+	"github.com/morehao/go-action/bizcase/einodeer/config"
 	"github.com/morehao/golib/glog"
 )
 

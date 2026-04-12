@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/morehao/go-action/bizCase/llmproxy"
+	"github.com/morehao/go-action/bizcase/llmproxy"
 )
 
 func main() {
@@ -190,4 +190,3 @@ func executeTool(funcName, argsJSON string) string {
 		return fmt.Sprintf("未知的工具: %s", funcName)
 	}
 }
-

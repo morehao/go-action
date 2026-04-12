@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/morehao/go-action/bizCase/messageCenter/dto"
-	"github.com/morehao/go-action/bizCase/messageCenter/service"
+	"github.com/morehao/go-action/bizcase/messageCenter/dto"
+	"github.com/morehao/go-action/bizcase/messageCenter/service"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )

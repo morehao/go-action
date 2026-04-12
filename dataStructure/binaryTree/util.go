@@ -1,4 +1,4 @@
-package binaryTree
+package binarytree
 
 // BuildTreeWithArray
 // @Description: 通过interface数组构建二叉树

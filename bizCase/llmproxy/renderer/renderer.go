@@ -1,6 +1,6 @@
 package renderer
 
-import "github.com/morehao/go-action/bizCase/llmproxy/types"
+import "github.com/morehao/go-action/bizcase/llmproxy/types"
 
 // Renderer 定义工具定义渲染器接口
 type Renderer interface {

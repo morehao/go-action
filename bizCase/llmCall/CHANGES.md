@@ -6,9 +6,9 @@
 **变更内容：**
 - 删除了所有手动构建提示词和解析 JSON 的代码（约 150 行）
 - 引入 `llmproxy` 包的三个核心模块：
-  - `github.com/morehao/go-action/bizCase/llmproxy/types`
-  - `github.com/morehao/go-action/bizCase/llmproxy/renderer`
-  - `github.com/morehao/go-action/bizCase/llmproxy/parser`
+  - `github.com/morehao/go-action/bizcase/llmproxy/types`
+  - `github.com/morehao/go-action/bizcase/llmproxy/renderer`
+  - `github.com/morehao/go-action/bizcase/llmproxy/parser`
 - 新增 `convertToOpenAIMessages()` 辅助函数
 - 重写 `CustomFunctionCall()` 函数
 - 重写 `CustomStreamFunctionCall()` 函数
@@ -71,9 +71,9 @@
 
 **新增依赖：**
 ```go
-github.com/morehao/go-action/bizCase/llmproxy/types
-github.com/morehao/go-action/bizCase/llmproxy/renderer
-github.com/morehao/go-action/bizCase/llmproxy/parser
+github.com/morehao/go-action/bizcase/llmproxy/types
+github.com/morehao/go-action/bizcase/llmproxy/renderer
+github.com/morehao/go-action/bizcase/llmproxy/parser
 ```
 
 ## 兼容性

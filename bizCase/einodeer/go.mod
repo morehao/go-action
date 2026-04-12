@@ -1,4 +1,4 @@
-module github.com/morehao/go-action/bizCase/einodeer
+module github.com/morehao/go-action/bizcase/einodeer
 
 go 1.24.0
 

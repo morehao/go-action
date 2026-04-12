@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/cloudwego/eino/compose"
-	"github.com/morehao/go-action/bizCase/einodeer/constants"
-	"github.com/morehao/go-action/bizCase/einodeer/model"
+	"github.com/morehao/go-action/bizcase/einodeer/constants"
+	"github.com/morehao/go-action/bizcase/einodeer/model"
 	"github.com/morehao/golib/glog"
 )
 

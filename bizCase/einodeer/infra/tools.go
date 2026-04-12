@@ -10,7 +10,7 @@ import (
 
 	"github.com/cloudwego/eino/components/tool"
 	"github.com/cloudwego/eino/schema"
-	"github.com/morehao/go-action/bizCase/einodeer/config"
+	"github.com/morehao/go-action/bizcase/einodeer/config"
 	"github.com/morehao/golib/glog"
 )
 

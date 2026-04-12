@@ -63,7 +63,7 @@ export OPENAI_MODEL="gpt-4o-mini"   # 可选，默认: gpt-4o-mini
 # 当从其他目录运行编译后的二进制文件时可覆盖此设置：
 # export SKILLS_DIR="/path/to/skills"
 
-cd bizCase/einoSkill
+cd bizcase/einoSkill
 go run .
 ```
 

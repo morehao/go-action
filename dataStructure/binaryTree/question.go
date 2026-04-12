@@ -1,4 +1,4 @@
-package binaryTree
+package binarytree
 
 var index int
 

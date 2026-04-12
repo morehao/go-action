@@ -12,8 +12,8 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/morehao/go-action/bizCase/llmproxy/parser"
-	"github.com/morehao/go-action/bizCase/llmproxy/types"
+	"github.com/morehao/go-action/bizcase/llmproxy/parser"
+	"github.com/morehao/go-action/bizcase/llmproxy/types"
 )
 
 // 类型别名，保持向后兼容

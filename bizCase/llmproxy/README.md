@@ -26,7 +26,7 @@
 ## 安装
 
 ```bash
-go get github.com/morehao/go-action/bizCase/llmproxy
+go get github.com/morehao/go-action/bizcase/llmproxy
 ```
 
 ## 快速开始
@@ -41,7 +41,7 @@ import (
     "fmt"
     "log"
     
-    "github.com/morehao/go-action/bizCase/llmproxy"
+    "github.com/morehao/go-action/bizcase/llmproxy"
 )
 
 func main() {

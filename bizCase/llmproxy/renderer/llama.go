@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/morehao/go-action/bizCase/llmproxy/types"
+	"github.com/morehao/go-action/bizcase/llmproxy/types"
 )
 
 // LlamaRenderer Llama 专用渲染器，使用 Python 函数签名格式

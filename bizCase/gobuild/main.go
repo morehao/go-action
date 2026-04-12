@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/morehao/go-action/bizCase/gobuild/version"
+	"github.com/morehao/go-action/bizcase/gobuild/version"
 )
 
 func main() {

@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/morehao/go-action/bizCase/llmproxy"
+	"github.com/morehao/go-action/bizcase/llmproxy"
 )
 
 func main() {
@@ -138,4 +138,3 @@ func executeWeatherTool(funcName, argsJSON string) string {
 	return fmt.Sprintf("城市 %s 的天气：晴朗，温度 %s°%s，湿度 65%%",
 		city, temp, map[string]string{"celsius": "C", "fahrenheit": "F"}[unit])
 }
-

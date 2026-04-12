@@ -9,8 +9,8 @@ import (
 	"github.com/cloudwego/eino-ext/components/model/deepseek"
 	"github.com/cloudwego/eino/compose"
 	"github.com/cloudwego/eino/flow/agent/react"
-	"github.com/morehao/go-action/bizCase/agentdemo/config"
-	"github.com/morehao/go-action/bizCase/agentdemo/tools"
+	"github.com/morehao/go-action/bizcase/agentdemo/config"
+	"github.com/morehao/go-action/bizcase/agentdemo/tools"
 )
 
 var (

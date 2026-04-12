@@ -8,8 +8,8 @@
     - Deploy Mode:     dev
     - Deploy Version:  1.0.0
     go build -ldflags "\
-            -X 'github.com/morehao/go-action/bizCase/gobuild/version.DeployMode=dev' \
-            -X 'github.com/morehao/go-action/bizCase/gobuild/version.DeployVersion=1.0.0'" \
+            -X 'github.com/morehao/go-action/bizcase/gobuild/version.DeployMode=dev' \
+            -X 'github.com/morehao/go-action/bizcase/gobuild/version.DeployVersion=1.0.0'" \
             -o myapp main.go
     🚀 Running...
     ./myapp

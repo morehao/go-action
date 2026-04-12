@@ -6,9 +6,9 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/morehao/go-action/bizCase/llmproxy/parser"
-	"github.com/morehao/go-action/bizCase/llmproxy/renderer"
-	"github.com/morehao/go-action/bizCase/llmproxy/types"
+	"github.com/morehao/go-action/bizcase/llmproxy/parser"
+	"github.com/morehao/go-action/bizcase/llmproxy/renderer"
+	"github.com/morehao/go-action/bizcase/llmproxy/types"
 	"github.com/morehao/golib/glog"
 	"github.com/openai/openai-go"
 )

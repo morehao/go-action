@@ -29,8 +29,8 @@ import (
 	ecmodel "github.com/cloudwego/eino/components/model"
 	"github.com/cloudwego/eino/compose"
 	"github.com/cloudwego/eino/schema"
-	"github.com/morehao/go-action/bizCase/einodeer/model"
-	"github.com/morehao/go-action/bizCase/einodeer/utils"
+	"github.com/morehao/go-action/bizcase/einodeer/model"
+	"github.com/morehao/go-action/bizcase/einodeer/utils"
 	"github.com/morehao/golib/glog"
 )
 

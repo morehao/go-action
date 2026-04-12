@@ -6,9 +6,9 @@ import (
 	"runtime"
 
 	"github.com/gin-gonic/gin"
-	"github.com/morehao/go-action/bizCase/agentdemo/agent"
-	"github.com/morehao/go-action/bizCase/agentdemo/config"
-	"github.com/morehao/go-action/bizCase/agentdemo/handler"
+	"github.com/morehao/go-action/bizcase/agentdemo/agent"
+	"github.com/morehao/go-action/bizcase/agentdemo/config"
+	"github.com/morehao/go-action/bizcase/agentdemo/handler"
 )
 
 func main() {

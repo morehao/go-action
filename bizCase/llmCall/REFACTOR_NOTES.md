@@ -193,7 +193,7 @@ func TestCustomFunctionCall(t *testing.T) {
 
 ```go
 require (
-    github.com/morehao/go-action/bizCase/llmproxy v0.0.0
+    github.com/morehao/go-action/bizcase/llmproxy v0.0.0
     // ... 其他依赖
 )
 ```

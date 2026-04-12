@@ -1,4 +1,4 @@
-package linkList
+package linklist
 
 import "testing"
 

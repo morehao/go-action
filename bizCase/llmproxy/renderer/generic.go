@@ -3,7 +3,7 @@
  * @Date: 2025-12-15 18:56:41
  * @LastEditors: morehao morehao@qq.com
  * @LastEditTime: 2025-12-16 18:57:59
- * @FilePath: /go-action/bizCase/llmproxy/renderer/generic.go
+ * @FilePath: /go-action/bizcase/llmproxy/renderer/generic.go
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 package renderer
@@ -13,7 +13,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/morehao/go-action/bizCase/llmproxy/types"
+	"github.com/morehao/go-action/bizcase/llmproxy/types"
 )
 
 // GenericRenderer 通用渲染器，使用 JSON 格式

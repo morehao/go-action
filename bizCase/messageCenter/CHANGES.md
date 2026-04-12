@@ -99,9 +99,9 @@ import (
 
 // 新的 import
 import (
-    "github.com/morehao/go-action/bizCase/messageCenter/dto"
-    "github.com/morehao/go-action/bizCase/messageCenter/model"
-    "github.com/morehao/go-action/bizCase/messageCenter/utils"
+    "github.com/morehao/go-action/bizcase/messageCenter/dto"
+    "github.com/morehao/go-action/bizcase/messageCenter/model"
+    "github.com/morehao/go-action/bizcase/messageCenter/utils"
 )
 ```
 
@@ -125,7 +125,7 @@ go mod tidy
 ### 2. 验证编译 ⚠️
 ```bash
 # 编译检查
-cd bizCase/messageCenter
+cd bizcase/messageCenter
 go build ./...
 
 # 运行测试

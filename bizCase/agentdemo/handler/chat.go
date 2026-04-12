@@ -8,7 +8,7 @@ import (
 
 	"github.com/cloudwego/eino/schema"
 	"github.com/gin-gonic/gin"
-	"github.com/morehao/go-action/bizCase/agentdemo/agent"
+	"github.com/morehao/go-action/bizcase/agentdemo/agent"
 )
 
 // ChatRequest is the JSON body accepted by both /chat and /chat/stream.

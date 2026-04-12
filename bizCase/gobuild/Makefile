@@ -2,7 +2,7 @@
 DeployMode ?=
 DeployVersion ?=
 
-VERSION_PKG = github.com/morehao/go-action/bizCase/gobuild/version
+VERSION_PKG = github.com/morehao/go-action/bizcase/gobuild/version
 
 # build 前参数校验
 check-vars:

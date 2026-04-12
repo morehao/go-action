@@ -1,4 +1,4 @@
-package linkList
+package linklist
 
 func ArrToLinkList(nums []int) *ListNode {
 	if len(nums) < 1 {

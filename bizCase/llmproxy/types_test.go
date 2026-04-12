@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/morehao/go-action/bizCase/llmproxy/parser"
+	"github.com/morehao/go-action/bizcase/llmproxy/parser"
 )
 
 func TestToOpenAIToolCalls(t *testing.T) {

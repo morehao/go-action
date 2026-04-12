@@ -19,7 +19,7 @@ package main
 
 import (
     "fmt"
-    "github.com/morehao/go-action/bizCase/llmproxy/parser"
+    "github.com/morehao/go-action/bizcase/llmproxy/parser"
 )
 
 func main() {

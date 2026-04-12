@@ -9,7 +9,7 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/bizCase/markdownreplace"
+            "program": "${workspaceFolder}/bizcase/markdownreplace"
         },
         {
             "name": "blackboard",
@@ -23,63 +23,63 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/bizCase/llmCall"
+            "program": "${workspaceFolder}/bizcase/llmCall"
         },
         {
             "name": "sseRedisStream",
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/bizCase/sseRedisStreams"
+            "program": "${workspaceFolder}/bizcase/sseRedisStreams"
         },
         {
             "name": "sseCache",
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/bizCase/sseCache"
+            "program": "${workspaceFolder}/bizcase/sseCache"
         },
         {
             "name": "mcpIPGeo",
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/bizCase/mcpDemo/ipgeoserver"
+            "program": "${workspaceFolder}/bizcase/mcpDemo/ipgeoserver"
         },
         {
             "name": "mcpClient",
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/bizCase/mcpClient"
+            "program": "${workspaceFolder}/bizcase/mcpClient"
         },
         {
             "name": "esvector",
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/bizCase/esvector"
+            "program": "${workspaceFolder}/bizcase/esvector"
         },
         {
             "name": "serverfingerprint",
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/bizCase/serverfingerprint"
+            "program": "${workspaceFolder}/bizcase/serverfingerprint"
         },
         {
             "name": "einodemo",
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/bizCase/einodemo"
+            "program": "${workspaceFolder}/bizcase/einodemo"
         },
         {
             "name": "einodeer",
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}/bizCase/einodeer"
+            "program": "${workspaceFolder}/bizcase/einodeer"
         },
     ]
 }

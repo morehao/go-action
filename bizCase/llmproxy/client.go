@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/morehao/go-action/bizCase/llmproxy/types"
+	"github.com/morehao/go-action/bizcase/llmproxy/types"
 )
 
 // Client HTTP 客户端，用于调用 OpenAI 兼容的 API

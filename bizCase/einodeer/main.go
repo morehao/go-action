@@ -6,9 +6,9 @@ import (
 	"runtime"
 
 	"github.com/gin-gonic/gin"
-	"github.com/morehao/go-action/bizCase/einodeer/config"
-	"github.com/morehao/go-action/bizCase/einodeer/handler"
-	"github.com/morehao/go-action/bizCase/einodeer/infra"
+	"github.com/morehao/go-action/bizcase/einodeer/config"
+	"github.com/morehao/go-action/bizcase/einodeer/handler"
+	"github.com/morehao/go-action/bizcase/einodeer/infra"
 	"github.com/morehao/golib/conf"
 	"github.com/morehao/golib/glog"
 )
