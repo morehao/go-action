@@ -1,0 +1,7 @@
+driver: minio
+endpoint: play.min.io:9000
+access_key: minioadmin
+secret_key: minioadmin
+bucket: test-bucket
+use_ssl: false
+server_port: ":8080"
