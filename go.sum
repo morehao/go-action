@@ -240,6 +240,8 @@ github.com/xuri/nfp v0.0.2-0.20250530014748-2ddeb826f9a9 h1:+C0TIdyyYmzadGaL/HBL
 github.com/xuri/nfp v0.0.2-0.20250530014748-2ddeb826f9a9/go.mod h1:WwHg+CVyzlv/TX9xqBFXEZAuxOPxn2k1GNHwG41IIUQ=
 github.com/yargevad/filepathx v1.0.0 h1:SYcT+N3tYGi+NvazubCNlvgIPbzAk7i7y2dwg3I5FYc=
 github.com/yargevad/filepathx v1.0.0/go.mod h1:BprfX/gpYNJHJfc35GjRRpVcwWXS89gGulUIU5tK3tA=
+github.com/ygpkg/storage-go v0.0.0-20260609011726-c644d03e1452 h1:y+iKgZs7PsPKA9zlEL6N6WtlZp/zBo0eNVUgJGOza0w=
+github.com/ygpkg/storage-go v0.0.0-20260609011726-c644d03e1452/go.mod h1:sfq8wVZNOUPUbLBrNCu8xAqxBwjWaQgk9TGrSpTSy+A=
 github.com/ygpkg/yg-go v1.23.55 h1:8gOFg8E0voBIxzhPLc0JQOz0zdIiapKDX7EjZMmaS8A=
 github.com/ygpkg/yg-go v1.23.55/go.mod h1:NI+lQ1j+4u/S5BMJq1crWaDyUcV8LmEzNC5/ZbujI8E=
 github.com/yosida95/uritemplate/v3 v3.0.2 h1:Ed3Oyj9yrmi9087+NczuL5BwkIc4wvTb5zIM+UJPGz4=

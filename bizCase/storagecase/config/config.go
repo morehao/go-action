@@ -11,9 +11,8 @@ import (
 
 type Config struct {
 	storage.Config `yaml:",inline"`
-
-	Driver     string `yaml:"driver"`
-	ServerPort string `yaml:"server_port"`
+	Driver         storage.DriverType `yaml:"driver"`
+	ServerPort     string             `yaml:"server_port"`
 }
 
 func (c *Config) Defaults() {

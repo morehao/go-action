@@ -1,8 +1,8 @@
 package service
 
 import (
+	"bytes"
 	"context"
-	"io"
 	"time"
 
 	storage "github.com/ygpkg/storage-go"
@@ -31,7 +31,7 @@ func (svc *StorageService) PutObject(ctx context.Context, bucket, key, contentTy
 	if ifNotExists {
 		opts = append(opts, storage.WithIfNotExists())
 	}
-	return svc.client().PutObject(ctx, bucket, key, bytesReader(body), opts...)
+	return svc.client().PutObject(ctx, bucket, key, bytes.NewReader(body), opts...)
 }
 
 func (svc *StorageService) GetObject(ctx context.Context, bucket, key string, rangeStart, rangeEnd int64) (*storage.GetObjectResult, error) {
@@ -50,24 +50,12 @@ func (svc *StorageService) DeleteObjects(ctx context.Context, bucket string, key
 	return svc.client().DeleteObjects(ctx, bucket, keys)
 }
 
-func (svc *StorageService) ListObjects(ctx context.Context, bucket, prefix string, maxKeys int64, startAfter string, recursive bool) (*storage.ListObjectsOutput, error) {
-	var opts []storage.ListOption
-	if maxKeys > 0 {
-		opts = append(opts, storage.WithMaxKeys(maxKeys))
-	}
-	if startAfter != "" {
-		opts = append(opts, storage.WithStartAfter(startAfter))
-	}
-	opts = append(opts, storage.WithRecursive(recursive))
-	return svc.client().ListObjects(ctx, bucket, prefix, opts...)
-}
-
 func (svc *StorageService) CreateMultipartUpload(ctx context.Context, bucket, key string) (string, error) {
 	return svc.client().CreateMultipartUpload(ctx, bucket, key)
 }
 
 func (svc *StorageService) UploadPart(ctx context.Context, bucket, key, uploadID string, partNumber int, body []byte) (*storage.CompletedPart, error) {
-	return svc.client().UploadPart(ctx, bucket, key, uploadID, partNumber, bytesReader(body))
+	return svc.client().UploadPart(ctx, bucket, key, uploadID, partNumber, bytes.NewReader(body))
 }
 
 func (svc *StorageService) CompleteMultipartUpload(ctx context.Context, bucket, key, uploadID string, parts []storage.CompletedPart) error {
@@ -98,20 +86,18 @@ func (svc *StorageService) PresignPutObject(ctx context.Context, bucket, key str
 	return svc.client().PresignPutObject(ctx, bucket, key, ttl)
 }
 
-type byteReader struct {
-	data []byte
-	pos  int
-}
-
-func bytesReader(data []byte) *byteReader {
-	return &byteReader{data: data}
-}
-
-func (r *byteReader) Read(p []byte) (int, error) {
-	if r.pos >= len(r.data) {
-		return 0, io.EOF
+// ListObjects 列举对象
+func (svc *StorageService) ListObjects(ctx context.Context, bucket, prefix string, maxKeys int64, startAfter string, recursive bool) (*storage.ListObjectsOutput, error) {
+	var opts []storage.ListOption
+	if maxKeys > 0 {
+		opts = append(opts, storage.WithMaxKeys(maxKeys))
 	}
-	n := copy(p, r.data[r.pos:])
-	r.pos += n
-	return n, nil
+	if startAfter != "" {
+		opts = append(opts, storage.WithStartAfter(startAfter))
+	}
+	if recursive {
+		opts = append(opts, storage.WithRecursive(true))
+	}
+	return svc.client().ListObjects(ctx, bucket, prefix, opts...)
 }
+

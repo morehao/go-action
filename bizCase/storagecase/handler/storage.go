@@ -2,14 +2,16 @@ package handler
 
 import (
 	"context"
+	// 去掉未使用的 time 导入
 	"errors"
 	"io"
+	"strings"
 	"time"
 
 	storage "github.com/ygpkg/storage-go"
 	"github.com/morehao/go-action/bizcase/storagecase/dto"
 	"github.com/morehao/go-action/bizcase/storagecase/service"
-	"github.com/morehao/golib/gcontext/gincontext"
+	"github.com/morehao/golib/biz/gcontext/gincontext"
 	"github.com/morehao/golib/glog"
 
 	"github.com/gin-gonic/gin"
@@ -29,16 +31,33 @@ func (h *StorageHandler) Health(c *gin.Context) {
 
 func (h *StorageHandler) PutObject(c *gin.Context) {
 	ctx := context.Background()
+
+	ct := c.ContentType()
+	glog.Infof(ctx, "PutObject Content-Type: %s", ct)
+	glog.Infof(ctx, "PutObject Content-Length: %d", c.Request.ContentLength)
+
 	var req dto.PutObjectReq
 	if err := c.ShouldBind(&req); err != nil {
 		gincontext.Fail(c, err)
 		return
 	}
 
-	body, err := io.ReadAll(c.Request.Body)
-	if err != nil {
-		gincontext.Fail(c, err)
-		return
+	var body []byte
+
+	if isMultipart(ct) {
+		file, err := readFormFile(c, "file")
+		if err != nil {
+			gincontext.Fail(c, err)
+			return
+		}
+		body = file
+	} else {
+		data, err := io.ReadAll(c.Request.Body)
+		if err != nil {
+			gincontext.Fail(c, err)
+			return
+		}
+		body = data
 	}
 
 	result, err := h.svc.PutObject(ctx, req.Bucket, req.Key, req.ContentType, req.Metadata, req.IfNotExists, body)
@@ -48,8 +67,24 @@ func (h *StorageHandler) PutObject(c *gin.Context) {
 		return
 	}
 
-	glog.Infof(ctx, "PutObject success: %s", result.Path.URI())
-	gincontext.Success(c, toObjectInfo(result.Path, 0, result.ETag, "", time.Time{}, req.Metadata))
+	gincontext.Success(c, toObjectInfo(result.Path, result.Size, result.ETag, result.ContentType, result.LastModified, result.Metadata))
+}
+
+func isMultipart(contentType string) bool {
+	return len(contentType) >= 9 && contentType[:9] == "multipart"
+}
+
+func readFormFile(c *gin.Context, field string) ([]byte, error) {
+	fh, err := c.FormFile(field)
+	if err != nil {
+		return nil, err
+	}
+	f, err := fh.Open()
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+	return io.ReadAll(f)
 }
 
 func (h *StorageHandler) GetObject(c *gin.Context) {
@@ -76,8 +111,10 @@ func (h *StorageHandler) GetObject(c *gin.Context) {
 
 	resp := dto.ObjectDataResp{
 		ContentType:   result.ContentType,
-		ContentLength: result.ContentLength,
+		ContentLength: result.Size,
 		ETag:          result.ETag,
+		LastModified:  result.LastModified.Format("2006-01-02 15:04:05"),
+		Path:          result.Path.URI(),
 		Data:          data,
 	}
 	gincontext.Success(c, resp)
@@ -142,7 +179,7 @@ func (h *StorageHandler) ListObjects(c *gin.Context) {
 		NextContinuationToken: result.NextContinuationToken,
 	}
 	for _, obj := range result.Contents {
-		resp.Contents = append(resp.Contents, toObjectInfo(obj.Path, obj.Size, obj.ETag, obj.ContentType, obj.LastModified, nil))
+		resp.Contents = append(resp.Contents, toObjectInfo(obj.Path, obj.Size, obj.ETag, obj.ContentType, obj.LastModified, obj.Metadata))
 	}
 	gincontext.Success(c, resp)
 }
@@ -308,13 +345,14 @@ func (h *StorageHandler) PresignPutObject(c *gin.Context) {
 
 func toObjectInfo(path storage.StoragePath, size int64, etag, contentType string, lastModified time.Time, metadata map[string]string) dto.ObjectInfoResp {
 	resp := dto.ObjectInfoResp{
-		Size:     size,
-		ETag:     etag,
+		Size:        size,
+		ETag:        strings.Trim(etag, "\""),
 		ContentType: contentType,
-		Metadata: metadata,
+		Metadata:    metadata,
 	}
 	if path != nil {
 		resp.Path = path.URI()
+		resp.PublicURL = path.PublicURL()
 	}
 	if !lastModified.IsZero() {
 		resp.LastModified = lastModified.Format(time.RFC3339)

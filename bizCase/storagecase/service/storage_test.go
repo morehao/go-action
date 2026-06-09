@@ -26,7 +26,7 @@ func TestMain(m *testing.M) {
 
 	if err := s3.Init("local", storage.Config{
 		Bucket:   testBucket,
-		LocalDir: dir,
+		BaseDir: dir,
 	}); err != nil {
 		panic(err)
 	}

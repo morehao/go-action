@@ -1,7 +1,8 @@
 driver: minio
-endpoint: play.min.io:9000
-access_key: minioadmin
-secret_key: minioadmin
-bucket: test-bucket
+endpoint: ${S3_ENDPOINT}
+access_key: ${MINIO_ACCESS_KEY}
+secret_key: ${MINIO_SECRET_KEY}
+bucket: ${S3_BUCKET}
+region: ${S3_REGION}
 use_ssl: false
 server_port: ":8080"

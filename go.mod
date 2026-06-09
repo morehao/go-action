@@ -58,6 +58,7 @@ require (
 	github.com/xuri/efp v0.0.1 // indirect
 	github.com/xuri/nfp v0.0.2-0.20250530014748-2ddeb826f9a9 // indirect
 	github.com/yargevad/filepathx v1.0.0 // indirect
+	github.com/ygpkg/storage-go v0.0.0-20260609011726-c644d03e1452 // indirect
 	go.mongodb.org/mongo-driver/v2 v2.5.0 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
