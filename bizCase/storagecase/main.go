@@ -11,10 +11,19 @@ import (
 	"github.com/morehao/go-action/bizcase/storagecase/handler"
 	"github.com/morehao/go-action/bizcase/storagecase/pkg/s3"
 	"github.com/morehao/golib/glog"
+	_ "github.com/morehao/golib/glog/driver/zap"
 	"gopkg.in/yaml.v3"
 )
 
 func main() {
+	if err := glog.InitLogger(&glog.LogConfig{
+		Service: "storagecase",
+		Writers: []glog.WriterConfig{{Type: glog.WriterConsole}},
+	}); err != nil {
+		panic(err)
+	}
+	defer glog.Close()
+
 	_, file, _, ok := runtime.Caller(0)
 	if !ok {
 		panic("storagecase: runtime.Caller failed")

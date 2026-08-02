@@ -9,16 +9,24 @@ import (
 	"github.com/morehao/go-action/bizcase/einodeer/config"
 	"github.com/morehao/go-action/bizcase/einodeer/handler"
 	"github.com/morehao/go-action/bizcase/einodeer/infra"
-	"github.com/morehao/golib/conf"
 	"github.com/morehao/golib/glog"
+	_ "github.com/morehao/golib/glog/driver/zap"
 )
 
 func main() {
+	if err := glog.InitLogger(&glog.LogConfig{
+		Service: "einodeer",
+		Writers: []glog.WriterConfig{{Type: glog.WriterConsole}},
+	}); err != nil {
+		panic(err)
+	}
+	defer glog.Close()
+
 	r := gin.Default()
 
 	_, workDir, _, _ := runtime.Caller(0)
 	rootDir := filepath.Dir(workDir)
-	conf.SetAppRootDir(rootDir)
+	config.SetAppRootDir(rootDir)
 	config.LoadDeerConfig()
 
 	infra.InitModel()

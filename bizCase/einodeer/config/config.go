@@ -19,8 +19,8 @@ package config
 import (
 	"context"
 
-	"github.com/morehao/golib/conf"
 	"github.com/morehao/golib/glog"
+	"github.com/morehao/golib/gutil"
 )
 
 // 定义一个结构体来解析 YAML 文件中的配置
@@ -48,16 +48,21 @@ type ToolsConfig struct {
 }
 
 var (
-	Config *DeerConfig = &DeerConfig{}
+	Config      *DeerConfig = &DeerConfig{}
+	appRootDir  string
 )
+
+func SetAppRootDir(dir string) {
+	appRootDir = dir
+}
 
 func LoadDeerConfig() {
 
-	configPath := conf.GetAppRootDir() + "/config/config.yaml"
+	configPath := appRootDir + "/config/config.yaml"
 
 	// 读取 YAML 文件内容
 	var deerConfig DeerConfig
-	conf.LoadConfig(configPath, &deerConfig)
+	gutil.LoadYamlConfig(configPath, &deerConfig)
 
 	glog.Infof(context.Background(), "load_config: %s", deerConfig)
 

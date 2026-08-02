@@ -11,7 +11,7 @@ import (
 	"github.com/cloudwego/eino/schema"
 	callbacksHelper "github.com/cloudwego/eino/utils/callbacks"
 	"github.com/gin-gonic/gin"
-	"github.com/morehao/golib/gcontext/gincontext"
+	"github.com/morehao/golib/biz/gcontext/gincontext"
 	"github.com/morehao/golib/glog"
 )
 

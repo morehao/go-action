@@ -8,8 +8,10 @@ import (
 
 	"github.com/Jeffail/tunny"
 
+	_ "github.com/morehao/golib/dbaccess/dbgorm/driver/mysql"
 	"github.com/morehao/golib/dbaccess/dbgorm"
 	"github.com/morehao/golib/glog"
+	_ "github.com/morehao/golib/glog/driver/zap"
 	"github.com/morehao/golib/gutil"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
@@ -19,13 +21,13 @@ func initMysqlClient() (*gorm.DB, error) {
 	if err := glog.InitLogger(&glog.LogConfig{
 		Service:   "test",
 		Level:     glog.DebugLevel,
-		Dir:       "./log",
+		Writers:   []glog.WriterConfig{{Type: glog.WriterFile, Dir: "./log"}},
 		ExtraKeys: []string{"requestId"},
 	}); err != nil {
 		return nil, err
 	}
 
-	cfg := &dbgorm.GormConfig{
+	cfg := &dbgorm.Config{
 		URL:             "mysql://root:123456@127.0.0.1:3306/demo?charset=utf8mb4&parseTime=True&loc=Local",
 		Service:         "test-service",
 		MaxSqlLen:       1000,

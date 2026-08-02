@@ -12,7 +12,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/mark3labs/mcp-go v0.47.1
 	github.com/mitchellh/mapstructure v1.5.0
-	github.com/morehao/golib v1.26.1
+	github.com/morehao/golib v1.31.0
 	github.com/mozillazg/go-pinyin v0.21.0
 	github.com/openai/openai-go v1.12.0
 	github.com/redis/go-redis/v9 v9.18.0
@@ -36,10 +36,6 @@ require (
 	github.com/goccy/go-yaml v1.19.2 // indirect
 	github.com/google/jsonschema-go v0.4.2 // indirect
 	github.com/goph/emperror v0.17.2 // indirect
-	github.com/jackc/pgpassfile v1.0.0 // indirect
-	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.9.1 // indirect
-	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/mailru/easyjson v0.9.2 // indirect
 	github.com/meguminnnnnnnnn/go-openai v0.1.2 // indirect
@@ -62,9 +58,7 @@ require (
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	golang.org/x/exp v0.0.0-20260410095643-746e56fc9e2f // indirect
-	golang.org/x/sync v0.22.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
-	gorm.io/driver/postgres v1.6.0 // indirect
 )
 
 require (
