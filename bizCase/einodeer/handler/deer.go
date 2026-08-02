@@ -11,7 +11,7 @@ import (
 	"github.com/morehao/go-action/bizcase/einodeer/infra"
 	"github.com/morehao/go-action/bizcase/einodeer/model"
 	"github.com/morehao/go-action/bizcase/einodeer/utils"
-	"github.com/morehao/golib/gcontext/gincontext"
+	"github.com/morehao/golib/biz/gcontext/gincontext"
 	"github.com/morehao/golib/glog"
 )
 

@@ -3,7 +3,6 @@ module github.com/morehao/go-action/bizcase/storagecase
 go 1.26.1
 
 replace (
-	github.com/morehao/golib => /Users/morehao/Documents/practice/go/golib
 	github.com/ygpkg/storage-go => /Users/morehao/Documents/works/yangu/ygpkg/storage-go
 	github.com/ygpkg/storage-go/driver/cos => /Users/morehao/Documents/works/yangu/ygpkg/storage-go/driver/cos
 	github.com/ygpkg/storage-go/driver/local => /Users/morehao/Documents/works/yangu/ygpkg/storage-go/driver/local
@@ -13,7 +12,7 @@ replace (
 
 require (
 	github.com/gin-gonic/gin v1.12.0
-	github.com/morehao/golib v1.2.16
+	github.com/morehao/golib v1.31.0
 	github.com/stretchr/testify v1.11.1
 	github.com/ygpkg/storage-go v0.0.0-00010101000000-000000000000
 	gopkg.in/yaml.v3 v3.0.1
