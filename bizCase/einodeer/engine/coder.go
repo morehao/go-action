@@ -15,6 +15,7 @@ import (
 	"github.com/morehao/go-action/bizcase/einodeer/infra"
 	"github.com/morehao/go-action/bizcase/einodeer/model"
 	"github.com/morehao/golib/glog"
+	"github.com/morehao/golib/gutil"
 )
 
 func loadCoderMsg(ctx context.Context, name string, opts ...any) (output []*schema.Message, err error) {
@@ -72,7 +73,7 @@ func routerCoder(ctx context.Context, input *schema.Message, opts ...any) (outpu
 				break
 			}
 		}
-		glog.Infof(ctx, "coder_end: %s", glog.ToJsonString(state.CurrentPlan))
+		glog.Infof(ctx, "coder_end: %s", gutil.ToJsonString(state.CurrentPlan))
 		state.Goto = constants.AgentResearchTeam
 		return nil
 	})
@@ -84,17 +85,17 @@ func modifyCoderfunc(ctx context.Context, input []*schema.Message) []*schema.Mes
 	maxLimit := 50000
 	for i := range input {
 		if input[i] == nil {
-			glog.Warnf(ctx, "modify_inputfunc_nil: %s", glog.ToJsonString(input[i]))
+			glog.Warnf(ctx, "modify_inputfunc_nil: %s", gutil.ToJsonString(input[i]))
 			continue
 		}
 		l := len(input[i].Content)
 		if l > maxLimit {
-			glog.Warnf(ctx, "modify_inputfunc_clip: %s", glog.ToJsonString(input[i]))
+			glog.Warnf(ctx, "modify_inputfunc_clip: %s", gutil.ToJsonString(input[i]))
 			input[i].Content = input[i].Content[l-maxLimit:]
 		}
 		sum += len(input[i].Content)
 	}
-	glog.Infof(ctx, "modify_inputfunc sum: %d, input: %s", sum, glog.ToJsonString(input))
+	glog.Infof(ctx, "modify_inputfunc sum: %d, input: %s", sum, gutil.ToJsonString(input))
 	return input
 }
 
@@ -113,7 +114,7 @@ func NewCoder[I, O any](ctx context.Context) *compose.Graph[I, O] {
 			}
 		}
 	}
-	glog.Debugf(ctx, "coder_end coder_tools: %s", glog.ToJsonString(researchTools))
+	glog.Debugf(ctx, "coder_end coder_tools: %s", gutil.ToJsonString(researchTools))
 
 	agent, err := react.NewAgent(ctx, &react.AgentConfig{
 		MaxStep:               40,

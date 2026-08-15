@@ -32,6 +32,7 @@ import (
 	"github.com/morehao/go-action/bizcase/einodeer/model"
 	"github.com/morehao/go-action/bizcase/einodeer/utils"
 	"github.com/morehao/golib/glog"
+	"github.com/morehao/golib/gutil"
 )
 
 type LoggerCallback struct {
@@ -47,11 +48,11 @@ func (cb *LoggerCallback) pushF(ctx context.Context, event string, data *model.C
 	dataByte, err := json.Marshal(data)
 	fmt.Println("=========[pushF]=========", event, "|", data)
 	if err != nil {
-		glog.Errorf(ctx, "json marshal error: %v, data: %s", err, glog.ToJsonString(data))
+		glog.Errorf(ctx, "json marshal error: %v, data: %s", err, gutil.ToJsonString(data))
 	}
 	if cb.SSE != nil {
 		if err := WriteSSE(cb.SSE, "", event, dataByte); err != nil {
-			glog.Errorf(ctx, "sse error: %v, data: %s", err, glog.ToJsonString(data))
+			glog.Errorf(ctx, "sse error: %v, data: %s", err, gutil.ToJsonString(data))
 		}
 	}
 	if cb.Out != nil {
@@ -94,7 +95,7 @@ func (cb *LoggerCallback) pushMsg(ctx context.Context, msgID string, msg *schema
 	if len(msg.ToolCalls) > 0 {
 		event := "tool_call_chunks"
 		if len(msg.ToolCalls) != 1 {
-			glog.Errorf(ctx, "sse_tool_calls raw: %s", glog.ToJsonString(msg))
+			glog.Errorf(ctx, "sse_tool_calls raw: %s", gutil.ToJsonString(msg))
 			return nil
 		}
 

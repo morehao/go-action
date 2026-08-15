@@ -13,6 +13,7 @@ import (
 	"github.com/morehao/go-action/bizcase/einodeer/utils"
 	"github.com/morehao/golib/biz/gcontext/gincontext"
 	"github.com/morehao/golib/glog"
+	"github.com/morehao/golib/gutil"
 )
 
 func ChatStream(ctx *gin.Context) {
@@ -29,7 +30,7 @@ func ChatStream(ctx *gin.Context) {
 		gincontext.Fail(ctx, err)
 		return
 	}
-	glog.Infof(ctx, "ChatStream_begin: %s", glog.ToJsonString(req))
+	glog.Infof(ctx, "ChatStream_begin: %s", gutil.ToJsonString(req))
 
 	// 根据前端参数生成Graph State
 	genFunc := func(ctx context.Context) *model.State {
@@ -55,7 +56,7 @@ func ChatStream(ctx *gin.Context) {
 			if req.InterruptFeedback == "edit_plan" {
 				s.Messages = append(s.Messages, req.Messages...)
 			}
-			glog.Debugf(ctx, "ChatStream_modf, path: %s, state: %s", path.GetPath(), glog.ToJsonString(state))
+			glog.Debugf(ctx, "ChatStream_modf, path: %s, state: %s", path.GetPath(), gutil.ToJsonString(state))
 			return nil
 		}),
 		// 连接LoggerCallback
@@ -67,7 +68,7 @@ func ChatStream(ctx *gin.Context) {
 
 	// 将interrupt信号传递到前端
 	if info, ok := compose.ExtractInterruptInfo(err); ok {
-		glog.Debugf(ctx, "ChatStream_interrupt: %s", glog.ToJsonString(info))
+		glog.Debugf(ctx, "ChatStream_interrupt: %s", gutil.ToJsonString(info))
 		data := &model.ChatResp{
 			ThreadID:     req.ThreadID,
 			ID:           "human_feedback:" + utils.RandStr(20),

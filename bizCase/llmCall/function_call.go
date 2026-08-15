@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/morehao/golib/glog"
+	"github.com/morehao/golib/gutil"
 	"github.com/openai/openai-go"
 )
 
@@ -54,7 +55,7 @@ func FunctionCall(ctx *gin.Context) {
 		return
 	}
 
-	glog.Infof(ctx, "[FunctionCall] Tool calls: %s", glog.ToJsonString(toolCalls))
+	glog.Infof(ctx, "[FunctionCall] Tool calls: %s", gutil.ToJsonString(toolCalls))
 
 	params.Messages = append(params.Messages, completion.Choices[0].Message.ToParam())
 	for _, toolCall := range toolCalls {

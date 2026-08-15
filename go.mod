@@ -12,7 +12,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/mark3labs/mcp-go v0.57.0
 	github.com/mitchellh/mapstructure v1.5.0
-	github.com/morehao/golib v1.31.1
+	github.com/morehao/golib v1.32.5
 	github.com/mozillazg/go-pinyin v0.21.0
 	github.com/openai/openai-go v1.12.0
 	github.com/redis/go-redis/v9 v9.22.0
@@ -57,6 +57,7 @@ require (
 	github.com/yargevad/filepathx v1.0.0 // indirect
 	go.mongodb.org/mongo-driver/v2 v2.8.0 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
+	go.opentelemetry.io/otel/sdk v1.43.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	golang.org/x/exp v0.0.0-20260727155853-b88d891fe743 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect

@@ -16,6 +16,7 @@ import (
 	"github.com/morehao/go-action/bizcase/einodeer/infra"
 	"github.com/morehao/go-action/bizcase/einodeer/model"
 	"github.com/morehao/golib/glog"
+	"github.com/morehao/golib/gutil"
 )
 
 func loadResearcherMsg(ctx context.Context, name string, opts ...any) (output []*schema.Message, err error) {
@@ -74,7 +75,7 @@ func routerResearcher(ctx context.Context, input *schema.Message, opts ...any) (
 				break
 			}
 		}
-		glog.Infof(ctx, "researcher_end, plan: %s", glog.ToJsonString(state.CurrentPlan))
+		glog.Infof(ctx, "researcher_end, plan: %s", gutil.ToJsonString(state.CurrentPlan))
 		state.Goto = constants.AgentResearchTeam
 		return nil
 	})
@@ -86,7 +87,7 @@ func modifyInputfunc(ctx context.Context, input []*schema.Message) []*schema.Mes
 	maxLimit := 50000
 	for i := range input {
 		if input[i] == nil {
-			glog.Warnf(ctx, "modify_inputfunc_nil: %s", glog.ToJsonString(input[i]))
+			glog.Warnf(ctx, "modify_inputfunc_nil: %s", gutil.ToJsonString(input[i]))
 			continue
 		}
 		l := len(input[i].Content)
@@ -130,7 +131,7 @@ func NewResearcher[I, O any](ctx context.Context) *compose.Graph[I, O] {
 			researchTools = append(researchTools, baseTool)
 		}
 	}
-	glog.Debugf(ctx, "researcher_end researcher_tools: %s", glog.ToJsonString(researchTools))
+	glog.Debugf(ctx, "researcher_end researcher_tools: %s", gutil.ToJsonString(researchTools))
 
 	agent, err := react.NewAgent(ctx, &react.AgentConfig{
 		MaxStep:               40,
